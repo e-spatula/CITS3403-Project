@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    margin-top: 80px;
+    padding: 30px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color: #FF9313;
+}
+
+header * {
+    display: inline;
+}
+header img {
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+header li {
+    margin: 20px;
+}
+
+header li a {
+    text-decoration: none; 
+
+}
