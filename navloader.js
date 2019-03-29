@@ -1,3 +1,3 @@
 $(document).ready(function(){
-    $('#menu').load('nav.html');
+    $('#menu').load('templates\\nav.html');
 });
