@@ -1,3 +1,4 @@
 $(document).ready(function(){
-    $('#menu').load('../templates/nav.html');
+    $('#menu').load('../pages/nav.html');
 });
+
