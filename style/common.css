@@ -38,16 +38,3 @@ header li a {
     text-decoration: none; 
 }
 
-.sidebar {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        width: 150px;
-        border-right: 1px solid black;
-        background-color: #FCFDFC;
-        padding: 10px;
-}
-
-
-
