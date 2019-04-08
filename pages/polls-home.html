@@ -2,25 +2,26 @@
 <html lang="en-US">
     <head>
         <link href="../style/common.css" type="text/css" rel="stylesheet" />
+        <link href="../style/sidebar.css" type="text/css" rel="stylesheet"/>
         <meta charset="UTF-8">
         <title>Polls</title>
-        <script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type = "text/javascript" src="../scripts/navloader.js"></script>
+        <script type = "text/javascript" src="../scripts/sidebarloader.js"></script>
     </head>
     <body>
         <header>
             <div id = "menu"></div>   
         </header>
-        <div class = "sidebar">
-            <div class = "links">
-                <ul>
-                    <li><a href="#">Polls Near Me</a></li>
-                    <li><a href="#"> Polls Ending Soon</a> </li>
-                    <li><a href="#">Just Posted</a> </li> 
-                </ul>
-                <p>Filter By:</p>
-            </div>
-
+        <div id="sidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Near you</a>
+            <a href="#">Trending</a>
+            <a href="#">New</a>
+            <a href="#">Random</a>
+          </div>
+          <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Polls</span>
         </div>
+        <div id="main"></div>
     </body>
 </html>
