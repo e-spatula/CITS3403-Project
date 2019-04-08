@@ -7,11 +7,12 @@ body {
 }
 
 header {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 65px;
+    width: 100%;
     background-color: #FF9313;
 }
 
@@ -27,7 +28,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* position: sticky; check if works */
+    z-index: 10;
 }
 
 header li {
@@ -37,6 +38,4 @@ header li {
 header li a {
     text-decoration: none; 
 }
-
-
 
