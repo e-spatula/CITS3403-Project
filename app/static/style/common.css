@@ -38,7 +38,7 @@ header li {
 header li a {
     text-decoration: none; 
 }
-span.alert-box {
+.banner {
     display: block;
 }
 .alert-box {
