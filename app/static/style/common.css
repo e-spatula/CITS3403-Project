@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    margin-top: 65px;
     padding: 30px;
+    margin-top: 65px;
 }
 
 header {
@@ -38,4 +38,30 @@ header li {
 header li a {
     text-decoration: none; 
 }
+span.alert-box {
+    display: block;
+}
+.alert-box {
+    color:#555;
+    border-radius:10px;
+    font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+    padding:10px;
+    margin: 0px 10px;
+}
 
+.error {
+    background-color:#ffecec;
+    border:1px solid #f5aca6;
+}
+.success {
+    background-color:#e9ffd9;
+    border:1px solid #a6ca8a;
+}
+.warning {
+    background-color:#fff8c4;
+    border:1px solid #f2c779;
+}
+.notice {
+    background-color:#e3f7fc;
+    border:1px solid #8ed9f6;
+}
