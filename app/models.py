@@ -1,10 +1,14 @@
-from app import db
-from datetime import datetime
+from app import db, login
+from datetime import datetime, timedelta
 from sqlalchemy.sql import func
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import UserMixin
 
+@login.user_loader
+def user_loader(id):
+    return(User.query.get(int(id)))
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(64), index = True, unique = True)
     email = db.Column(db.String(128), index = True, unique = True, nullable = False)
@@ -19,6 +23,8 @@ class User(db.Model):
     
     def check_password(self, password):
         return(check_password_hash(self.password_hash, password))
+    def get_name(self):
+        return(self.username)
 
     def __repr__(self):
         return("User<{}>".format(self.username))
@@ -29,14 +35,10 @@ class Poll(db.Model):
     title = db.Column(db.String(64), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     create_date = db.Column(db.DateTime, index = True, server_default = func.now())
-    expiry_date = db.Column(db.DateTime, index = True, nullable = False)
+    expiry_date = db.Column(db.DateTime, index = True, nullable = False, default = datetime.utcnow() + timedelta(days = 1))
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")
     poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic")
 
-    def __init__(self, title, user_id, expiry_date):
-        self.title = title
-        self.user_id = user_id
-        self.expiry_date = expiry_date if expiry_date else datetime.utcnow() + datetime.timedelta(days = 30)
     def __repr__(self):
         return("Poll <{}>".format(self.title))
 
