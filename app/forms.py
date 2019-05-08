@@ -11,7 +11,7 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired()])
     email = StringField("Email", validators = [DataRequired(), Email()])
-    password = StringField("Password", validators = [DataRequired()])
+    password = PasswordField("Password", validators = [DataRequired()])
     password2 = PasswordField(
         "Repeat Password", validators = [DataRequired(), EqualTo("password")]
     )
@@ -26,4 +26,3 @@ class RegistrationForm(FlaskForm):
         email = User.query.filter_by(email = email.data).first()
         if(email is not None):
             raise ValidationError("Email already registered.")
-    
