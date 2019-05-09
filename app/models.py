@@ -25,6 +25,12 @@ class User(UserMixin, db.Model):
         return(check_password_hash(self.password_hash, password))
     def get_name(self):
         return(self.username)
+    def get_admin(self):
+        return(self.is_admin)
+    def set_admin(self, status):
+        self.is_admin = status
+        db.session.commit()
+
 
     def __repr__(self):
         return("User<{}>".format(self.username))

@@ -22,9 +22,8 @@
                     <br>
                 {% endfor %}
             </p>
-            <p>
-                {{ form.submit() }}
-            </p>
+            <br>
+            {{ form.submit() }}
         </form>
         <p>New User? <a href = "{{url_for('register')}}"> Join here</a></p>
     {% endblock %}
