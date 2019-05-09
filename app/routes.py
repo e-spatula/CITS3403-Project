@@ -73,5 +73,9 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
+    polls = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
     
-    return render_template('user.html', user=user)
+    return render_template('user.html', user=user, polls = polls)
