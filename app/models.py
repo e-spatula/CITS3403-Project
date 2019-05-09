@@ -46,19 +46,16 @@ class Responses(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     value = db.Column(db.DateTime, index = True, nullable = False)
     poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
-    votes = db.relationship("Votes", back_populates = "responses")
     
 
     def __repr__(self):
         return("Response {}, made on poll {}".format(self.value, self.poll_id))
 
 class Votes(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    response_id = db.Column(db.Integer, db.ForeignKey("responses.id"))
+    response_id = db.Column(db.Integer, db.ForeignKey("responses.id"), primary_key = True)
     time = db.Column(db.DateTime, server_default = func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
-    responses = db.relationship("Responses", back_populates = "votes")
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key = True)
+    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"), primary_key = True)
 
 
     def __repr__(self):
