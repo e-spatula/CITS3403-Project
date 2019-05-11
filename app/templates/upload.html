@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Select photo to upload</h2>
+    <p>Accepted formats are jpg, jpeg, png</p>
+    <br>
+    <form method = "POST" action = "/upload" enctype = "multipart/form-data">
+        <br>
+        <input type = "file" name = "file" multiple = "false" autocomplete = "off" required>
+        <p></p>
+        <input type = "submit" value = "Submit">
+    </form>
+{% endblock %}

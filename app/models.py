@@ -1,8 +1,11 @@
-from app import db, login
+from app import db, login, UPLOAD_FOLDER
 from datetime import datetime, timedelta
 from sqlalchemy.sql import func
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
+from flask import url_for
+from hashlib import md5
+import os
 
 @login.user_loader
 def user_loader(id):
@@ -17,7 +20,15 @@ class User(UserMixin, db.Model):
     polls = db.relationship("Poll", backref = "author", lazy = "dynamic")
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic")
 
-    
+    def avatar(self, size):
+        for file in os.listdir(UPLOAD_FOLDER):
+            file_id = file.split(".")[0] 
+            if(file_id == str(self.id)):
+                return(url_for("static", filename = "user-images/" + file))
+        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
+        return(("https://www.gravatar.com/avatar/{}?d=retro&s={}").format(digest, size))
+
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
     

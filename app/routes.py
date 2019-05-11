@@ -1,9 +1,10 @@
-from app import app, db
+from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm, AdminForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
 import os
 
 
@@ -79,3 +80,42 @@ def user(username):
     ]
     
     return render_template('user.html', user=user, polls = polls)
+
+@app.route('/upload')
+@login_required
+def upload():
+    return (render_template("upload.html", title = "Upload"))
+
+def allowed_file(file):
+    return(file.filename.split(".")[1].lower() in ALLOWED_FILES)
+
+def previous_file_checker():
+    for file in os.listdir(UPLOAD_FOLDER):
+        file_id = file.split(".")[0] 
+        if(file_id == str(current_user.id)):
+            return(UPLOAD_FOLDER + file)
+
+@app.route("/upload", methods = ["POST"])
+@login_required
+def upload_file():
+    if(request.method == "POST"):
+        if("file" not in request.files):
+            print(request.files)
+            flash("No file part")
+            return(redirect("upload"))
+        file = request.files["file"]
+        if(not file.filename):
+            flash("No file uploaded!")
+            return(redirect("upload"))
+        if(not allowed_file(file)):
+            flash("Unsupported image type")
+            return(redirect(url_for("upload")))
+        if(file):
+            previous_file = previous_file_checker()
+            extension = file.filename.split(".")[1]
+            filename = secure_filename(str(current_user.id) + "." + extension)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            if(previous_file):
+                os.remove(previous_file)
+            flash("Files successfully uploaded")
+            return(redirect(url_for("user", username = current_user.username)))
