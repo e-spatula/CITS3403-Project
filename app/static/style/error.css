@@ -1,0 +1,25 @@
+#error-form {
+    text-align: center;
+}
+form.page-error {
+    display: inline-block;
+}
+form.page-error li {
+    display: inline-block;
+}
+form.page-error li img {
+    width: 400px;
+    height: 400px;
+    margin: 0 50px 50px 10px;
+}
+
+.button-link {
+    background-color: #008CBA;
+    text-decoration: none;
+    appearance: button;
+    font-size: 16px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    color: white;
+    margin: 20px;   
+}
