@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, StringField, IntegerField, FileField
-from wtforms.validators import DataRequired, ValidationError, DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, StringField, IntegerField, FileField, TextAreaField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -41,3 +41,6 @@ class AdminForm(FlaskForm):
         if(not user):
             raise ValidationError("User not registered")
     
+class EditProfileForm(FlaskForm):
+    description = TextAreaField('Personal Description:', validators=[Length(min=0, max=240)])
+    submit = SubmitField("Submit")

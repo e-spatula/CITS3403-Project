@@ -1,6 +1,6 @@
 from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER, ADMIN_PIN
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, AdminForm
+from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
@@ -134,3 +134,16 @@ def upload_file():
         return(redirect(url_for("index")))
     else:
         return(redirect(url_for("upload")))
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if(form.validate_on_submit()):
+        current_user.description = form.description.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif(request.method == 'GET'):
+        form.description.data = current_user.description
+    return( render_template('edit_profile.html', title='Edit Profile', form=form))
