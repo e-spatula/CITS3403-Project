@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, StringField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, StringField, IntegerField, FileField
 from wtforms.validators import DataRequired, ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -13,17 +13,20 @@ class RegistrationForm(FlaskForm):
     email = StringField("Email", validators = [DataRequired(), Email()])
     password = PasswordField("Password", validators = [DataRequired()])
     password2 = PasswordField(
-        "Repeat Password", validators = [DataRequired(), EqualTo("password")]
+        "Repeat Password", validators = [DataRequired(), EqualTo("password", message = "Passwords must match")]
     )
     admin = BooleanField("I have an admin pin")
-    submit = SubmitField("Register")
 
+    display_picture = FileField("Upload a display picture...or don't I'm not a cop")
+
+    submit = SubmitField("Register")
+    
     def validate_username(self, username):
         user = User.query.filter_by(username = username.data).first()
         if(user is not None):
             raise ValidationError("Username taken, please user another")
 
-    def validation_email(self, email):
+    def validate_email(self, email):
         email = User.query.filter_by(email = email.data).first()
         if(email is not None):
             raise ValidationError("Email already registered.")

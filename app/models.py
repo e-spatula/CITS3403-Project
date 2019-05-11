@@ -25,7 +25,7 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         for file in os.listdir(UPLOAD_FOLDER):
             file_id = file.split(".")[0] 
-            if(file_id == str(self.id)):
+            if(file_id == self.username):
                 return(url_for("static", filename = "user-images/" + file))
         digest = md5(self.email.lower().encode("utf-8")).hexdigest()
         return(("https://www.gravatar.com/avatar/{}?d=retro&s={}").format(digest, size))

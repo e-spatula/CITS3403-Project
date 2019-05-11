@@ -1,4 +1,4 @@
-from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER
+from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER, ADMIN_PIN
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm, AdminForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -50,11 +50,11 @@ def admin():
         return(redirect(url_for("index")))
     form = AdminForm()
     if(form.validate_on_submit()):
-        admin_pin = os.environ.get("ADMIN_PIN")
+        admin_pin = ADMIN_PIN
         if(admin_pin == form.pin.data):
             current_user.set_admin(True)
             return(redirect(url_for("index")))
-        flash("Invalid username or pin")
+        form.pin.errors.append("Admin pin incorrect")
     return(render_template("admin.html", form = form))
     
 
@@ -66,6 +66,10 @@ def register():
     if(form.validate_on_submit()):
         user = User(username = form.username.data, email = form.email.data)
         user.set_password(form.password.data)
+        if(form.display_picture.data):
+            if(not file_uploader(form.username.data, form.display_picture.data)):
+                db.session.rollback()
+                return(redirect(url_for("register")))
         db.session.add(user)
         db.session.commit()
         flash("Congratulations you have now joined")
@@ -98,30 +102,35 @@ def allowed_file(file):
 def previous_file_checker():
     for file in os.listdir(UPLOAD_FOLDER):
         file_id = file.split(".")[0] 
-        if(file_id == str(current_user.id)):
+        if(file_id == current_user.username):
             return(UPLOAD_FOLDER + file)
 
-@app.route("/upload", methods = ["POST"])
-@login_required
-def upload_file():
+def file_uploader(username, file):
     if(request.method == "POST"):
-        if("file" not in request.files):
-            print(request.files)
-            flash("No file part")
-            return(redirect("upload"))
-        file = request.files["file"]
         if(not file.filename):
             flash("No file uploaded!")
-            return(redirect("upload"))
+            return(False)
         if(not allowed_file(file)):
             flash("Unsupported image type")
-            return(redirect(url_for("upload")))
+            return(False)
         if(file):
-            previous_file = previous_file_checker()
-            extension = file.filename.split(".")[1]
-            filename = secure_filename(str(current_user.id) + "." + extension)
+            previous_file = ""
+            extension = file.filename.split(".")[1]  
+            if(current_user.is_authenticated):  
+                previous_file = previous_file_checker()
+            filename = secure_filename(username + "." + extension)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             if(previous_file):
                 os.remove(previous_file)
             flash("Files successfully uploaded")
-            return(redirect(url_for("user", username = current_user.username)))
+            return(True)
+
+
+@app.route("/upload", methods = ["POST"])
+@login_required
+def upload_file():
+    file = request.files["file"]
+    if(file_uploader(current_user.username, file)):
+        return(redirect(url_for("index")))
+    else:
+        return(redirect(url_for("upload")))

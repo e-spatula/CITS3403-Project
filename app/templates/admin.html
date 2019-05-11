@@ -7,14 +7,13 @@
         <p>{{form.username(size  = 32)}}</p>
         {% for error in form.username.errors %}
             <br>
-            <span class = "alert-box error"></span>
+            <span class = "alert-box error">{{error}}</span>
             <br>
         {% endfor %}
         <p>{{ form.pin.label }}</p>
         <p>{{ form.pin(size = 4)}}</p>
         {% for error in form.pin.errors %}
-            <br>
-            <span class = "alert-box error"></span>
+            <span class = "alert-box error">{{error}}</span>
             <br>
         {% endfor %}
         <br>

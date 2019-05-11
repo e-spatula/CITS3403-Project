@@ -13,8 +13,9 @@ app.config.from_object(Config)
 dirname = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = dirname + "/static/user-images/"
 ALLOWED_FILES = ["png", "jpeg", "jpg"]
+ADMIN_PIN = "0000"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-app.config["ALLOWED_FILES"] = ALLOWED_FILES
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
