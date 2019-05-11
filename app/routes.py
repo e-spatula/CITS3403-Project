@@ -5,9 +5,15 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
 
 
+@app.before_request
+def before_request():
+    if(current_user.is_authenticated):
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 @app.route("/")
 @app.route("/index")

@@ -17,6 +17,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), index = True, unique = True, nullable = False)
     password_hash = db.Column(db.String(128), nullable = False)
     is_admin = db.Column(db.Boolean(), default = False)
+    description = db.Column(db.String(240))
+    last_seen = db.Column(db.DateTime, default = func.now())
     polls = db.relationship("Poll", backref = "author", lazy = "dynamic")
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic")
 

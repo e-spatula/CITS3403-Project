@@ -4,9 +4,15 @@
     <img src = "{{user.avatar(128)}}" style = "width:128px; height:128px;" alt = "user avatar" />
     <br>
     {% if user.id == current_user.id %}
-        <a href = "{{ url_for('upload') }}">I hate my profile picture can I change it?</a>
+        <a href = "{{ url_for('upload') }}">Change profile picture</a>
     {% endif %}
-    <h1>Posts from {{ user.username }}:</h1>
+    <h1>User: {{ user.username }}</h1>
+    {% if user.description %}
+        <p> {{ user.description }} </p>
+    {% endif %}
+    {% if user.last_seen %}
+        <p> Last seen: {{user.last_seen}}</p>
+    {% endif %}
     <hr>
     <div class = "container">
             <div class = "grid-row">
