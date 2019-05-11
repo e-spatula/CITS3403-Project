@@ -51,6 +51,7 @@ class Poll(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(64), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    description = db.Column(db.String(240))
     create_date = db.Column(db.DateTime, index = True, server_default = func.now())
     expiry_date = db.Column(db.DateTime, index = True, nullable = False, default = datetime.utcnow() + timedelta(days = 1))
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")

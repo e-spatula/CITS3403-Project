@@ -6,12 +6,13 @@
     {% if user.id == current_user.id %}
         <a href = "{{ url_for('upload') }}">I hate my profile picture can I change it?</a>
     {% endif %}
-    <h1>User: {{ user.username }}</h1>
+    <h1>Posts from {{ user.username }}:</h1>
     <hr>
-    {% for poll in polls %}
-    <p>
-    <img src = "{{poll.author.avatar(32)}}" style = "width:128px; height:128px;"  alt = "user who made posts avatar" />
-    {{ poll.author.username }} says: <b>{{ poll.body }}</b>
-    </p>
+    <div class = "container">
+            <div class = "grid-row">
+    {% for poll in polls %}   
+            {% include "_poll.html"  %}
     {% endfor %}
+        </div> 
+    </div>
 {% endblock %}
