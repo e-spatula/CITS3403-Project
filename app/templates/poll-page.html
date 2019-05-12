@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{poll.title}}</h1>
+    <p>{{poll.description}}</p>
+    <form action = "" method = "POST">
+        {{ form.hidden_tag() }}      
+        <ul>
+            {%  for field in form %}
+                {% if field.type == "BooleanField" %}
+                    <li>{{ field.label }} {{field}} </li>
+                {% endif %}
+            {% endfor %}
+            
+        </ul> 
+        {{form.submit}}
+    </form>
+{% endblock %}  

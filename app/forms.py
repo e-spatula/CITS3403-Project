@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, StringField, IntegerField, FileField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
+     StringField, IntegerField, FileField, TextAreaField, FormField, Form, \
+     FieldList
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -44,3 +46,26 @@ class AdminForm(FlaskForm):
 class EditProfileForm(FlaskForm):
     description = TextAreaField('Personal Description:', validators=[Length(min=0, max=240)])
     submit = SubmitField("Submit")
+
+
+
+def generate_poll_form(options, **kwargs):
+    class PollForm(FlaskForm): 
+        pass
+
+    for i in range(len(options)):
+        label = options[i]
+        field = BooleanField(label)
+        setattr(PollForm, label, field)
+    setattr(PollForm, "submit", SubmitField("Submit"))
+    return(PollForm(**kwargs))
+
+
+# class VoteForm(FlaskForm):
+#     options = FieldList(
+#         FormField(PollForm), 
+#         min_entries = 1,
+#         max_entries = 100,
+#         validators = [DataRequired()]
+#     )
+#     submit = SubmitField("Submit")

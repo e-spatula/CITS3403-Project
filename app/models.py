@@ -43,8 +43,6 @@ class User(UserMixin, db.Model):
     def set_admin(self, status):
         self.is_admin = status
         db.session.commit()
-
-
     def __repr__(self):
         return("User<{}>".format(self.username))
      
@@ -55,7 +53,8 @@ class Poll(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     description = db.Column(db.String(240))
     create_date = db.Column(db.DateTime, index = True, server_default = func.now())
-    expiry_date = db.Column(db.DateTime, index = True, nullable = False, default = datetime.utcnow() + timedelta(days = 1))
+    expiry_date = db.Column(db.DateTime, index = True, nullable = False, default = datetime.utcnow() + timedelta(days = 30))
+    option_limit = db.Column(db.Integer, nullable = False, default = -1)
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")
     poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic")
 
@@ -69,7 +68,7 @@ class Responses(db.Model):
     
 
     def __repr__(self):
-        return("Response {}, made on poll {}".format(self.value, self.poll_id))
+        return("{}".format(self.value))
 
 class Votes(db.Model):
     response_id = db.Column(db.Integer, db.ForeignKey("responses.id"), primary_key = True)
