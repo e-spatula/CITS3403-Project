@@ -53,19 +53,15 @@ def generate_poll_form(options, **kwargs):
     class PollForm(FlaskForm): 
         pass
 
+        def get_responses(self):
+            data = self.data
+            del data["submit"]
+            del data["csrf_token"]
+            return(data)
+
     for i in range(len(options)):
         label = options[i]
         field = BooleanField(label)
         setattr(PollForm, label, field)
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
-
-
-# class VoteForm(FlaskForm):
-#     options = FieldList(
-#         FormField(PollForm), 
-#         min_entries = 1,
-#         max_entries = 100,
-#         validators = [DataRequired()]
-#     )
-#     submit = SubmitField("Submit")

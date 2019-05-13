@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 76725df49e25
+Revision ID: 643518905f13
 Revises: 
-Create Date: 2019-05-12 16:04:46.056830
+Create Date: 2019-05-13 18:48:06.622857
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '76725df49e25'
+revision = '643518905f13'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -52,14 +52,15 @@ def upgrade():
     )
     op.create_index(op.f('ix_responses_value'), 'responses', ['value'], unique=False)
     op.create_table('votes',
-    sa.Column('response_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('response_id', sa.Integer(), nullable=True),
     sa.Column('time', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('poll_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('poll_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['poll_id'], ['poll.id'], ),
     sa.ForeignKeyConstraint(['response_id'], ['responses.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('response_id', 'user_id', 'poll_id')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

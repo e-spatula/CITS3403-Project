@@ -66,15 +66,15 @@ class Responses(db.Model):
     value = db.Column(db.DateTime, index = True, nullable = False)
     poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
     
-
     def __repr__(self):
         return("{}".format(self.value))
 
 class Votes(db.Model):
-    response_id = db.Column(db.Integer, db.ForeignKey("responses.id"), primary_key = True)
+    id = db.Column(db.Integer, primary_key = True)
+    response_id = db.Column(db.Integer, db.ForeignKey("responses.id"))
     time = db.Column(db.DateTime, server_default = func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key = True)
-    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"), primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
 
 
     def __repr__(self):
