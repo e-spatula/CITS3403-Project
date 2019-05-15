@@ -116,9 +116,10 @@ def file_uploader(username, file):
             if(current_user.is_authenticated):  
                 previous_file = previous_file_checker()
             filename = secure_filename(username + "." + extension)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
             if(previous_file):
+                print(previous_file)
                 os.remove(previous_file)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
             flash("Files successfully uploaded", category = "info")
             return(True)
 
