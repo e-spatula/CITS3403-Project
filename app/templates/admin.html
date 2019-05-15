@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1> Get admin privileges </h1>
+    <form action = "", method = "post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{ form.username.label }}</p>
+        <p>{{form.username(size  = 32)}}</p>
+        {% for error in form.username.errors %}
+            <br>
+            <span class = "alert-box error">{{error}}</span>
+            <br>
+        {% endfor %}
+        <p>{{ form.pin.label }}</p>
+        <p>{{ form.pin(size = 4)}}</p>
+        {% for error in form.pin.errors %}
+            <span class = "alert-box error">{{error}}</span>
+            <br>
+        {% endfor %}
+        <br>
+        {{ form.submit() }}
+    </form>
+{%  endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <img src = "{{user.avatar(128)}}" style = "width:128px; height:128px;" alt = "user avatar" />
+    <br>
+    {% if user == current_user %}
+        <a href = "{{ url_for('upload') }}">Change profile picture</a>
+        <br>
+        <a href = "{{ url_for('edit_profile') }}">Edit personal description</a>
+        {%  if not current_user.get_admin() %}
+            <br>
+            <a href = "{{url_for('admin')}}">Get admin privileges</a>
+        {% endif %}
+    {% endif %}
+    <h1>User: {{ user.username }}</h1>
+    <p>Admin: {{user.get_admin()}}</p>
+    {% if user.description %}
+        <p> {{ user.description }} </p>
+    {% endif %}
+    {% if user.last_seen %}
+        <p> Last seen: {{user.last_seen}}</p>
+    {% endif %}
+    <hr>
+    <div class = "container">
+            <div class = "grid-row">
+    {% for poll in polls %}   
+            {% include "_poll.html"  %}
+    {% endfor %}
+        </div> 
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+
+.container {
+  max-width: 1335px;
+
+}
+
+.grid-row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.grid-item {
+  height: 550px;
+  flex-basis: 20%;
+  min-width: 259px;
+  position: relative;
+  padding: 10px;
+  padding: 0px;
+  box-sizing: border-box;
+  margin: 15px 15px;
+  background-color: #d9d9d9;
+  
+}
+
+.grid-image {
+    width: 100%;
+    height: 40%;
+}
+
+.grid-button {
+    background-color: #008CBA;
+    text-decoration: none;
+    appearance: button;
+    font-size: 16px;
+    padding: 10px 24px;
+    border-radius: 4px;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;   
+
+}
+
+.grid-text, .grid-title {
+    padding: 10px 20px;
+    text-align: justify;
+}
