@@ -34,8 +34,10 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Email already registered.")
 
 class UploadForm(FlaskForm):
+    
     display_picture = FileField("Select photo to upload")
-    submit = SubmitField("Submit")
+
+    submit = SubmitField("Upload")
     
 class AdminForm(FlaskForm):
     username = StringField("Username:", validators = [DataRequired()])

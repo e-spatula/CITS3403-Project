@@ -80,10 +80,13 @@ def register():
         return(redirect(url_for(next_page)))
     return(render_template("register.html", title = "Register", form = form))
 
-@app.route('/upload')
+@app.route('/upload', methods = ["GET", "POST"])
 @login_required
 def upload():
     form = UploadForm()
+    if(request.method == "POST"):
+        if(file_uploader(current_user.username, form.display_picture.data)):
+            return(redirect(url_for("index")))
     return (render_template("upload.html", title = "Upload", form = form))
 
 def allowed_file(file):
@@ -96,25 +99,23 @@ def previous_file_checker():
             return(UPLOAD_FOLDER + file)
 
 def file_uploader(username, file):
-    if(request.method == "POST"):
-        if(not file.filename):
-            flash("No file uploaded!", category = "error")
-            return(False)
-        if(not allowed_file(file)):
-            flash("Unsupported image type", category = "error")
-            return(False)
-        if(file):
-            previous_file = ""
-            extension = file.filename.split(".")[1]  
-            if(current_user.is_authenticated):  
-                previous_file = previous_file_checker()
-            filename = secure_filename(username + "." + extension)
-            if(previous_file):
-                print(previous_file)
-                os.remove(previous_file)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            flash("Files successfully uploaded", category = "info")
-            return(True)
+    if(not file.filename):
+        flash("No file uploaded!", category = "error")
+        return(False)
+    if(not allowed_file(file)):
+        flash("Unsupported image type", category = "error")
+        return(False)
+    if(file):
+        previous_file = ""
+        extension = file.filename.split(".")[1]  
+        if(current_user.is_authenticated):  
+            previous_file = previous_file_checker()
+        filename = secure_filename(username + "." + extension)
+        if(previous_file):
+            os.remove(previous_file)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        flash("Files successfully uploaded", category = "info")
+        return(True)
 
 
 @app.route("/upload", methods = ["POST"])

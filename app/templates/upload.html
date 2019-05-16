@@ -4,9 +4,14 @@
     <p>Accepted formats are jpg, jpeg, png</p>
     <br>
     <form action = "" method = "POST" enctype = "multipart/form-data">
+        {{ form.hidden_tag() }}
         <br>
-        <input type = "file" name = "file" multiple = "false" autocomplete = "off" required>
-        <p></p>
-        <input type = "submit" value = "Submit">
+        {{ form.display_picture.label }}
+        <br>
+        <br>
+        {{ form.display_picture }}
+        <br>   
+        <br> 
+        {{ form.submit }}
     </form>
 {% endblock %}
