@@ -33,6 +33,10 @@ class RegistrationForm(FlaskForm):
         if(email is not None):
             raise ValidationError("Email already registered.")
 
+class UploadForm(FlaskForm):
+    display_picture = FileField("Select photo to upload")
+    submit = SubmitField("Submit")
+    
 class AdminForm(FlaskForm):
     username = StringField("Username:", validators = [DataRequired()])
     pin = PasswordField("PIN:", validators = [DataRequired()])
@@ -65,3 +69,4 @@ def generate_poll_form(options, **kwargs):
         setattr(PollForm, label, field)
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
+

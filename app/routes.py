@@ -1,6 +1,6 @@
 from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER, ADMIN_PIN
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form
+from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
@@ -80,18 +80,11 @@ def register():
         return(redirect(url_for(next_page)))
     return(render_template("register.html", title = "Register", form = form))
 
-@app.route('/user/<username>')
-@login_required
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    polls = Poll.query.filter_by(user_id = user.id)
-    
-    return render_template('user.html', user=user, polls = polls)
-
 @app.route('/upload')
 @login_required
 def upload():
-    return (render_template("upload.html", title = "Upload"))
+    form = UploadForm()
+    return (render_template("upload.html", title = "Upload", form = form))
 
 def allowed_file(file):
     return(file.filename.split(".")[1].lower() in ALLOWED_FILES)
@@ -132,6 +125,14 @@ def upload_file():
         return(redirect(url_for("index")))
     else:
         return(redirect(url_for("upload")))
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    polls = Poll.query.filter_by(user_id = user.id)
+    
+    return render_template('user.html', user=user, polls = polls)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
