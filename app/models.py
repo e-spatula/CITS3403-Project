@@ -1,4 +1,4 @@
-from app import db, login, UPLOAD_FOLDER
+from app import db, login, USER_UPLOAD_FOLDER
 from datetime import datetime, timedelta
 from sqlalchemy.sql import func
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic")
 
     def avatar(self, size):
-        for file in os.listdir(UPLOAD_FOLDER):
+        for file in os.listdir(USER_UPLOAD_FOLDER):
             file_id = file.split(".")[0] 
             print(file_id)
             if(file_id == self.username):

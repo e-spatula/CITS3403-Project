@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
      StringField, IntegerField, FileField, TextAreaField, FormField, Form, \
-     FieldList
+     FieldList, DateTimeField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
+from datetime import datetime
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired()])
@@ -72,3 +73,19 @@ def generate_poll_form(options, **kwargs):
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
 
+class CreatePollField(FlaskForm):
+    option =  DateTimeField("Date and Time:")
+
+    def validate_option(self, option):
+        if(option <= datetime.utcnow()):
+            raise ValidationError("Can't put in option in the past")
+        
+class CreatePollForm(FlaskForm):
+    title = StringField("Title:", validators = [DataRequired()])
+    expiry_date = DateTimeField("Select when you want this poll to end:", validators = [DataRequired()])
+    description = TextAreaField('Poll description', validators=[Length(min=0, max=240)])
+    options = FieldList(
+        FormField(CreatePollField),
+        min_entries = 1,
+        max_entries = 20
+    )

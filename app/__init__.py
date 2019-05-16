@@ -12,7 +12,8 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 dirname = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = dirname + "/static/user-images/"
+USER_UPLOAD_FOLDER = dirname + "/static/user-images/"
+POLL_UPLOAD_FOLDER = dirname + "/static/poll-images/"
 ALLOWED_FILES = ["png", "jpeg", "jpg"]
 ADMIN_PIN = "0000"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024

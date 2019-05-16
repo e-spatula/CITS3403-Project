@@ -1,4 +1,4 @@
-from app import app, db, ALLOWED_FILES, UPLOAD_FOLDER, ADMIN_PIN
+from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -67,7 +67,7 @@ def register():
         user = User(username = form.username.data, email = form.email.data)
         user.set_password(form.password.data)
         if(form.display_picture.data):
-            if(not file_uploader(form.username.data, form.display_picture.data)):
+            if(not file_uploader(form.username.data, form.display_picture.data, USER_UPLOAD_FOLDER)):
                 db.session.rollback()
                 return(redirect(url_for("register")))
         db.session.add(user)
@@ -85,20 +85,20 @@ def register():
 def upload():
     form = UploadForm()
     if(request.method == "POST"):
-        if(file_uploader(current_user.username, form.display_picture.data)):
+        if(file_uploader(current_user.username, form.display_picture.data, USER_UPLOAD_FOLDER)):
             return(redirect(url_for("index")))
     return (render_template("upload.html", title = "Upload", form = form))
 
 def allowed_file(file):
     return(file.filename.split(".")[1].lower() in ALLOWED_FILES)
 
-def previous_file_checker():
-    for file in os.listdir(UPLOAD_FOLDER):
+def previous_file_checker(id, folder):
+    for file in os.listdir(folder):
         file_id = file.split(".")[0] 
-        if(file_id == current_user.username):
-            return(UPLOAD_FOLDER + file)
+        if(file_id == id):
+            return(folder + file)
 
-def file_uploader(username, file):
+def file_uploader(id, file, folder):
     if(not file.filename):
         flash("No file uploaded!", category = "error")
         return(False)
@@ -109,11 +109,11 @@ def file_uploader(username, file):
         previous_file = ""
         extension = file.filename.split(".")[1]  
         if(current_user.is_authenticated):  
-            previous_file = previous_file_checker()
-        filename = secure_filename(username + "." + extension)
+            previous_file = previous_file_checker(current_user.username, folder)
+        filename = secure_filename(id + "." + extension)
         if(previous_file):
             os.remove(previous_file)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        file.save(os.path.join(folder, filename))
         flash("Files successfully uploaded", category = "info")
         return(True)
 
@@ -122,7 +122,7 @@ def file_uploader(username, file):
 @login_required
 def upload_file():
     file = request.files["file"]
-    if(file_uploader(current_user.username, file)):
+    if(file_uploader(current_user.username, file, USER_UPLOAD_FOLDER)):
         return(redirect(url_for("index")))
     else:
         return(redirect(url_for("upload")))
