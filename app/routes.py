@@ -1,6 +1,7 @@
 from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
+from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm, \
+    CreatePollForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
@@ -166,8 +167,6 @@ def valid_vote(options, vote_limit):
         return(True)
 
 
-
-
 @app.route("/poll/<id>", methods = ["GET", "POST"])
 def poll(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
@@ -202,3 +201,13 @@ def can_vote(user, poll):
         if(response.user_id == user.id):
             return(False)
     return(True)
+
+@app.route("/poll/create", methods = ["GET", "POST"])
+@login_required
+def create_poll():
+    form = CreatePollForm()
+    if(form.validate_on_submit()):
+        flash("You did good son", category = "message")
+        return(redirect(url_for("index")))
+    return(render_template("create-poll.html", form = form))
+

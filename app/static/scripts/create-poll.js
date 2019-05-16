@@ -1,0 +1,28 @@
+$(document).ready(function() {
+    $form = $("<form method = 'POST' action = '/poll/create'> </form>")
+    let template = $("#hidden-component").html()
+    $form.append("<label for = 'title'>Title </label>")
+    $form.append("<br>")
+    $form.append("<input type = 'text' maxlength = '64' id = 'title' />")
+    $form.append("<br>")
+    $form.append("<br>")
+    $form.append("<label for = 'description'> Description </label>")
+    $form.append("<br>")
+    $form.append("<textarea rows = '4' cols = '50' maxlength = '240' id = 'description'>Enter a description of the poll here </textarea>")
+    $form.append("<br>")
+    $form.append("<br>")
+    $form.append("<label for = 'display_picture'>Add a poll picture if you'd like</label>")
+
+    $form.append("<br>")
+    $form.append("<input type = 'file' id = 'display_picture'>")
+    $form.append("<br>")
+    $form.append("<br>")
+    $form.append("<div id = 'options'>")
+    $form.append("<a href = '#'> Add date </a>").click(function() {
+        $form.append(template)
+    })
+    $form.append("<br>")
+    $form.append("<br>")
+    $form.append("<input type = 'submit' value = 'Submit'>")
+    $("#content").append($form)
+});

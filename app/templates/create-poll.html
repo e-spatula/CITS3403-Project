@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<script src = "{{url_for('static', filename = 'scripts/create-poll.js')}}"></script>
+<div id = "hidden-component" hidden>
+    <input type = "date" />
+    <div id = "times">
+         <div id = "time">
+             <input type = "time">
+             <a href = "#">Remove time</a>
+         </div>
+    </div>
+    <a href = "#" id = "add-time">Add time</a>
+</div>
+    <!-- <form method = "POST" action = "" enctype = "multipart/form-data">
+        <h2>Create a form</h2>
+        {{ form.hidden_tag() }}
+        <p>{{ form.title.label }}</p>
+        <p>{{ form.title }}</p>
+        <p> {{ form.description.label }}</p>
+        <p>{{ form.description }}</p>
+        <p>{{ form.expiry_date.label }}</p>
+        <p> {{ form.expiry_date }} </p>
+        <p></p>
+        {% for error in form.expiry_date.errors %}
+            <span class = "alert-box error"> {{ error }} </span>
+        {% endfor %}
+        {% for option in form.options %}
+            <p>{{ option.option.label }} </p>
+            <p> {{ option.option }} </p>
+        {% endfor %}
+
+        {{ form.submit }}
+    </form>     -->
+{% endblock %}
