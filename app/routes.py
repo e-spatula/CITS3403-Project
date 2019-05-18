@@ -45,7 +45,7 @@ def logout():
     return(redirect(url_for("index")))
 
 @app.route("/admin", methods = ["POST", "GET"])
-@login_required
+@login_required 
 def admin():
     if(current_user.get_admin()):
         return(redirect(url_for("index")))
@@ -207,7 +207,6 @@ def can_vote(user, poll):
 def create_poll():
     form = CreatePollForm()
     if(form.validate_on_submit()):
-        flash("You did good son", category = "message")
-        return(redirect(url_for("index")))
-    return(render_template("create-poll.html", form = form))
-
+        data = form.data
+        return(render_template("create-poll.html",title = "Create a new poll", form = form, data = data))
+    return(render_template("create-poll.html",title = "Create a new poll", form = form))

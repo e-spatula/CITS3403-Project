@@ -1,28 +1,48 @@
-$(document).ready(function() {
-    $form = $("<form method = 'POST' action = '/poll/create'> </form>")
-    let template = $("#hidden-component").html()
-    $form.append("<label for = 'title'>Title </label>")
-    $form.append("<br>")
-    $form.append("<input type = 'text' maxlength = '64' id = 'title' />")
-    $form.append("<br>")
-    $form.append("<br>")
-    $form.append("<label for = 'description'> Description </label>")
-    $form.append("<br>")
-    $form.append("<textarea rows = '4' cols = '50' maxlength = '240' id = 'description'>Enter a description of the poll here </textarea>")
-    $form.append("<br>")
-    $form.append("<br>")
-    $form.append("<label for = 'display_picture'>Add a poll picture if you'd like</label>")
+function displayError(errorText) {
+    $("#errors").empty();
+    $("#errors").append("<span class =  'alert-box error banner'> " + errorText + " </span>");
 
-    $form.append("<br>")
-    $form.append("<input type = 'file' id = 'display_picture'>")
-    $form.append("<br>")
-    $form.append("<br>")
-    $form.append("<div id = 'options'>")
-    $form.append("<a href = '#'> Add date </a>").click(function() {
-        $form.append(template)
-    })
-    $form.append("<br>")
-    $form.append("<br>")
-    $form.append("<input type = 'submit' value = 'Submit'>")
-    $("#content").append($form)
+}
+
+
+function addOption() {
+    let $templateForm = $("#options-_");
+    if(!$templateForm) {
+        console.log("Can't find template");
+    }
+    let $lastForm = $(".subform").last();
+    let newIndex = 0;
+    if($lastForm.length > 0) {
+        newIndex = parseInt($lastForm.data("index")) + 1;
+    }
+    if(newIndex > 10) {
+        displayError("Can't have more than 10 options");
+        return false;
+    }
+    
+    let $newForm = $templateForm.clone();
+
+    $newForm.attr('id', $newForm.attr('id').replace('_', newIndex));
+    $newForm.data('index', newIndex);
+
+    $newForm.find('input').each(function(idx) {
+        var $item = $(this);
+
+        $item.attr('id', $item.attr('id').replace('_', newIndex));
+        $item.attr('name', $item.attr('name').replace('_', newIndex));
+    });
+
+    $('#subforms-container').append($newForm);
+    $newForm.addClass('subform');
+    $newForm.removeClass('is-hidden');
+}
+
+function removeOption() {
+
+}
+
+$(document).ready(function() {
+    $(".add").click(addOption)
+    $(".remove").click(removeOption);
 });
+

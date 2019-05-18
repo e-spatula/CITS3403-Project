@@ -3,9 +3,10 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
      StringField, IntegerField, FileField, TextAreaField, FormField, Form, \
      FieldList
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
-from wtforms.fields.html5 import DateTimeLocalField
+from wtforms.fields.html5 import DateField, TimeField
 from app.models import User
 from datetime import datetime
+from dateparser import parse
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired()])
@@ -74,23 +75,33 @@ def generate_poll_form(options, **kwargs):
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
 
-class CreatePollField(FlaskForm):
-    option =  DateTimeLocalField("Date and Time:")
+class CreateOptionsField(FlaskForm):
+    time = TimeField("Enter a time:")
 
-    def validate_option(self, option):
-        if(option <= datetime.utcnow()):
-            raise ValidationError("Can't put in option in the past")
+    # def validate_time(self, time):
+    #     print(self.time.data)
+    #     time = self.time.data
+    #     if(not time):
+    #         raise ValidationError("Blank time")
         
+
+    
+
+class CreatePollField(FlaskForm):
+
+    date = DateField("Select a date")
+    time = TimeField("Select a time")
+
 class CreatePollForm(FlaskForm):
-    title = StringField("Title:", validators = [DataRequired()])
-    description = TextAreaField('Poll description', validators=[Length(min=0, max=240)])
-    expiry_date = DateTimeLocalField("Select when you want this poll to end:", validators = [DataRequired()])
+    title = StringField("Title:")
+    description = TextAreaField('Poll description')
+    expiry_date = DateField("Select date you want this poll to end:")
     poll_image = FileField("Upload a poll image if you would like")
 
     options = FieldList(
         FormField(CreatePollField),
         min_entries = 1,
-        max_entries = 20
+        max_entries = 10
     )
     
     submit = SubmitField("Submit")
