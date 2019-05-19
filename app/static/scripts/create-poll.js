@@ -105,6 +105,7 @@ function formProcessor() {
     let expiry_date = $("#expiry_date").val();
     expiry_date = new Date(expiry_date.replace(/-/g, "/")).getTime();
     let today = new Date()
+
     // check if there is no date or that it is before today
 
     if(!expiry_date || expiry_date < today) {

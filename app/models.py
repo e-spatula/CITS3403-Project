@@ -68,6 +68,9 @@ class Poll(db.Model):
         # image credit https://www.flaticon.com/free-icon/ballot-box_1750198 
         return(url_for("static", filename = "images/ballot-box.png"))
 
+    def has_expired(self):
+        return(self.expiry_date < datetime.utcnow())
+
     def __repr__(self):
         return("Poll <{}>".format(self.title))
 
