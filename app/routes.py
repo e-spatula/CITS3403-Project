@@ -1,4 +1,4 @@
-from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN
+from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN, POLL_UPLOAD_FOLDER
 from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
 from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -109,7 +109,7 @@ def file_uploader(id, file, folder):
         previous_file = ""
         extension = file.filename.split(".")[1]  
         if(current_user.is_authenticated):  
-            previous_file = previous_file_checker(current_user.username, folder)
+            previous_file = previous_file_checker(id, folder)
         filename = secure_filename(id + "." + extension)
         if(previous_file):
             os.remove(previous_file)
@@ -118,14 +118,6 @@ def file_uploader(id, file, folder):
         return(True)
 
 
-@app.route("/upload", methods = ["POST"])
-@login_required
-def upload_file():
-    file = request.files["file"]
-    if(file_uploader(current_user.username, file, USER_UPLOAD_FOLDER)):
-        return(redirect(url_for("index")))
-    else:
-        return(redirect(url_for("upload")))
 
 @app.route('/user/<username>')
 @login_required
@@ -236,7 +228,7 @@ def create_poll():
             return(jsonify({"url" : False}), 400)
         if(not options):
             return(jsonify({"url" : False}), 400)
-        poll = Poll(title = title, description = description, expiry_date = expiry_date, option_limit = int(options_limit))
+        poll = Poll(title = title, description = description, expiry_date = expiry_date, option_limit = int(options_limit), user_id = current_user.id)
         db.session.add(poll)
         db.session.commit()
         for i in range(len(options)):
@@ -246,3 +238,13 @@ def create_poll():
         db.session.commit()
         response_dict = {"url": poll.id}
     return(jsonify(response_dict))
+
+
+@app.route("/poll/upload/<id>", methods = ["GET", "POST"])
+@login_required
+def poll_upload(id):
+    form = UploadForm()
+    if(request.method == "POST"):
+        if(file_uploader(id, form.display_picture.data, POLL_UPLOAD_FOLDER)):
+            return(redirect(url_for("poll", id = id)))
+    return(render_template("upload.html", id = id, form = form))

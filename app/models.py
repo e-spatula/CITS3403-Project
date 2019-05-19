@@ -1,4 +1,4 @@
-from app import db, login, USER_UPLOAD_FOLDER
+from app import db, login, USER_UPLOAD_FOLDER, POLL_UPLOAD_FOLDER
 from datetime import datetime, timedelta
 from sqlalchemy.sql import func
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -57,6 +57,16 @@ class Poll(db.Model):
     option_limit = db.Column(db.Integer, nullable = False, default = -1)
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")
     poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic")
+
+    def get_display_picture(self):
+        for file in os.listdir(POLL_UPLOAD_FOLDER):
+            print(file)
+            file_id = file.split(".")[0] 
+            if(file_id == str(self.id)):
+                print("image found")
+                return(url_for("static", filename = "poll-images/" + file))
+        # image credit https://www.flaticon.com/free-icon/ballot-box_1750198 
+        return(url_for("static", filename = "images/ballot-box.png"))
 
     def __repr__(self):
         return("Poll <{}>".format(self.title))

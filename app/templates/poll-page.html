@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>{{poll.title}}</h1>
+    <img src = "{{ poll.get_display_picture() }}">
     <p>{{poll.description}}</p>
+    {% if current_user.id == poll.user_id %}
+        <a href = "{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
+    {% endif %}
     <form action = "" method = "POST">
         {{ form.hidden_tag() }}      
         <ul>
