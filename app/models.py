@@ -66,6 +66,16 @@ class Poll(db.Model):
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic", cascade = "all,delete")
     poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic", cascade = "all,delete")
 
+    def delete(self):
+        for file in os.listdir(POLL_UPLOAD_FOLDER):
+            file_id = file.split(".")[0] 
+            if(file_id == self.id):
+                path = POLL_UPLOAD_FOLDER + file
+                os.remove(path)
+        db.session.delete(self)
+        db.session.commit()
+
+
     def get_display_picture(self):
         for file in os.listdir(POLL_UPLOAD_FOLDER):
             file_id = file.split(".")[0] 

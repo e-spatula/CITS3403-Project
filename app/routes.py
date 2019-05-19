@@ -239,8 +239,6 @@ def create_poll():
             if(not options[i]):
                 del options[i]
             options[i] = datetime.fromtimestamp(options[i] / 1000.0)
-        print(options)
-        print(expiry_date)
         if(not title):
             return(jsonify({"url" : False}), 400)
         if(not options):
@@ -249,8 +247,7 @@ def create_poll():
         db.session.add(poll)
         db.session.commit()
         for i in range(len(options)):
-            resp = Responses(value = options[i], poll_id = poll.id)
-            print(resp) 
+            resp = Responses(value = options[i], poll_id = poll.id) 
             db.session.add(resp)
         db.session.commit()
         response_dict = {"url": poll.id}
@@ -265,3 +262,19 @@ def poll_upload(id):
         if(file_uploader(id, form.display_picture.data, POLL_UPLOAD_FOLDER)):
             return(redirect(url_for("poll", id = id)))
     return(render_template("upload.html", id = id, form = form))
+
+@app.route("/poll/delete/<id>", methods = ["GET", "POST"])
+@login_required
+def delete_poll(id):
+    user_id = int(current_user.id)
+    admin = current_user.get_admin()
+    poll = Poll.query.filter_by(id = id).first()
+    if(not poll):
+        flash("Poll to delete not found")
+        return(redirect(url_for("index")))
+    poll_owner = int(poll.user_id)
+
+    if(admin or user_id == poll_owner):
+        poll.delete()
+        flash("Poll deleted forever", category = "info")
+        return(redirect(url_for("index")))
