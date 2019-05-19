@@ -6,6 +6,7 @@ from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from sqlalchemy import text
 import os
 
 
@@ -192,6 +193,8 @@ def poll(id):
             flash("You have already voted you sneaky devil", category = "error")
             return(render_template("poll-page.html", poll = poll, form = form))
         if(valid_vote(voted_options, option_limit)):
+            print(voted_options)
+
             for key in voted_options.keys():
                 if(voted_options[key]):
                     vote = Votes(response_id = key, user_id = current_user.id, poll_id = id)
@@ -278,3 +281,14 @@ def delete_poll(id):
         poll.delete()
         flash("Poll deleted forever", category = "info")
         return(redirect(url_for("index")))
+
+@app.route("/api/poll/<poll_id>", methods = ["GET"])
+def get_poll(poll_id):
+    response = {}
+    poll = Poll.query.filter_by(id = poll_id).first()
+    poll_options = poll.poll_options
+    for option in poll_options:
+        value = str(option.value)
+        response[value] = option.get_count()
+
+    return(jsonify(response))

@@ -69,8 +69,8 @@ def generate_poll_form(options, **kwargs):
             return(data) 
 
     for key in options.keys():
-        label = options[key]
-        field = BooleanField(label)
+        label = key
+        field = BooleanField(options[key])
         setattr(PollForm, label, field)
 
     setattr(PollForm, "submit", SubmitField("Submit"))

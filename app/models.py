@@ -100,6 +100,11 @@ class Responses(db.Model):
     def get_value(self, id):
         value = Poll.query.get(id)
         return(str(value))
+
+    def get_count(self):
+        count = list(Votes.query.filter_by(response_id = self.id))
+        return(len(count))
+
 class Votes(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     response_id = db.Column(db.Integer, db.ForeignKey("responses.id", onupdate = "CASCADE", ondelete = "CASCADE"))
