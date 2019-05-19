@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
 
     def delete(self):
         db.session.delete(self)
+        
         db.session.commit()
 
     def avatar(self, size):
