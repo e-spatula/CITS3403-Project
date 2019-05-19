@@ -85,7 +85,7 @@ def register():
 def upload():
     form = UploadForm()
     if(request.method == "POST"):
-        if(file_uploader(current_user.username, form.display_picture.data, USER_UPLOAD_FOLDER)):
+        if(file_uploader(current_user.id, form.display_picture.data, USER_UPLOAD_FOLDER)):
             return(redirect(url_for("index")))
     return (render_template("upload.html", title = "Upload", form = form))
 
@@ -134,7 +134,7 @@ def delete_user(id):
     id = int(id)
     user_id = int(current_user.id)
     deleting_self = (id == user_id)
-    
+
     if(admin or deleting_self):  
         user = User.query.filter_by(id = id).first()
         username = user.username

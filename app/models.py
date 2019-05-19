@@ -23,8 +23,12 @@ class User(UserMixin, db.Model):
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic", cascade = "all,delete")
 
     def delete(self):
+        for file in os.listdir(USER_UPLOAD_FOLDER):
+            file_id = file.split(".")[0] 
+            if(file_id == self.username):
+                path = USER_UPLOAD_FOLDER + file
+                os.remove(path)
         db.session.delete(self)
-        
         db.session.commit()
 
     def avatar(self, size):
