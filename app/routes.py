@@ -126,6 +126,16 @@ def user(username):
     polls = Poll.query.filter_by(user_id = user.id)
     
     return render_template('user.html', user=user, polls = polls)
+@app.route("/user/delete/<id>")
+@login_required
+def delete_user(id):
+    if(not current_user.get_admin() or id == current_user.id):
+        return(redirect(url_for("index")))
+    user = User.query.filter_by(id = id).first()
+    username = user.username
+    user.delete()
+    flash("User " + username + " is gone forever!", category = "info")
+    return(redirect(url_for("index")))
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required

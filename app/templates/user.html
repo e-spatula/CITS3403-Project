@@ -20,10 +20,13 @@
     {% if user.last_seen %}
         <p> Last seen: {{user.last_seen}}</p>
     {% endif %}
+    {% if user.id == current_user.id or current_user.get_admin() %}
+        <a href = "{{url_for('delete_user', id = user.id) }}">Delete user</a>
+    {% endif %}
     <hr>
     <div class = "container">
             <div class = "grid-row">
-    {% for poll in polls %}   
+    {% for poll in user.polls %}   
             {% include "_poll.html"  %}
     {% endfor %}
         </div> 

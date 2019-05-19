@@ -19,8 +19,12 @@ class User(UserMixin, db.Model):
     is_admin = db.Column(db.Boolean(), default = False)
     description = db.Column(db.String(240))
     last_seen = db.Column(db.DateTime, default = func.now())
-    polls = db.relationship("Poll", backref = "author", lazy = "dynamic")
-    votes = db.relationship("Votes", backref = "voter", lazy = "dynamic")
+    polls = db.relationship("Poll", backref = "author", lazy = "dynamic", cascade = "all,delete")
+    votes = db.relationship("Votes", backref = "voter", lazy = "dynamic", cascade = "all,delete")
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
     def avatar(self, size):
         for file in os.listdir(USER_UPLOAD_FOLDER):
@@ -29,7 +33,6 @@ class User(UserMixin, db.Model):
                 return(url_for("static", filename = "user-images/" + file))
         digest = md5(self.email.lower().encode("utf-8")).hexdigest()
         return(("https://www.gravatar.com/avatar/{}?d=retro&s={}").format(digest, size))
-
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -50,20 +53,18 @@ class User(UserMixin, db.Model):
 class Poll(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(64), nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", onupdate = "CASCADE", ondelete = "CASCADE"))
     description = db.Column(db.String(240))
     create_date = db.Column(db.DateTime, index = True, server_default = func.now())
     expiry_date = db.Column(db.DateTime, index = True, nullable = False, default = datetime.utcnow() + timedelta(days = 30))
     option_limit = db.Column(db.Integer, nullable = False, default = -1)
-    poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")
-    poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic")
+    poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic", cascade = "all,delete")
+    poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic", cascade = "all,delete")
 
     def get_display_picture(self):
         for file in os.listdir(POLL_UPLOAD_FOLDER):
-            print(file)
             file_id = file.split(".")[0] 
             if(file_id == str(self.id)):
-                print("image found")
                 return(url_for("static", filename = "poll-images/" + file))
         # image credit https://www.flaticon.com/free-icon/ballot-box_1750198 
         return(url_for("static", filename = "images/ballot-box.png"))
@@ -77,7 +78,7 @@ class Poll(db.Model):
 class Responses(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     value = db.Column(db.DateTime, index = True, nullable = False)
-    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
+    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id", onupdate = "CASCADE", ondelete = "CASCADE"))
     
     def __repr__(self):
         return("{}".format(self.value))
@@ -86,10 +87,10 @@ class Responses(db.Model):
         return(str(value))
 class Votes(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    response_id = db.Column(db.Integer, db.ForeignKey("responses.id"))
+    response_id = db.Column(db.Integer, db.ForeignKey("responses.id", onupdate = "CASCADE", ondelete = "CASCADE"))
     time = db.Column(db.DateTime, server_default = func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", onupdate = "CASCADE", ondelete = "CASCADE"))
+    poll_id = db.Column(db.Integer, db.ForeignKey("poll.id", onupdate = "CASCADE", ondelete = "CASCADE"))
 
 
     def __repr__(self):

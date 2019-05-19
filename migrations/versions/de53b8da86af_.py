@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 643518905f13
+Revision ID: de53b8da86af
 Revises: 
-Create Date: 2019-05-13 18:48:06.622857
+Create Date: 2019-05-19 15:44:14.388950
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '643518905f13'
+revision = 'de53b8da86af'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,10 +35,10 @@ def upgrade():
     sa.Column('title', sa.String(length=64), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('description', sa.String(length=240), nullable=True),
-    sa.Column('create_date', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
+    sa.Column('create_date', sa.DateTime(), server_default=sa.text(u'CURRENT_TIMESTAMP'), nullable=True),
     sa.Column('expiry_date', sa.DateTime(), nullable=False),
     sa.Column('option_limit', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], onupdate='CASCADE', ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_poll_create_date'), 'poll', ['create_date'], unique=False)
@@ -47,19 +47,19 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('value', sa.DateTime(), nullable=False),
     sa.Column('poll_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['poll_id'], ['poll.id'], ),
+    sa.ForeignKeyConstraint(['poll_id'], ['poll.id'], onupdate='CASCADE', ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_responses_value'), 'responses', ['value'], unique=False)
     op.create_table('votes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('response_id', sa.Integer(), nullable=True),
-    sa.Column('time', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
+    sa.Column('time', sa.DateTime(), server_default=sa.text(u'CURRENT_TIMESTAMP'), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('poll_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['poll_id'], ['poll.id'], ),
-    sa.ForeignKeyConstraint(['response_id'], ['responses.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['poll_id'], ['poll.id'], onupdate='CASCADE', ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['response_id'], ['responses.id'], onupdate='CASCADE', ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], onupdate='CASCADE', ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
