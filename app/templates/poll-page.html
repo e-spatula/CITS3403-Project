@@ -5,14 +5,12 @@
     <form action = "" method = "POST">
         {{ form.hidden_tag() }}      
         <ul>
-            {% set counter = 0  %}
             {%  for field in form %}
                 {% if field.type == "BooleanField" %}
-                    <li>{{ options_values[counter] }}
+                    <li>{{ field.label }}
                         {% if current_user.is_authenticated %} 
                             {{field}} </li>
                         {% endif %}
-                    {% set counter =  counter + 1 %}
                 {% endif %}
             {% endfor %}
             

@@ -1,7 +1,6 @@
 from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN
-from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm, \
-    CreatePollForm
+from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
+from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
@@ -171,12 +170,10 @@ def valid_vote(options, vote_limit):
 def poll(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
     options = poll.poll_options
-    options_list = []
-    options_values = []
+    options_list = {}
     for option in options:
-        options_list.append(str(option.id))
-        options_values.append(option.value)
-    
+        options_list[str(option.id)] = str(option.value)
+
     option_limit = poll.option_limit
     form = generate_poll_form(options_list)
 
@@ -184,7 +181,7 @@ def poll(id):
         voted_options = form.get_responses()
         if(not can_vote(current_user, poll)):
             flash("You have already voted you sneaky devil", category = "error")
-            return(render_template("poll-page.html", poll = poll, form = form, options_values = options_values))
+            return(render_template("poll-page.html", poll = poll, form = form))
         if(valid_vote(voted_options, option_limit)):
             for key in voted_options.keys():
                 if(voted_options[key]):
@@ -193,7 +190,7 @@ def poll(id):
             db.session.commit()
             flash("Vote counted!", category = "info")
             return(redirect(url_for("index")))
-    return(render_template("poll-page.html", poll = poll, form = form, options_values = options_values))
+    return(render_template("poll-page.html", poll = poll, form = form))
 
 def can_vote(user, poll):
     responses = poll.poll_votes
@@ -202,11 +199,50 @@ def can_vote(user, poll):
             return(False)
     return(True)
 
+
 @app.route("/poll/create", methods = ["GET", "POST"])
 @login_required
 def create_poll():
-    form = CreatePollForm()
-    if(form.validate_on_submit()):
-        data = form.data
-        return(render_template("create-poll.html",title = "Create a new poll", form = form, data = data))
-    return(render_template("create-poll.html",title = "Create a new poll", form = form))
+    if(request.method == "GET"):
+        return(render_template("create-poll.html",title = "Create a new poll"))
+    if(request.get_json()):
+        data = request.get_json()
+        if(not data):
+            response_dict = {"message" : "Validation error, please make sure javascript is enabled for this site"}
+            resp = make_response(response_dict)
+            resp.headers["status"] = 400
+            return(resp)
+        try:
+            title = data["title"]
+            description = data["description"]
+            options = data["options"]
+            expiry_date = data["expiry_date"]
+            options_limit = data["options_limit"]
+        except KeyError as e:
+            return(jsonify({"url" : False}), 400)
+        if(not options_limit):
+            options_limit = -1
+        if(not expiry_date):
+            return(jsonify({"url" : False}), 400)
+        
+        expiry_date = datetime.fromtimestamp(expiry_date / 1000.0) 
+        for i in range(len(options)):
+            if(not options[i]):
+                del options[i]
+            options[i] = datetime.fromtimestamp(options[i] / 1000.0)
+        print(options)
+        print(expiry_date)
+        if(not title):
+            return(jsonify({"url" : False}), 400)
+        if(not options):
+            return(jsonify({"url" : False}), 400)
+        poll = Poll(title = title, description = description, expiry_date = expiry_date, option_limit = int(options_limit))
+        db.session.add(poll)
+        db.session.commit()
+        for i in range(len(options)):
+            resp = Responses(value = options[i], poll_id = poll.id)
+            print(resp) 
+            db.session.add(resp)
+        db.session.commit()
+        response_dict = {"url": poll.id}
+    return(jsonify(response_dict))

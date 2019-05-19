@@ -68,7 +68,9 @@ class Responses(db.Model):
     
     def __repr__(self):
         return("{}".format(self.value))
-
+    def get_value(self, id):
+        value = Poll.query.get(id)
+        return(str(value))
 class Votes(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     response_id = db.Column(db.Integer, db.ForeignKey("responses.id"))

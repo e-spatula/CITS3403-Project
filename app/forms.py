@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
      FieldList
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from wtforms.fields.html5 import DateField, TimeField
-from app.models import User
+from app.models import User, Poll
 from datetime import datetime
 from dateparser import parse
 
@@ -66,42 +66,12 @@ def generate_poll_form(options, **kwargs):
             data = self.data
             del data["submit"]
             del data["csrf_token"]
-            return(data)
+            return(data) 
 
-    for i in range(len(options)):
-        label = options[i]
+    for key in options.keys():
+        label = options[key]
         field = BooleanField(label)
         setattr(PollForm, label, field)
+
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
-
-class CreateOptionsField(FlaskForm):
-    time = TimeField("Enter a time:")
-
-    # def validate_time(self, time):
-    #     print(self.time.data)
-    #     time = self.time.data
-    #     if(not time):
-    #         raise ValidationError("Blank time")
-        
-
-    
-
-class CreatePollField(FlaskForm):
-
-    date = DateField("Select a date")
-    time = TimeField("Select a time")
-
-class CreatePollForm(FlaskForm):
-    title = StringField("Title:")
-    description = TextAreaField('Poll description')
-    expiry_date = DateField("Select date you want this poll to end:")
-    poll_image = FileField("Upload a poll image if you would like")
-
-    options = FieldList(
-        FormField(CreatePollField),
-        min_entries = 1,
-        max_entries = 10
-    )
-    
-    submit = SubmitField("Submit")
