@@ -198,12 +198,6 @@ function formProcessor() {
 
 }
 
-
-function displayError(errorText) {
-    $("#errors").empty();
-    $("#errors").append("<span class =  'alert-box error banner'> " + errorText + " </span>");
-
-}
 $(document).ready(function() {
     $(".add-date").click(addDate)
     $(".remove-date").click(removeDate);

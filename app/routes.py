@@ -6,7 +6,6 @@ from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
-from sqlalchemy import text
 import os
 
 
@@ -320,4 +319,18 @@ def get_user(id):
     response["last_voted"] = last_voted
     response["votes_cast"] = len(unique_votes)
     response["polls_voted"] = list(unique_votes)
+    return(jsonify(response))
+
+@app.route("/api/<username>")
+def check_username(username):
+    username = User.query.filter_by(username = username)
+    username = list(username)
+    response = {}
+    # if username list contains an element return true, as user exists, otherwise return false.
+    if(username):
+        response["response"] = True
+
+    else:
+        response["response"] = False
+
     return(jsonify(response))

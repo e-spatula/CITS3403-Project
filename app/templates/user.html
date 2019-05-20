@@ -2,8 +2,6 @@
 {% block content %}
     <script>
         let userID = {{user.id}};
-        let url = window.location.origin;
-    
     </script>
     <script src="{{url_for('static', filename = 'scripts/user.js')}}"></script>
     <img src = "{{user.avatar(128)}}" style = "width:128px; height:128px;" alt = "user avatar" />

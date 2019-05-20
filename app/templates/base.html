@@ -6,6 +6,10 @@
         <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/polls-home.css')}}"> 
         <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/error.css')}}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{url_for('static', filename = 'scripts/error-text.js')}}"></script>
+        <script>
+            let url = window.location.origin;
+        </script>
         {{ moment.include_moment() }}
     </head>
     <body>
@@ -33,19 +37,21 @@
         </ul>
         </nav>
     </header> 
-        {% with messages = get_flashed_messages(with_categories = true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    {% if category == "info" %}
-                        <span class = "alert-box notice banner">{{ message }} </span>
-                    {% elif category == "warning"%}
-                        <span class = "alert-box warning banner">{{ message }} </span>
-                    {% else %}
-                        <span class = "alert-box error banner">{{  message }} </span>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        <div id = "errors">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == "info" %}
+                            <span class = "alert-box notice banner">{{ message }} </span>
+                        {% elif category == "warning"%}
+                            <span class = "alert-box warning banner">{{ message }} </span>
+                        {% else %}
+                            <span class = "alert-box error banner">{{  message }} </span>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
         <div id = "content">
             {% block content %}
             {% endblock %}
