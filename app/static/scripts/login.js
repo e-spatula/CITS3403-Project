@@ -1,13 +1,13 @@
 $(document).ready(function() {
     $("#username").blur(function() {
         if(this.value.length === 0) {
-            displayError("Your username is blank");
+            displayText("Your username is blank", "error");
         } else {
             clearError();
         }
     $("#password").blur(function() {
         if(this.value.length === 0) {
-            displayError("Your password is blank");
+            displayText("Your password is blank", "error");
         } else {
             clearError();
         }

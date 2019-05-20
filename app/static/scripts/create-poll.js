@@ -10,7 +10,7 @@ function addDate() {
         newIndex = parseInt($lastForm.data("index")) + 1;
     }
     if(newIndex > 4) {
-        displayError("Can't add more than 5 dates");
+        displayText("Can't add more than 5 dates", "error");
         return false;
     }
     $newForm.attr("id", $newForm.attr("id").replace("_", newIndex));
@@ -71,7 +71,7 @@ function addTime() {
     newID = previousID + 1;
 
     if(newID > 4)  {
-        displayError("Can't add more than 5 times to a date");
+        displayText("Can't add more than 5 times to a date", "error");
         return false;
     }
     let $newElement =  $previousSibling.clone();
@@ -94,12 +94,12 @@ function formProcessor() {
     contents = {};
     let title = $("#title").val();
     if(!title) {
-        displayError("Your poll doesn't have a title");
+        displayText("Your poll doesn't have a title", "error");
         return false;
     }
     let description = $("#description").val();
     if(description.length > 240) {
-        displayError("Can't have a description longer than 240 characters");
+        displayText("Can't have a description longer than 240 characters", "error");
         return false;
     }
     let expiry_date = $("#expiry_date").val();
@@ -109,7 +109,7 @@ function formProcessor() {
     // check if there is no date or that it is before today
 
     if(!expiry_date || expiry_date < today) {
-        displayError("Expiry date blank or set in the past");
+        displayText("Expiry date blank or set in the past", "error");
         return false;
     }
     let options_limit = $("#options_limit option:selected").val();
@@ -126,7 +126,7 @@ function formProcessor() {
         // change date format for easier comparison with JS Date
         date = date.replace(/-/g, "/");
         if(!date || new Date(date) < new Date()) {
-            displayError("Can't have blank dates or set options in the past, have a look at date " + (i + 1));
+            displayText("Can't have blank dates or set options in the past, have a look at date " + (i + 1), "error");
             return false;
         }
         // Decompose date features into individual components
@@ -146,7 +146,7 @@ function formProcessor() {
         $(this).find("input[type=time]").each(function(j) {
             let time = $(this).val();
             if(!time) {
-                displayError("You can't leave blank times, have a look at date " + (i  + 1 )+ " time " + (j + 1));
+                displayText("You can't leave blank times, have a look at date " + (i  + 1 )+ " time " + (j + 1), "error");
                 return false;
             }
             // decompose time into hours and minutes and strip leading zeros
@@ -165,7 +165,7 @@ function formProcessor() {
         })
     });
     if(options.length == 0) {
-        displayError("You haven't added any options");
+        displayText("You haven't added any options", "error");
         return false;
     }
     contents["options"] = options;
@@ -190,7 +190,7 @@ function formProcessor() {
             url = url + pollUrl;
             window.location.replace(url);
         } else {
-            displayError("Please enable your Javascript for form validation");
+            displayText("Please enable your Javascript for form validation", "error");
         }
         
         
