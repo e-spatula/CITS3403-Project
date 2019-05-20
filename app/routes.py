@@ -286,9 +286,38 @@ def delete_poll(id):
 def get_poll(poll_id):
     response = {}
     poll = Poll.query.filter_by(id = poll_id).first()
+    if(not poll):
+        return(jsonify({"error" : "404 poll not found"}))
     poll_options = poll.poll_options
+    options_count = len(list(poll_options))
+    options = {}
     for option in poll_options:
         value = str(option.value)
-        response[value] = option.get_count()
+        options [value] = option.get_count()
 
+    response["options"] = options
+    response["poll_id"] = poll.id
+    response["options_count"] = options_count
+    return(jsonify(response))
+
+@app.route("/api/user/<id>")
+def get_user(id):
+    response = {}
+    user = User.query.filter_by(id = id).first()
+    if(not user):
+        return(jsonify({"error" : "404 user not found"}))
+    response["username"] = user.username
+    response["is_admin"] = user.is_admin
+    response["last_seen"] = user.last_seen
+    votes = user.votes
+    unique_votes = set([])
+    last_voted = datetime.utcnow()
+    for vote in votes:
+        unique_votes.add(int(vote.poll_id))
+        if(vote.time < last_voted):
+            last_voted = vote.time
+    
+    response["last_voted"] = last_voted
+    response["votes_cast"] = len(unique_votes)
+    response["polls_voted"] = list(unique_votes)
     return(jsonify(response))

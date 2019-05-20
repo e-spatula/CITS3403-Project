@@ -114,5 +114,5 @@ class Votes(db.Model):
 
 
     def __repr__(self):
-        return("Vote {} placed at {} with value {}".format(self.id, self.time, self.response_id))
+        return("Vote {} placed at {} on poll {} with value {}".format(self.id, self.time, self.poll_id, self.response_id))
 
