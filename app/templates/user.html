@@ -23,7 +23,7 @@
         <p> {{ user.description }} </p>
     {% endif %}
     {% if user.last_seen %}
-        <p> Last seen: {{user.last_seen}}</p>
+        <p> Last seen: {{ moment(user.last_seen).format("LLL") }}</p>
     {% endif %}
     {% if user.id == current_user.id or current_user.get_admin() %}
         <a href = "{{url_for('delete_user', id = user.id) }}">Delete user</a>

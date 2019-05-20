@@ -3,6 +3,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_moment import Moment
 import os
 
 
@@ -10,6 +11,8 @@ import os
 app = Flask(__name__)
 app.config.from_object(Config)
 
+
+moment = Moment(app)
 dirname = os.path.dirname(os.path.abspath(__file__))
 USER_UPLOAD_FOLDER = dirname + "/static/user-images/"
 POLL_UPLOAD_FOLDER = dirname + "/static/poll-images/"

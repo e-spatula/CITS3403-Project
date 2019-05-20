@@ -1,4 +1,4 @@
-from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN, POLL_UPLOAD_FOLDER
+from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN, POLL_UPLOAD_FOLDER, moment
 from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
 from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -183,7 +183,7 @@ def poll(id):
     options_list = {}
     for option in options:
         options_list[str(option.id)] = str(option.value)
-
+    
     option_limit = poll.option_limit
     form = generate_poll_form(options_list)
 
