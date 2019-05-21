@@ -75,3 +75,13 @@ def generate_poll_form(options, **kwargs):
 
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField("Email", validators = [DataRequired(), Email()])
+    submit = SubmitField("Reset Password")
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators = [DataRequired()])
+    password2 = PasswordField("Repeat Password", validators = [DataRequired(), EqualTo("password")])
+    
+    submit = SubmitField("Reset")

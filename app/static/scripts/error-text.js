@@ -7,6 +7,6 @@ function displayText(text, category) {
 
 }
 
-function clearError() {
+function clearText() {
     $("#errors").empty();
 }

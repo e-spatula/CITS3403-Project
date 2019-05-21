@@ -1,13 +1,14 @@
 from app import app, db, ALLOWED_FILES, USER_UPLOAD_FOLDER, ADMIN_PIN, POLL_UPLOAD_FOLDER, moment
 from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
-from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm
+from app.forms import LoginForm, RegistrationForm, AdminForm, EditProfileForm, generate_poll_form, UploadForm, \
+    ResetPasswordRequestForm, ResetPasswordForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Poll, Responses, Votes
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-
+from app.email import send_password_reset_email
 
 @app.before_request
 def before_request():
@@ -334,3 +335,50 @@ def check_username(username):
         response["response"] = False
 
     return(jsonify(response))
+
+
+@app.route("/api/email/<email>")
+def check_email(email):
+    email = User.query.filter_by(email = email)
+    email = list(email)
+    response = {}
+    # if email list contains an element return true as the email is registered, otherwise false
+    if(email):
+        response["response"] = True
+    else:
+        response["response"] = False
+    
+    return(jsonify(response))
+
+@app.route("/reset_password_request", methods = ["GET", "POST"])
+def reset_password_request():
+    if(current_user.is_authenticated):
+        return(redirect(url_for("index")))
+    form = ResetPasswordRequestForm()
+    if(form.validate_on_submit()):
+        user = User.query.filter_by(email = form.email.data).first()
+        if(user):
+            send_password_reset_email(user)
+            flash("Password reset link sent", category = "info")
+            return(redirect(url_for("login")))
+    return(render_template("reset_password_request.html", form = form, title = "Reset Password"))
+
+
+@app.route("/reset_password/<token>", methods = ["GET", "POST"])
+def reset_password(token):
+    if(current_user.is_authenticated):
+        return(redirect(url_for("index")))
+    
+    user = User.verify_reset_token(token)
+    print(user)
+    if(not user):
+        return(redirect(url_for("index")))
+
+    form = ResetPasswordForm()  
+    if(form.validate_on_submit()):
+
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Password reset!", category = "info")
+        return(redirect(url_for("login")))
+    return(render_template("reset_password.html", form = form))
