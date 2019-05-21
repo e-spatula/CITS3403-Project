@@ -21,10 +21,31 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable = False)
     is_admin = db.Column(db.Boolean(), default = False)
     description = db.Column(db.String(240))
+    confirmed = db.Column(db.Boolean(), nullable = False, default = False)
     last_seen = db.Column(db.DateTime, default = func.now())
     polls = db.relationship("Poll", backref = "author", lazy = "dynamic", cascade = "all,delete")
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic", cascade = "all,delete")
 
+
+    def confirm(self):
+        self.confirmed = True
+        db.session.commit()
+    
+    def generate_confirmation_token(self, expires_in = 600):
+        return(jwt.encode(
+            {"confirmation_token" : self.id, "exp": time() + expires_in},
+            app.config["SECRET_KEY"], algorithm = "HS256").decode("utf-8"))
+
+    @staticmethod
+    def verify_confirmation_token(token):
+        try:
+            id = jwt.decode(token, app.config["SECRET_KEY"], algorithms = ["HS256"])["confirmation_token"]
+
+        except:
+            return
+        return(User.query.get(id))
+        
+    
     def get_reset_password_token(self, expires_in = 600):
         return(jwt.encode(
             {"reset_password": self.id, "exp" : time() + expires_in},
@@ -66,6 +87,7 @@ class User(UserMixin, db.Model):
         return(self.username)
     def get_admin(self):
         return(self.is_admin)
+
     def set_admin(self, status):
         self.is_admin = status
         db.session.commit()

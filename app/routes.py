@@ -8,7 +8,7 @@ from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-from app.email import send_password_reset_email
+from app.email import send_password_reset_email, send_confirmation_email
 
 @app.before_request
 def before_request():
@@ -30,6 +30,9 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if(user is None or not user.check_password(form.password.data)):
             flash('Invalid username or password', category = "error")
+            return(redirect(url_for('login')))
+        if(not user.confirmed):
+            flash("You have not confirmed your email address", category = "error")
             return(redirect(url_for('login')))
         login_user(user)
         next_page = request.args.get("next")
@@ -73,7 +76,8 @@ def register():
                 return(redirect(url_for("register")))
         db.session.add(user)
         db.session.commit()
-        flash("Congratulations you have now joined", category = "info")
+        send_confirmation_email(user)
+        flash("Congratulations you have now joined, please check your email for a password reset link", category = "info")
         if(form.admin.data):
             next_page = "admin"
         else:
@@ -370,7 +374,6 @@ def reset_password(token):
         return(redirect(url_for("index")))
     
     user = User.verify_reset_token(token)
-    print(user)
     if(not user):
         return(redirect(url_for("index")))
 
@@ -382,3 +385,18 @@ def reset_password(token):
         flash("Password reset!", category = "info")
         return(redirect(url_for("login")))
     return(render_template("reset_password.html", form = form))
+
+
+@app.route("/confirm_email/<token>", methods = ["GET", "POST"])
+def confirm_email(token):
+
+    if(current_user.is_authenticated):
+        return(redirect(url_for("index")))
+    
+    user = User.verify_confirmation_token(token)
+    if(not user):
+        return(redirect(url_for("register")))
+
+    user.confirm()
+    flash("Email confirmed!", category = "success")
+    return(redirect(url_for("login")))
