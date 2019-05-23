@@ -20,7 +20,7 @@
   }
   
   body {
-    background-image: url("background.svg"),
+    background-image: url("../images/background.svg"),
       linear-gradient(110deg, #f93d66, #6d47d9);
     background-size: 340px, auto;
     min-height: calc(100vh - 100px);
