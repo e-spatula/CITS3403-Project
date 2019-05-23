@@ -52,6 +52,15 @@ $(document).ready(function() {
             clearText();
         }
     });
+    
+    $("#display_picture").change(function() {
+        let extension = this.value.split(".").pop();
+        if(!allowed_files.includes(extension)) {
+            displayText("Unsupported file type", "error");
+        } else {
+            clearText();
+        }
+    });
 });
 
 /* Though it would be possible to use a complex email matching regex pattern, I as the best way to check
