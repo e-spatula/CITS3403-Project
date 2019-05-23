@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+        <title> </title>
+        <link rel="stylesheet" type="text/css" href="../style/common.css">
+        <link rel="stylesheet" type="text/css" href="../style/polls-home.css"> 
+        <link rel="stylesheet" type="text/css" href="../style/error.css">
+        <link rel="stylesheet" type="text/css" href="../style/forms.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><style></style>
+        <script src="/static/scripts/error-text.js"></script>
+        <script src="/static/scripts/validate.js"></script>
+        <script>
+            let url = window.location.origin;
+            let allowed_files =  ["png", "jpeg", "jpg"];
+        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script>
+moment.locale("en");
+function flask_moment_render(elem) {
+    $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+    $(elem).removeClass('flask-moment').show();
+}
+function flask_moment_render_all() {
+    $('.flask-moment').each(function() {
+        flask_moment_render(this);
+        if ($(this).data('refresh')) {
+            (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+        }
+    })
+}
+$(document).ready(function() {
+    flask_moment_render_all();
+});
+</script>
+    <script async="" src="https://adblocker.pcvark.com/firefox/adblocker-firefoxImportjs.js"></script>
+</head>
+<body>
+    
+        <header>
+                <nav>
+                    <!-- image source: https://www.flaticon.com/free-icon/voting_1598627#term=poll&page=1&position=8 -->
+                    <div class="logo">
+                        <a href="/index" class="navLinks"><img src="/static/images/icon.png" id="logo" alt="Company icon, a heart with a tick box inside it"></a> 
+                    </div>
+                    <div class="about">
+                        <a href="/index" class="navLinks"> Home </a> 
+                    </div>
+                    <div class="join">
+                        <a href=".about.html" class="navLinks">About </a>
+                    </div>
+                    <div class="join">
+                        <a href="/register" class="navLinks"> Join </a> 
+                    </div>
+                
+                    <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
+                    <div class="new">
+                        <a href="/poll/create" class="navLinks"> <img src="/static/images/plus-32.png" id="create-poll" alt="plus button, create a poll"></a>
+                    </div>
+                    <!-- image source: https://www.flaticon.com/packs/avatar-set-->
+                    
+                    <div class="profile">
+                    <a href="/login" class="navLinks"><img src="/static/images/user-32.png" class="nav-right" alt="user avatar, click to login or view profile"></a>
+                    </div>
+                    <div class="login">
+                        <a href="/login" class="navLinks">Login</a>
+                    </div>
+                    
+                
+                </nav>
+            </header> 
+                <div id="errors">
+                    
+                        
+                    
+                </div>
+                <div id="content">
+                    
+        <div id="error-form">
+                <h1> 404, ouch!</h1>
+                <h3>Choose a dev to fire:</h3>
+                <form class="page-error"> 
+                    <ul>
+                        <li>
+                            <h4>Dave</h4>
+                            <p>Front-end dev</p>
+                            <img src="/static/images/dadams.jpg">
+                            <br>
+                            <input type="radio">
+                        </li>
+                        <li>
+                            <h4>Eddie</h4>
+                            <p>Back-end dev</p>
+                            <img src="/static/images/eddie.jpg">
+                            <br>
+                            <input type="radio">
+                        </li>
+                    </ul>
+                    <br>
+                    <a href="/index" class="button-link">Vote</a>
+                </form>
+            </div>
+        
+        
+                </div>              
+</body>
+</html>

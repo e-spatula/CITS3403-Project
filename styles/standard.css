@@ -82,8 +82,11 @@ h6 {
   padding: 5px;
 }
 
-.poll:hover .poll__overlay {
-  transform: translateY(0);
+.poll:hover {
+  background: rgba(0, 0, 0, 0.8);
+    -webkit-transition: background 500ms linear;
+    -ms-transition: background 500ms linear;
+    transition: background 500ms linear;
 }
 
 
