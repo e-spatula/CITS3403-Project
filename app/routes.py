@@ -222,11 +222,6 @@ def can_vote(user, poll):
             return(False)
     return(True)
 
-<<<<<<< HEAD
-@app.route("/about")
-def about():
-    return(render_template("about.html"))
-=======
 
 @app.route("/poll/create", methods = ["GET", "POST"])
 @login_required
@@ -399,4 +394,3 @@ def confirm_email(token):
     user.confirm()
     flash("Email confirmed!", category = "success")
     return(redirect(url_for("login")))
->>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
