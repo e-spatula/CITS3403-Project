@@ -61,6 +61,7 @@ def admin():
         admin_pin = ADMIN_PIN
         if(admin_pin == form.pin.data):
             current_user.set_admin(True)
+            flash("Congratulations you are now an admin", "success")
             return(redirect(url_for("index")))
         form.pin.errors.append("Admin pin incorrect")
     return(render_template("admin.html", form = form))
@@ -81,7 +82,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         send_confirmation_email(user)
-        flash("Congratulations you have now joined, please check your email for a password reset link", category = "info")
+        flash("Congratulations you have now joined, please check your email for an email confirmation link", category = "info")
         if(form.admin.data):
             next_page = "admin"
         else:
@@ -354,8 +355,8 @@ def reset_password_request():
         user = User.query.filter_by(email = form.email.data).first()
         if(user):
             send_password_reset_email(user)
-            flash("Password reset link sent", category = "info")
-            return(redirect(url_for("login")))
+        flash("Password reset link sent", category = "info")
+        return(redirect(url_for("login")))
     return(render_template("reset_password_request.html", form = form, title = "Reset Password"))
 
 
@@ -373,7 +374,7 @@ def reset_password(token):
 
         user.set_password(form.password.data)
         db.session.commit()
-        flash("Password reset!", category = "info")
+        flash("Password reset!", category = "success")
         return(redirect(url_for("login")))
     return(render_template("reset_password.html", form = form))
 

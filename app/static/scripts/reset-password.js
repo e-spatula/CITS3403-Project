@@ -1,12 +1,4 @@
 $(document).ready(function() {
-    $("#username").blur(function() {
-        validateNewUsername(this.value);
-    });
-
-    $("#email").blur(function() {
-        validateEmail(this.value);
-    });
-
     $("#password").blur(function() {
         let $password2 = $("#password2").val();
 
@@ -32,10 +24,4 @@ $(document).ready(function() {
             clearText();
         }
     });
-    
-    $("#display_picture").change(function() {
-        validateImage(this.value);
-    });
 });
-
-
