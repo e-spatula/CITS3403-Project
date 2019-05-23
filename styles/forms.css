@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  
+  h1,
+  .login,
+  .account,
+  .contact{
+    width:80%;
+    margin: 0 auto;
+  }
+  
+  
+    @media (min-width: 980px) {
+      .container {
+        grid-template-columns: repeat(2, minmax(150px, 30%));
+        width: 25%;
+      }
+      h1,
+      .login {
+        grid-column-end: span 2;
+        width: auto;
+      }
+      .login > div {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
+      }
+      .login > div.actions {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .account {
+        border: 1px dotted rgb(191, 216, 227);
+        padding: 0 10px 0 0;
+        align-self: center;
+        justify-self: center;
+        width: auto;
+      }
+      .contact {
+        padding: 0 0 0 10px;
+        width: auto;
+      }
+      input[type="submit"] {
+        grid-column: 2;
+      }
+      .actions a {
+        justify-self: end;
+      }
+    }
+  
+  h1 {
+    background-color: rgba(191, 216, 227, 0.8);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 10px;
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  
+  .login, .textarea {
+    background-color: rgba(191, 216, 227, .4);
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .textarea {
+      width: fixed;
+  }
+  
+  .account  {
+    background-color: rgba(191, 216, 227, .4);
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .login > div {
+    padding: 5px 0;
+  }
+  
+  input[type="submit"] {
+    border: 1px solid rgba(191, 216, 227, .8);
+    border-radius: 5px;
+    color: #fff;
+    background-color: rgb(54, 134, 169);
+    font-size: 110%;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    border: 1px solid rgba(191, 216, 227, .8);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 110%;
+    width: 100%;
+  }
+  
+  .actions a {
+    font-size: 80%;
+  }
