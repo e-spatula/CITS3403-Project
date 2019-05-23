@@ -18,7 +18,8 @@ def before_request():
 @app.route("/")
 @app.route("/index")
 def index():
-    return(render_template("index.html", title = "Home"))
+    polls = Poll.query.order_by(Poll.expiry_date.desc())
+    return(render_template("index.html", title = "Home", polls = polls))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -117,7 +118,6 @@ def file_uploader(username, file):
                 previous_file = previous_file_checker()
             filename = secure_filename(username + "." + extension)
             if(previous_file):
-                print(previous_file)
                 os.remove(previous_file)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             flash("Files successfully uploaded", category = "info")
@@ -200,3 +200,7 @@ def can_vote(user, poll):
         if(response.user_id == user.id):
             return(False)
     return(True)
+
+@app.route("/about")
+def about():
+    return(render_template("about.html"))
