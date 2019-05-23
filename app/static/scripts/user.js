@@ -3,11 +3,12 @@ $(document).ready(function() {
         return(response.json())
     }).then(function(json) {
         voteCounter(json["votes_cast"]);
+        console.log(json["votes_cast"]);
     })
 });
 
 function voteCounter(votes) {
-    let current = 0;
+    let current = -1;
     let timer = setInterval(function() {
         current++;
         document.getElementById("vote-counter").textContent = current
