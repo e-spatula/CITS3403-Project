@@ -18,19 +18,6 @@
     <header>
         <nav>
             <!-- image source: https://www.flaticon.com/free-icon/voting_1598627#term=poll&page=1&position=8 -->
-<<<<<<< HEAD
-            <div class="logo">
-                <a href="{{ url_for('index') }}" class="navLinks"><img src="../static/images/icon.png" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a>
-            </div>
-            <div class="home">
-                <a href="{{ url_for('index') }}" class="navLinks"> Home </a>
-            </div>
-            <div class="about">
-                <a href="{{ url_for('about') }}" class="navLinks"> About </a>
-            </div>
-            <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
-            <a href= "#"> <img src="../static/images/plus-32.png" id="create-poll" alt="plus button, create a poll"/></a>
-=======
             <li><a href="{{ url_for('index') }}"><img src="{{url_for('static', filename = 'images/icon.png')}}" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a></li> 
             <li><a href="{{ url_for('index') }}"> Home </a> </li>
             <li><a href="../pages/about.html">About </a></li>
@@ -40,7 +27,6 @@
         <ul>
             <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
             <li><a href= "{{url_for('create_poll')}}"> <img src="{{url_for('static', filename = 'images/plus-32.png')}}" id="create-poll" alt="plus button, create a poll"/></a></li>
->>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
             <!-- image source: https://www.flaticon.com/packs/avatar-set-->
             {% if current_user.is_authenticated %}
                 <div class="profile">
@@ -50,17 +36,8 @@
                     <a href = "{{ url_for('logout')}}" class="navLinks">Logout</a>
                 </div>
             {% else %}
-<<<<<<< HEAD
-            <div class="join">
-                <a href="{{url_for('register')}}" class="navLinks"> Join </a>
-            </div>
-            
-            <a href="{{ url_for('login') }}"><img src="../static/images/user-32.png" class="nav-right"  alt="user avatar, click to login or view profile"/></a>
-            <a href = "{{ url_for('login')}}">Login</a>
-=======
             <li><a href="{{ url_for('login') }}"><img src="{{url_for('static', filename = 'images/user-32.png')}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a></li>
             <li><a href = "{{ url_for('login')}}">Login</a></li>
->>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
             {% endif %}
         </ul>
         </nav>
