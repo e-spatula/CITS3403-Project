@@ -20,6 +20,7 @@ USER_UPLOAD_FOLDER = dirname + "/static/user-images/"
 POLL_UPLOAD_FOLDER = dirname + "/static/poll-images/"
 ALLOWED_FILES = ["png", "jpeg", "jpg"]
 ADMIN_PIN = "0000"
+
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config ["MAIL_SERVER"] = "smtp.googlemail.com"
 app.config ["MAIL_PORT"] = 587
@@ -33,6 +34,7 @@ mail = Mail(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 login = LoginManager(app)
 login.login_view = "login"
 
