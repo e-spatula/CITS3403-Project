@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div id = "error-form">
+        <h1> {{ code }}, ouch!</h1>
+        <h3>Choose a dev to fire:</h3>
+        <form class = "page-error"> 
+            <ul>
+                <li>
+                    <h4>Dave</h4>
+                    <p>Front-end dev</p>
+                    <img src = "{{url_for('static', filename = 'images/dadams.jpg')}}">
+                    <br>
+                    <input type = "radio" />
+                </li>
+                <li>
+                    <h4>Eddie</h4>
+                    <p>Back-end dev</p>
+                    <img src = "{{url_for('static', filename = 'images/eddie.jpg')}}">
+                    <br>
+                    <input type = "radio" />
+                </li>
+            </ul>
+            <br>
+            <a href = "{{url_for('index')}}" class = "button-link">Vote</a>
+        </form>
+    </div>
+
+{% endblock %}

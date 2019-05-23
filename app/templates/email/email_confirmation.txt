@@ -1,0 +1,10 @@
+Dear {{ user.username }},
+
+To confirm your email click the link below.
+
+{{ url_for("confirm_email", token = token, _external = True) }}
+
+
+Sincerely,
+
+Polly

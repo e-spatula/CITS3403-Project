@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <script src="{{url_for('static', filename = 'scripts/login.js')}}"></script>
+        <h1>Sign In</h1>
+        <form action = "" method = "post" novalidate>
+            {{  form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size = 32) }}<br>
+                {% for error in form.username.errors %}
+                    <br>
+                    <span class = "alert-box error"> {{ error }}</span> 
+                    <br>
+                {% endfor %}
+            </p>
+            <p>
+                {{  form.password.label }}<br>
+                {{ form.password(size = 32) }}<br>
+                {% for error in form.password.errors  %}
+                    <br>
+                    <span class = "alert-box error">{{ error }}</span>
+                    <br>
+                {% endfor %}
+            </p>
+            <br>
+            <br>
+            {{ form.submit() }}
+        </form>
+        <p>New User? <a href = "{{url_for('register')}}"> Join here</a></p>
+        <p>Forgot your password? Reset it <a href = "{{url_for('reset_password_request')}}">here.</a></p>
+        
+    {% endblock %}
