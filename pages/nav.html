@@ -9,26 +9,28 @@
   <style>
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 nav {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) auto repeat(2, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   grid-auto-rows: auto;
   grid-gap: 1em;
   align-items: center;
   text-align: center;
-  border-bottom: 4px solid black;
   background: #FF9313;
 }
+
 
 nav div {
     display: grid;
     align-items:  center;
+    padding: 5px;
 }
 
-@media screen and (max-width: 900px) {
+
+@media screen and (max-width: 550px) {
   nav {
     grid-template-columns: 100%;
     grid-template-rows: auto;
@@ -36,28 +38,8 @@ nav div {
  }
 }  
 
-.home {
-  grid-column: 2;
-}
-
-.about {
-  grid-column: 3;
-}
-.logo {
-  grid-column: 1;
-  height: 10vh;
-}
-
-.portfolio {
-  grid-column: 4;
-}
-
-.contact {
-  grid-column: 5;
-}
-
 .navLinks {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: sans-serif;
   font-size: 1.2em;
   text-transform: uppercase;
   text-decoration: none;
@@ -66,14 +48,13 @@ nav div {
 
 .navLinks:hover {
   color: white;
-  border: 1px solid white;
 }
 
   </style>
 </head>
 <body>
         <header>
-  <nav class="container">
+  <nav>
     <div class="logo">
             <a href="index.html" class="navLinks"><img src="../styles/icon.png" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a>
     </div>
@@ -84,13 +65,16 @@ nav div {
     <a href="#" class="navLinks">About Us</a>
     </div>
     <div class="join">
-    <a href="#" class="navLinks"></a>
+    <a href="#" class="navLinks">Join</a>
     </div>
-    <div class="contact">
-            <a href= "#" class="navLinks"> <img src="../styles/plus-32.png" id="create-poll" alt="plus button, create a poll"/>
+    <div class="new">
+        <a href= "#" class="navLinks"> <img src="../styles/plus-32.png" id="create-poll" alt="plus button, create a poll"/>
     </div>
-    <div class="">
-            <a href="#" class="navLinks"></a>
+    <div class="profile">
+        <a href="#" class="navLinks"><img src="../styles/user-32.png" class="nav-right"  alt="user avatar, click to login or view profile"/></a>
+    </div>
+    <div class="login">
+        <a href="#" class="navLinks">Login</a>
     </div>
   </nav>
 </header>
