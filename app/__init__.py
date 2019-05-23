@@ -5,12 +5,15 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_mail import Mail, Message
+from dotenv import load_dotenv
 import os
 
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+load_dotenv(override = True)
 
 dirname = os.path.dirname(os.path.abspath(__file__))
 USER_UPLOAD_FOLDER = dirname + "/static/user-images/"
@@ -23,7 +26,7 @@ app.config ["MAIL_PORT"] = 587
 app.config ["MAIL_USE_TLS"] =  True 
 app.config ["MAIL_USERNAME"] = "flaskpolly@gmail.com"
 app.config ["MAIL_DEFAULT_SENDER"] = "flaskpolly@gmail.com"
-app.config ["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config ["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 
 
 mail = Mail(app)
