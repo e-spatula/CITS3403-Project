@@ -1,16 +1,98 @@
-<nav>
-    <ul>
-        <!-- image source: https://www.flaticon.com/free-icon/voting_1598627#term=poll&page=1&position=8 -->
-       <li><img src="../images/icon.png" id = "logo" alt="Company icon, a heart with a tick box inside it"/> Polls</li> 
-       <li><a href="../pages/index.html"> Home </a> </li>
-       <li><a href="../pages/about.html">About </a></li>
-       <li><a href="../pages/contact.html"> Contact </a></li>
-       <li><a href="../pages/join.html"> Join </a></li>  
-    </ul>
-    <ul>
-       <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
-       <li><a href= "#"> <img src="../images/plus-32.png" id="create-poll" alt="plus button, create a poll"/></a></li>
-       <!-- image source: https://www.flaticon.com/packs/avatar-set-->
-       <li><a href="../pages/login.html"><img src="../images/user-32.png" class="nav-right"  alt="user avatar, click to login or view profile"/></a></li>
-   </ul>
-</nav> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/standard.css">
+  <link rel="stylesheet" href="../styles/barGrid.css">
+  <title>Example Integrated poll page</title>
+  <style>
+
+body {
+  margin: 0;
+}
+
+nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto repeat(2, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 1em;
+  align-items: center;
+  text-align: center;
+  border-bottom: 4px solid black;
+  background: #FF9313;
+}
+
+nav div {
+    display: grid;
+    align-items:  center;
+}
+
+@media screen and (max-width: 900px) {
+  nav {
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    grid-gap: 1em;
+ }
+}  
+
+.home {
+  grid-column: 2;
+}
+
+.about {
+  grid-column: 3;
+}
+.logo {
+  grid-column: 1;
+  height: 10vh;
+}
+
+.portfolio {
+  grid-column: 4;
+}
+
+.contact {
+  grid-column: 5;
+}
+
+.navLinks {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+}
+
+.navLinks:hover {
+  color: white;
+  border: 1px solid white;
+}
+
+  </style>
+</head>
+<body>
+        <header>
+  <nav class="container">
+    <div class="logo">
+            <a href="index.html" class="navLinks"><img src="../styles/icon.png" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a>
+    </div>
+    <div class="home">
+    <a href="#" class="navLinks">Home</a>
+    </div>
+    <div class="about">
+    <a href="#" class="navLinks">About Us</a>
+    </div>
+    <div class="join">
+    <a href="#" class="navLinks"></a>
+    </div>
+    <div class="contact">
+            <a href= "#" class="navLinks"> <img src="../styles/plus-32.png" id="create-poll" alt="plus button, create a poll"/>
+    </div>
+    <div class="">
+            <a href="#" class="navLinks"></a>
+    </div>
+  </nav>
+</header>
+</body>
+</html>
