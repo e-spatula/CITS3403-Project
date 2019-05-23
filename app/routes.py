@@ -147,49 +147,11 @@ def delete_user(id):
     user_id = int(current_user.id)
     deleting_self = (id == user_id)
 
-<<<<<<< HEAD
-def allowed_file(file):
-    return(file.filename.split(".")[1].lower() in ALLOWED_FILES)
-
-def previous_file_checker():
-    for file in os.listdir(UPLOAD_FOLDER):
-        file_id = file.split(".")[0] 
-        if(file_id == current_user.username):
-            return(UPLOAD_FOLDER + file)
-
-def file_uploader(username, file):
-    if(request.method == "POST"):
-        if(not file.filename):
-            flash("No file uploaded!", category = "error")
-            return(False)
-        if(not allowed_file(file)):
-            flash("Unsupported image type", category = "error")
-            return(False)
-        if(file):
-            previous_file = ""
-            extension = file.filename.split(".")[1]  
-            if(current_user.is_authenticated):  
-                previous_file = previous_file_checker()
-            filename = secure_filename(username + "." + extension)
-            if(previous_file):
-                os.remove(previous_file)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            flash("Files successfully uploaded", category = "info")
-            return(True)
-
-
-@app.route("/upload", methods = ["POST"])
-@login_required
-def upload_file():
-    file = request.files["file"]
-    if(file_uploader(current_user.username, file)):
-=======
     if(admin or deleting_self):  
         user = User.query.filter_by(id = id).first()
         username = user.username
         user.delete()
         flash("User " + username + " is gone forever!", category = "info")
->>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
         return(redirect(url_for("index")))
     else:
         return(redirect(url_for("index")))
