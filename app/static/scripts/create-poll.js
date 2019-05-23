@@ -172,8 +172,6 @@ function formProcessor() {
     let headers = {
         "Content-Type" : "application/json"
     }
-    console.log(contents);
-    console.log(JSON.stringify(contents));
     let url = window.location.href;
 
     fetch(url, {

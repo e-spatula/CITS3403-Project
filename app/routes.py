@@ -341,19 +341,6 @@ def check_username(username):
     return(jsonify(response))
 
 
-@app.route("/api/email/<email>")
-def check_email(email):
-    email = User.query.filter_by(email = email)
-    email = list(email)
-    response = {}
-    # if email list contains an element return true as the email is registered, otherwise false
-    if(email):
-        response["response"] = True
-    else:
-        response["response"] = False
-    
-    return(jsonify(response))
-
 @app.route("/reset_password_request", methods = ["GET", "POST"])
 def reset_password_request():
     if(current_user.is_authenticated):
