@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
     <script src = "{{url_for('static', filename = 'scripts/upload.js')}}"></script>
+    <div class="container">
     <h2>Select photo to upload</h2>
+    <div class="login">
     <p>Accepted formats are jpg, jpeg, png</p>
     <br>
     <form action = "" method = "POST" enctype = "multipart/form-data">
@@ -15,4 +17,6 @@
         <br> 
         {{ form.submit }}
     </form>
+    </div>
+    </div>
 {% endblock %}
