@@ -25,7 +25,6 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         for file in os.listdir(UPLOAD_FOLDER):
             file_id = file.split(".")[0] 
-            print(file_id)
             if(file_id == self.username):
                 return(url_for("static", filename = "user-images/" + file))
         digest = md5(self.email.lower().encode("utf-8")).hexdigest()
@@ -59,6 +58,7 @@ class Poll(db.Model):
     poll_votes = db.relationship("Votes", backref = "poll", lazy = "dynamic")
     poll_options = db.relationship("Responses", backref = "poll", lazy = "dynamic")
 
+    
     def __repr__(self):
         return("Poll <{}>".format(self.title))
 
