@@ -1,0 +1,9 @@
+<p>Dear {{ user.username }}, </p>
+
+<p>
+    To confirm your email click <a href = "{{url_for('confirm_email', token = token, _external = True)}}"> here </a>.
+</p>
+
+
+<p>Sincerely,</p> 
+<p>Polly</p>

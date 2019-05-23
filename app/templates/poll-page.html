@@ -1,23 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
+    <script src="{{url_for('static', filename = 'scripts/poll.js')}}"></script>
+    {% if poll.has_expired() %}
+        <span class = "alert-box banner notice">This poll has expired, you are able to view it but will not be able to submit a vote </span> 
+    {% endif %}
     <h1>{{poll.title}}</h1>
-    <p>{{poll.description}}</p>
+    <img src = "{{ poll.get_display_picture() }}">
+    {% if poll.description %}
+        <p>{{poll.description}}</p>
+    {% endif %}
+    <p>Poll expires {{ moment(poll.expiry_date).fromNow() }}</p>
+    {% if current_user.id == poll.user_id or current_user.get_admin() %}
+        <a href = "{{url_for('delete_poll', id = poll.id)}}">Delete poll</a>
+    {%  endif %}
+    {% if current_user.id == poll.user_id %}
+        <a href = "{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
+    {% endif %}
     <form action = "" method = "POST">
-        {{ form.hidden_tag() }}      
-        <ul>
-            {% set counter = 0  %}
+        {{ form.hidden_tag() }} 
+        <div id = "options">     
             {%  for field in form %}
                 {% if field.type == "BooleanField" %}
-                    <li>{{ options_values[counter] }}
+                    {{ field.label }}
                         {% if current_user.is_authenticated %} 
-                            {{field}} </li>
+                            {{field}}
                         {% endif %}
-                    {% set counter =  counter + 1 %}
+                        <br>
                 {% endif %}
             {% endfor %}
-            
-        </ul> 
-        {% if current_user.is_authenticated  %}
+        </div>
+        {% if current_user.is_authenticated and not poll.has_expired() %}
             {{form.submit}}
         {% endif %}
     </form>

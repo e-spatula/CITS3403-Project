@@ -3,7 +3,10 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
      StringField, IntegerField, FileField, TextAreaField, FormField, Form, \
      FieldList
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
-from app.models import User
+from wtforms.fields.html5 import DateField, TimeField
+from app.models import User, Poll
+from datetime import datetime
+from dateparser import parse
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators = [DataRequired()])
@@ -33,6 +36,12 @@ class RegistrationForm(FlaskForm):
         if(email is not None):
             raise ValidationError("Email already registered.")
 
+class UploadForm(FlaskForm):
+    
+    display_picture = FileField("Select photo to upload")
+
+    submit = SubmitField("Upload")
+    
 class AdminForm(FlaskForm):
     username = StringField("Username:", validators = [DataRequired()])
     pin = PasswordField("PIN:", validators = [DataRequired()])
@@ -57,11 +66,22 @@ def generate_poll_form(options, **kwargs):
             data = self.data
             del data["submit"]
             del data["csrf_token"]
-            return(data)
+            return(data) 
 
-    for i in range(len(options)):
-        label = options[i]
-        field = BooleanField(label)
+    for key in options.keys():
+        label = key
+        field = BooleanField(options[key])
         setattr(PollForm, label, field)
+
     setattr(PollForm, "submit", SubmitField("Submit"))
     return(PollForm(**kwargs))
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField("Email", validators = [DataRequired(), Email()])
+    submit = SubmitField("Reset Password")
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators = [DataRequired()])
+    password2 = PasswordField("Repeat Password", validators = [DataRequired(), EqualTo("password")])
+    
+    submit = SubmitField("Reset")

@@ -5,11 +5,20 @@
         <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/common.css')}}">
         <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/polls-home.css')}}"> 
         <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/error.css')}}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{url_for('static', filename = 'scripts/error-text.js')}}"></script>
+        <script src="{{url_for('static', filename = 'scripts/validate.js')}}"></script>
+        <script>
+            let url = window.location.origin;
+            let allowed_files =  {{ allowed_files|tojson }};
+        </script>
+        {{ moment.include_moment() }}
     </head>
     <body>
     <header>
         <nav>
             <!-- image source: https://www.flaticon.com/free-icon/voting_1598627#term=poll&page=1&position=8 -->
+<<<<<<< HEAD
             <div class="logo">
                 <a href="{{ url_for('index') }}" class="navLinks"><img src="../static/images/icon.png" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a>
             </div>
@@ -21,6 +30,17 @@
             </div>
             <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
             <a href= "#"> <img src="../static/images/plus-32.png" id="create-poll" alt="plus button, create a poll"/></a>
+=======
+            <li><a href="{{ url_for('index') }}"><img src="{{url_for('static', filename = 'images/icon.png')}}" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a></li> 
+            <li><a href="{{ url_for('index') }}"> Home </a> </li>
+            <li><a href="../pages/about.html">About </a></li>
+            <li><a href="../pages/contact.html"> Contact </a></li>
+            <li><a href="{{url_for('register')}}"> Join </a></li> 
+        </ul>
+        <ul>
+            <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
+            <li><a href= "{{url_for('create_poll')}}"> <img src="{{url_for('static', filename = 'images/plus-32.png')}}" id="create-poll" alt="plus button, create a poll"/></a></li>
+>>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
             <!-- image source: https://www.flaticon.com/packs/avatar-set-->
             {% if current_user.is_authenticated %}
                 <div class="profile">
@@ -30,30 +50,41 @@
                     <a href = "{{ url_for('logout')}}" class="navLinks">Logout</a>
                 </div>
             {% else %}
+<<<<<<< HEAD
             <div class="join">
                 <a href="{{url_for('register')}}" class="navLinks"> Join </a>
             </div>
             
             <a href="{{ url_for('login') }}"><img src="../static/images/user-32.png" class="nav-right"  alt="user avatar, click to login or view profile"/></a>
             <a href = "{{ url_for('login')}}">Login</a>
+=======
+            <li><a href="{{ url_for('login') }}"><img src="{{url_for('static', filename = 'images/user-32.png')}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a></li>
+            <li><a href = "{{ url_for('login')}}">Login</a></li>
+>>>>>>> 78f41511d64dff8331ca3ed6886b09e4b8591cf4
             {% endif %}
         </ul>
         </nav>
     </header> 
-        {% with messages = get_flashed_messages(with_categories = true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    {% if category == "info" %}
-                        <span class = "alert-box notice banner">{{ message }} </span>
-                    {% elif category == "warning"%}
-                        <span class = "alert-box warning banner">{{ message }} </span>
-                    {% else %}
-                        <span class = "alert-box error banner">{{  message }} </span>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        {% block content %}
-        {% endblock %}
+        <div id = "errors">
+            {% with messages = get_flashed_messages(with_categories = true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == "info" %}
+                            <span class = "alert-box notice banner">{{ message }} </span>
+                        {% elif category == "warning"%}
+                            <span class = "alert-box warning banner">{{ message }} </span>
+                        {% elif category == "success"%}
+                            <span class = "alert-box success banner">{{ message }} </span>
+                        {% else %}
+                            <span class = "alert-box error banner">{{  message }} </span>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div id = "content">
+            {% block content %}
+            {% endblock %}
+        </div>
     </body>
 </html>
