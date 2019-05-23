@@ -9,6 +9,7 @@
         <script src="{{url_for('static', filename = 'scripts/error-text.js')}}"></script>
         <script>
             let url = window.location.origin;
+            let allowed_files =  {{allowed_files|tojson}};
         </script>
         {{ moment.include_moment() }}
     </head>

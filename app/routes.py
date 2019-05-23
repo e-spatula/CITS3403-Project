@@ -10,6 +10,10 @@ from datetime import datetime
 import os
 from app.email import send_password_reset_email, send_confirmation_email
 
+
+@app.context_processor
+def get_allowed_files():
+    return(dict(allowed_files = ALLOWED_FILES))
 @app.before_request
 def before_request():
     if(current_user.is_authenticated):
