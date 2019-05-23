@@ -17,26 +17,41 @@
     <body>
     <header>
         <nav>
-        <ul>
             <!-- image source: https://www.flaticon.com/free-icon/voting_1598627#term=poll&page=1&position=8 -->
-            <li><a href="{{ url_for('index') }}"><img src="{{url_for('static', filename = 'images/icon.png')}}" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a></li> 
-            <li><a href="{{ url_for('index') }}"> Home </a> </li>
-            <li><a href="../pages/about.html">About </a></li>
-            <li><a href="../pages/contact.html"> Contact </a></li>
-            <li><a href="{{url_for('register')}}"> Join </a></li> 
-        </ul>
-        <ul>
+            <div class="logo">
+                <a href="{{ url_for('index') }}" class ="navLinks"><img src="{{url_for('static', filename = 'images/icon.png')}}" id = "logo" alt="Company icon, a heart with a tick box inside it"/></a> 
+            </div>
+            <div class="about">
+                <a href="{{ url_for('index') }}" class="navLinks"> Home </a> 
+            </div>
+            <div class="join">
+                <a href=".about.html" class="navLinks">About </a>
+            </div>
+            <div class="join">
+                <a href="{{url_for('register')}}" class="navLinks"> Join </a> 
+            </div>
+        
             <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
-            <li><a href= "{{url_for('create_poll')}}"> <img src="{{url_for('static', filename = 'images/plus-32.png')}}" id="create-poll" alt="plus button, create a poll"/></a></li>
+            <div class="new">
+                <a href= "{{url_for('create_poll')}}" class="navLinks"> <img src="{{url_for('static', filename = 'images/plus-32.png')}}" id="create-poll" alt="plus button, create a poll"/></a>
+            </div>
             <!-- image source: https://www.flaticon.com/packs/avatar-set-->
             {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('user', username = current_user.username) }}"><img src="{{current_user.avatar(32)}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a></li>
-                <li><a href = "{{ url_for('logout')}}">Logout</a></li>
+                <div class="profile">
+                    <a href="{{ url_for('user', username = current_user.username) }}" class="navLinks"><img src="{{current_user.avatar(32)}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a>
+                </div>
+                <div class="login">
+                    <a href = "{{ url_for('logout')}}" class="navLinks">Logout</a>
+                </div>
             {% else %}
-            <li><a href="{{ url_for('login') }}"><img src="{{url_for('static', filename = 'images/user-32.png')}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a></li>
-            <li><a href = "{{ url_for('login')}}">Login</a></li>
+            <div class="profile">
+            <a href="{{ url_for('login') }}" class="navLinks"><img src="{{url_for('static', filename = 'images/user-32.png')}}" class="nav-right"  alt="user avatar, click to login or view profile"/></a>
+            </div>
+            <div class="login">
+                <a href = "{{ url_for('login')}}" class="navLinks">Login</a>
+            </div>
             {% endif %}
-        </ul>
+        
         </nav>
     </header> 
         <div id = "errors">
