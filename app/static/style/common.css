@@ -39,7 +39,12 @@
     background: #FF9313;
   }
   
-  
+  nav img {
+    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+  }
+
   nav div {
       display: grid;
       align-items:  center;

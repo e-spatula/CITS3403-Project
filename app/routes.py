@@ -23,7 +23,8 @@ def before_request():
 @app.route("/")
 @app.route("/index")
 def index():
-    return(render_template("index.html", title = "Home"))
+    polls = Poll.query.order_by(Poll.expiry_date.desc())
+    return(render_template("index.html", title = "Home", polls = polls))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -211,7 +212,7 @@ def poll(id):
                     db.session.add(vote)
             db.session.commit()
             flash("Vote counted!", category = "info")
-            return(redirect(url_for("index")))
+            return(redirect(url_for("results")))
     return(render_template("poll-page.html", poll = poll, form = form))
 
 def can_vote(user, poll):
@@ -305,8 +306,11 @@ def get_poll(poll_id):
         value = str(option.value)
         options [value] = option.get_count()
 
+    votes_count = len(list(poll.poll_votes))
+    print(list(poll.poll_votes))  
     response["options"] = options
     response["poll_id"] = poll.id
+    response["votes_count"] = votes_count
     response["options_count"] = options_count
     return(jsonify(response))
 
@@ -393,3 +397,10 @@ def confirm_email(token):
     user.confirm()
     flash("Email confirmed!", category = "success")
     return(redirect(url_for("login")))
+
+
+@app.route("/poll/results/<id>")
+@login_required
+def results(id):
+    poll = Poll.query.filter_by(id = id).first_or_404()
+    return(render_template("results.html", poll = poll))
