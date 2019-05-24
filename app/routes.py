@@ -404,3 +404,9 @@ def confirm_email(token):
 def results(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
     return(render_template("results.html", poll = poll))
+
+
+@app.route("/about")
+def about():
+    
+    return(render_template("about.html", title = "About"))

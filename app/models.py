@@ -27,6 +27,16 @@ class User(UserMixin, db.Model):
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic", cascade = "all,delete")
 
 
+
+    def has_voted(self, poll_id):
+        poll = Poll.query.filter_by(id = id).first_or_404()
+
+        responses = poll.poll_votes
+        for response in responses:
+            if(response.user_id == self.id):
+                return(True)
+        return(False)
+        
     def confirm(self):
         self.confirmed = True
         db.session.commit()
