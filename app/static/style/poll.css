@@ -223,3 +223,9 @@
   text-shadow: 0 0 2px palegoldenrod;
   font-size: 14pt;
 }
+
+#results {
+  padding: 15px;
+  line-height: 2;
+}
+
