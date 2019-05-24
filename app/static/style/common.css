@@ -1,5 +1,6 @@
 :root {
     --black: #272727;
+    --borderBox: rgba(118, 212, 222, 0.2)
   }
   
   html {
@@ -20,8 +21,7 @@
   }
   
   body {
-    background-image: url("../images/background.svg"),
-      linear-gradient(110deg, #f93d66, #6d47d9);
+    background-image: url("../images/background.svg");
     background-size: 340px, auto;
     min-height: calc(100vh - 100px);
     background-attachment: fixed;
@@ -31,12 +31,13 @@
   
   nav {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(4, minmax(50px, 100px)) 1fr repeat(3, minmax(50px,100px));
     grid-auto-rows: auto;
     grid-gap: 1em;
     align-items: center;
     text-align: center;
-    background: #FF9313;
+    background: linear-gradient(110deg, #9DACB2, #A5CCD1);
+    border-radius: 5px;
   }
   
   nav img {
@@ -66,7 +67,14 @@
   .profile {
       grid-column: -3;
   }
-  
+  .new {
+    grid-column: -4;
+  }
+
+  .profile img,
+  .new img {
+    border-radius: 5px;
+  }
   .navLinks {
     font-family: sans-serif;
     font-size: 1.2em;

@@ -15,30 +15,22 @@ form.page-error li img {
     border-radius: 5px;
 }
 
-ul {
-    background: rgba(255, 255, 255, 0.2);
+ul,
+.button-link {
+    background: var(--borderBox);
     box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
     border-radius: 5px;
 }
 
-h4 {
+ h4 {
     font-size: large;
 }
 
-.description {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: large;
-    background: red;
-    background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet);
-    background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
-    background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
-    background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+h3 {
+    color: #D39B9B;
+    font-size: 50px;
 }
+
 
 .button-link {
     background-color: #008CBA;
