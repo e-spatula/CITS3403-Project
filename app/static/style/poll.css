@@ -6,7 +6,7 @@
 }
 
 .poll {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--borderBox);
   box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
   padding: 20px;
   display: grid;
@@ -51,15 +51,6 @@
   background: rgba(0, 0, 0, 0.7);
   padding: 5px;
 }
-
-
-.poll:hover {
-  background: rgba(0, 0, 0, 0.8);
-    -webkit-transition: background 500ms linear;
-    -ms-transition: background 500ms linear;
-    transition: background 500ms linear;
-}
-
 
 .overlay {
   position: fixed;
