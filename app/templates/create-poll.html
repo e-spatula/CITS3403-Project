@@ -7,18 +7,20 @@
             display: none;
         }
     </style>
-
-    <div id = "form">
+    <div class="form">
+    <div class = "container">
         <h2>Create a new poll </h2>
         <label for = "title">Title: </label>
         <br>
         <input type = "text" id = "title" required>
         <br>
+        <div class="textarea">
         <label for = "description"> Description </label>
         <br>
         <textarea cols = "50" rows = "4" id = "description"></textarea>
         <br>
         <br>
+        </div>
         <label for = "expiry_date">Select the date you want your poll to expire</label>
         <br>
         <input type = "date"  id = "expiry_date">
@@ -59,11 +61,8 @@
         <button type="button" class="add-date">Add date</button>
         <button type="button" class="remove-date">Remove date</button>
         <div id = "subform-container">
-    
         </div>
         <button type = "button" id = "submit">Submit</button>
-    </div>
-
     <div id="options-_" class="is-hidden" data-index="_">
             <br>
             <input id="options-_-date" name="options-__-date" required type="date" value="">
@@ -72,6 +71,7 @@
             <button type = "button" class = "add-time">Add time</button>
             <button type = "button" class = "remove-time">Remove time</button>
             <br>
-        
-        </div>
+    </div>
+</div>
+</div>
 {% endblock %}
