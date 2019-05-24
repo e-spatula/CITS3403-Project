@@ -76,6 +76,17 @@
     /* margin-bottom: 10px; */
   }
 
+  .add-poll input[type="button"],
+  #options-_-date,
+  input[type="time"] {
+    grid-column: 1;
+    margin: 5px;
+  }
+
+  .remove-time {
+    margin: 10px;
+    width: 60%;
+  }
   .textarea {
     margin-top: 30px;
       width: fixed;
@@ -92,7 +103,8 @@
     padding: 5px 0;
   }
   
-  input[type="submit"] {
+  input[type="submit"],
+  #submit {
     border: 1px solid rgba(191, 216, 227, .8);
     border-radius: 5px;
     color: #fff;
@@ -100,6 +112,7 @@
     font-size: 200%;
   }
   
+
   input[type="text"],
   input[type="password"] {
     border: 1px solid rgba(191, 216, 227, .8);
