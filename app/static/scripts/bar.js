@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    
     fetch(url + "/api/poll/" + String(poll_id)).then(function(response) {
         return(response.json());
     }).then(function(json) {
@@ -24,7 +25,7 @@ $(document).ready(function() {
         $(".graph").append("<span class='graphRowLabel'>30</span>");
         $(".graph").append("<span class='graphRowLabel'>20</span>");
         $(".graph").append("<span class='graphRowLabel'>10</span>");
-        console.log("working");
+    
 
         Object.keys(days).forEach(function(day) {
             let adjustedCount = (days[day] / count);
@@ -53,7 +54,5 @@ $(document).ready(function() {
             
             document.getElementsByClassName("graph")[0].appendChild(labelSpan);
         });
-
-
     });
 });
