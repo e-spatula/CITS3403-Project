@@ -7,7 +7,6 @@
 
 .poll {
   background: var(--borderBox);
-  box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
   padding: 20px;
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -15,7 +14,7 @@
   align-items: center;
   color: black;
   font-weight: 100;
-  border: 5px solid rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
   border-radius: 3px;
   margin: 10px;
 }
