@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-    <script src="{{url_for('static', filename = 'scripts/poll.js')}}"></script>
+   <script src="{{url_for('static', filename = 'scripts/poll.js')}}"></script>
+   <style>
+       .container {
+            font-size: 15px;
+       }
+       img {
+           justify-self: center;
+           width: 300px;
+           height: 300px;
+       }
+   </style>
+   <div class="form">
+    <div class="container">
     {% if poll.has_expired() %}
         <span class = "alert-box banner notice">This poll has expired, you are able to view it but will not be able to submit a vote </span> 
     {% endif %}
+    <div class="login">
     <h1>{{poll.title}}</h1>
     <img src = "{{ poll.get_display_picture() }}">
     {% if poll.description %}
@@ -33,8 +46,12 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <br>
         {% if current_user.is_authenticated and not poll.has_expired() %}
             {{form.submit}}
         {% endif %}
+    </div>
     </form>
+</div>
+</div>
 {% endblock %}  
