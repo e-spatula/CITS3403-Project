@@ -10,11 +10,15 @@
         <p>{{poll.description}}</p>
     {% endif %}
     <p>Poll expires {{ moment(poll.expiry_date).fromNow() }}</p>
-    {% if current_user.id == poll.user_id or current_user.get_admin() %}
-        <a href = "{{url_for('delete_poll', id = poll.id)}}">Delete poll</a>
-    {%  endif %}
-    {% if current_user.id == poll.user_id %}
-        <a href = "{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
+
+
+    {% if current_user.is_authenticated %}
+        {% if current_user.id == poll.user_id or current_user.get_admin() %}
+            <a href = "{{url_for('delete_poll', id = poll.id)}}">Delete poll</a>
+        {%  endif %}
+        {% if current_user.id == poll.user_id %}
+            <a href = "{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
+        {% endif %}
     {% endif %}
     <form action = "" method = "POST">
         {{ form.hidden_tag() }} 
