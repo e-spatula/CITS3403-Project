@@ -10,7 +10,7 @@
   box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 300px 1fr;
   grid-gap: 10px;
   align-items: center;
   color: black;
@@ -21,65 +21,26 @@
 }
 
 .poll__image {
-  width: 300px;
-  width: 300px;
-  float: left;
-
+  width: 100%;
 }
 
-.poll__overlay {
-  background: #ffc60032;
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  position: relative;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  transition: 0.2s;
-  transform: translateY(100%);
+.poll__details {
+  justify-self: center;
+  text-align: center;
+  font-size: 20px;
 }
 
-.poll__overlay button {
-  background: none;
-  border: 2px solid white;
-  color: black;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 5px;
-  float: right;
-}
 .poll__vote {
   background: none;
-  border: 2px solid white;
+  text-decoration: none;
   color: black;
   background: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
   padding: 5px;
 }
 
-.overlay {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.7);
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: none;
-  z-index: 2;
-}
-
-.overlay.open {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-}
-
-.overlay-inner {
-  background: white;
-  width: 700px;
-  padding: 20px;
-}
-
-.overlay img {
-  width: 100%;
+.poll__vote:hover {
+  color: white;
 }
 
 .graph {
