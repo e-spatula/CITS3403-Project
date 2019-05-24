@@ -51,8 +51,34 @@ $(document).ready(function() {
             labelSpan.className += "graphColumnLabel";
             labelSpan.innerHTML = day;
 
-            
             document.getElementsByClassName("graph")[0].appendChild(labelSpan);
         });
+        Object.keys(options).forEach(function(option, i) {
+            let result = document.createElement("h2");
+            
+            let span = "<span id = " + i + "></span>"
+
+            result.innerHTML = moment(String(option)).format("dddd, MMMM Do YYYY, h:mm:ss a") + " : " + span;
+    
+    
+            document.getElementById("results").append(result);
+            voteCounter(options[option], i);
+
+
+
+
+        }); 
     });
 });
+
+
+function voteCounter(votes, id) {
+    let current = -1;
+    let timer = setInterval(function() {
+        current++;
+        document.getElementById(id).textContent =  current;
+        if(current == votes) {
+            clearInterval(timer);
+        }
+    }, 100);
+}

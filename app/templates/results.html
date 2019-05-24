@@ -12,12 +12,22 @@
     </style>
 
     <h1> See how {{ poll.title }} is going </h1>
+    <br>
+    <h2> Poll author: {{ poll.author.username }}</h2>
+    <h2>About poll:</h2>
+    <p> {{ poll.description }}</p>
+    <h2>Expires {{ moment(poll.expiry_date).fromNow() }} </h2>
     <div class = "polls">
         <div class = "poll">
             <div class="graph">
                 
-            </div>  
-            </div>
+            </div>   
         </div>
-</div>
+    </div>
+    
+    <div id = "results">
+        <h1>Results: </h1>
+
+    </div>
+
 {% endblock %}
