@@ -28,10 +28,11 @@
             <div class="about">
                 <a href=".about.html" class="navLinks">About </a>
             </div>
-            <div class="join">
-                <a href="{{url_for('register')}}" class="navLinks"> Join </a> 
-            </div>
-        
+            {% if not current_user.is_authenticated %}
+                <div class="join">
+                    <a href="{{url_for('register')}}" class="navLinks"> Join </a> 
+                </div>
+            {% endif %}
             <!--image source: https://www.flaticon.com/free-icon/plus_143510 -->
             <div class="new">
                 <a href= "{{url_for('create_poll')}}" class="navLinks"> <img src="{{url_for('static', filename = 'images/plus-32.png')}}" id="create-poll" alt="plus button, create a poll"/></a>

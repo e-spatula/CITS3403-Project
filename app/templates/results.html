@@ -6,19 +6,21 @@
     </script>
 
     <h1> See how {{ poll.title }} is going </h1>
+    <br>
+    <h2> Poll author: {{ poll.author.username }}</h2>
+    <h2>About poll:</h2>
+    <p> {{ poll.description }}</p>
+    <h2>Expires {{ moment(poll.expiry_date).fromNow() }} </h2>
     <div class = "polls">
         <div class = "poll">
             <div class="graph">
                 
             </div>   
-            <div class = "poll_details">
-                <div class = "poll_author">
-                        {{ poll.author.username }}
-                </div>
-                <div class = "poll_desc">
-                    {{ poll.description }}
-                </div>
-            </div>
         </div>
-</div>
+    </div>
+    <h1>Results: </h1>
+    <div id = "results">
+
+    </div>
+
 {% endblock %}
