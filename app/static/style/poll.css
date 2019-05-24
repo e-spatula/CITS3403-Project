@@ -13,7 +13,7 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   align-items: center;
-  color: white;
+  color: black;
   font-weight: 100;
   border: 5px solid rgba(0, 0, 0, 0.03);
   border-radius: 3px;
@@ -42,7 +42,7 @@
 .poll__overlay button {
   background: none;
   border: 2px solid white;
-  color: white;
+  color: black;
   background: rgba(0, 0, 0, 0.7);
   padding: 5px;
   float: right;
@@ -50,7 +50,7 @@
 .poll__vote {
   background: none;
   border: 2px solid white;
-  color: white;
+  color: black;
   background: rgba(0, 0, 0, 0.7);
   padding: 5px;
 }
