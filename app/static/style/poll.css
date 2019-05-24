@@ -1,0 +1,231 @@
+.polls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-auto-rows: minmax(200px, 1fr);
+  grid-gap: 20px;
+}
+
+.poll {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  align-items: center;
+  color: white;
+  font-weight: 100;
+  border: 5px solid rgba(0, 0, 0, 0.03);
+  border-radius: 3px;
+}
+
+.poll__image {
+  width: 100%;
+}
+
+.poll__overlay {
+  background: #ffc60032;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  transition: 0.2s;
+  transform: translateY(100%);
+}
+
+.poll__overlay button {
+  background: none;
+  border: 2px solid white;
+  color: white;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5px;
+}
+.poll__vote {
+  background: none;
+  border: 2px solid white;
+  color: white;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5px;
+}
+
+
+.poll:hover {
+  background: rgba(0, 0, 0, 0.8);
+    -webkit-transition: background 500ms linear;
+    -ms-transition: background 500ms linear;
+    transition: background 500ms linear;
+}
+
+
+.overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  z-index: 2;
+}
+
+.overlay.open {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.overlay-inner {
+  background: white;
+  width: 700px;
+  padding: 20px;
+}
+
+.overlay img {
+  width: 100%;
+}
+
+.graph {
+  display: grid;
+  grid: repeat(10, auto) max-content / max-content repeat(1, auto);
+  height: 100%;
+}
+/* graph bars */
+.graphBar {
+  grid-row: 1 / -2;
+  border-radius: 0 0 50% 50% / 0 0 10px 10px;
+  background: palegoldenrod
+      linear-gradient(to top, gold var(--h), transparent var(--h));
+  justify-self: center;
+  width: 45px;
+  height: 100%;
+  box-shadow: 0 0 3px lightgrey;
+}
+.graphBar:nth-of-type(1) {
+  grid-column: 2;
+}
+.graphBar:nth-of-type(2) {
+  grid-column: 3;
+}
+.graphBar:nth-of-type(3) {
+  grid-column: 4;
+}
+.graphBar:nth-of-type(4) {
+  grid-column: 5;
+}
+.graphBar:nth-of-type(5) {
+  grid-column: 6;
+}
+.h00 {
+  --h: 5%;
+}
+
+.h05 {
+  --h: = 5%;
+}
+
+.h10 {
+  --h: 10%;
+}
+
+.h15 {
+  --h: 15%;
+}
+
+.h20 {
+  --h: 20%;
+}
+
+.h25 {
+  --h: 25%;
+}
+
+.h30 {
+  --h: 30%;
+}
+
+.h35 {
+  --h: 35%;
+}
+
+.h40 {
+  --h: 40%;
+}
+
+.h45 {
+  --h: 45%;
+}
+
+.h50 {
+  --h: 50%;
+}
+
+.h55 {
+  --h: 55%;
+}
+
+.h60 {
+  --h: 60%;
+}
+
+.h65 {
+  --h: 65%;
+}
+
+.h70 {
+  --h: 75%;
+}
+
+.h75 {
+  --h: 75%;
+}
+
+.h80 {
+  --h: 80%;
+}
+
+.h85 {
+  --h: 85%;
+}
+
+.h90 {
+  --h: 90%;
+}
+
+.h95 {
+  --h: 95%;
+}
+
+.h100 {
+  --h: 100%;
+}
+/* graph bar edges */
+.graphBar::before,
+.graphBar::after {
+  display: block;
+  content: "";
+  height: 20px;
+  border-radius: 50% / 10px;
+}
+.graphBar::before {
+  margin-top: -10px;
+  background-color: darkkhaki;
+}
+.graphBar::after {
+  background-color: darkgoldenrod;
+  position: relative;
+  top: calc(100% - var(--h) - 20px);
+}
+/* graph  labels */
+.graphRowLabel {
+  margin-top: -0.5em;
+}
+.graphColumnLabel {
+  justify-self: center;
+  margin-top: 6px;
+  text-shadow: 0 0 2px palegoldenrod;
+  font-size: 14pt;
+}
