@@ -10,7 +10,7 @@ h1,
   width: 80%;
   margin: 0 auto;
 }
-
+/* overall container grid */
 .form {
   display: grid;
   grid-template-columns: 1fr;
@@ -18,12 +18,12 @@ h1,
   justify-items: center;
   align-items: center;
 }
-
+/* internal form styling */
 .container {
   width: 100%;
   margin-top: 30px;
 }
-
+/* styling for larger screens */
 @media (min-width: 550px) {
   .container {
     grid-template-columns: repeat(2, minmax(150px, 30%));
@@ -68,7 +68,7 @@ h1,
     justify-self: end;
   }
 }
-
+/* generic box styling for elemetns */
 .container h1 {
   background-color: rgba(191, 216, 227, 0.8);
   border-top-right-radius: 5px;
@@ -84,8 +84,6 @@ h1,
   border: 1px solid rgba(191, 216, 227, .8);
   border-radius: 5px;
   padding: 20px;
-  /* padding: 10px; */
-  /* margin-bottom: 10px; */
 }
 
 .add-poll input[type="button"],

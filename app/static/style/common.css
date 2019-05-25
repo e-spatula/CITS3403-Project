@@ -3,6 +3,7 @@
   --borderBox: rgba(118, 212, 222, 0.2)
 }
 
+/* styling for all pages */
 html {
   box-sizing: border-box;
   /*System font stack for platforms */
@@ -28,7 +29,7 @@ body {
   letter-spacing: -1px;
   margin: 0;
 }
-
+/* navigation collums for large width browser windows */
 nav {
   display: grid;
   grid-template-columns: repeat(4, minmax(50px, 100px)) 1fr repeat(3, minmax(50px, 100px));
@@ -52,7 +53,7 @@ nav div {
   padding: 5px;
 }
 
-
+/* changes nov layout for smaller browser windows */
 @media screen and (max-width: 550px) {
   nav {
     grid-template-columns: 1fr 1fr 1fr;
@@ -65,7 +66,7 @@ nav div {
     padding: 10px;
   }
 }
-
+/* specifying position of nav elemetns */
 .login {
   grid-column: -2;
 }
@@ -95,16 +96,7 @@ nav div {
   color: white;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 5px 0;
-}
-
-
+/* error box styling */
 .is-hidden {
   display: none;
 }
@@ -142,6 +134,7 @@ h6 {
   border: 1px solid #8ed9f6;
 }
 
+/* generic text styling */
 h1 { 
   color: #111;  
   font-size: 50px; 
@@ -177,12 +170,13 @@ p {
    margin: 10px;
  }
 
-
+/* reference page styling */
  #references {
    margin: 10px;
    margin: 0 auto;
    width: 75%;
  }
+
  .list {
    line-height: 1.5;
    letter-spacing: 0px;
