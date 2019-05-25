@@ -262,6 +262,7 @@ def create_poll():
         poll = Poll(title = title, description = description, expiry_date = expiry_date, option_limit = int(options_limit), user_id = current_user.id)
         db.session.add(poll)
         db.session.commit()
+        poll.check_display_picture()
         for i in range(len(options)):
             resp = Responses(value = options[i], poll_id = poll.id) 
             db.session.add(resp)
