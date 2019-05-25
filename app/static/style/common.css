@@ -46,30 +46,16 @@
     height: 32px;
   }
 
-  nav div {
-      display: grid;
-      align-items:  center;
-      padding: 5px;
-  }
-  
-  
-  @media screen and (max-width: 550px) {
-    nav {
-      grid-template-columns: 100%;
-      grid-template-rows: auto;
-      grid-gap: 1em;
-   }
-  }  
-
-  .login {
-      grid-column: -2;
-  }
-  .profile {
-      grid-column: -3;
-  }
-  .new {
-    grid-column: -4;
-  }
+html {
+  box-sizing: border-box;
+  /*System font stack for platforms */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 900;
+  font-size: 10px;
+  color: var(--black);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
+}
 
   .profile img,
   .new img {
@@ -88,24 +74,58 @@
   .navLinks:hover {
     color: white;
   }
-  
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0 0 5px 0;
+   nav .login {
+    padding: 10px;
   }
+}
+
+.login {
+  grid-column: -2;
+}
+
+.profile {
+  grid-column: -3;
+}
+
+.new {
+  grid-column: -4;
+}
+
+.profile img,
+.new img {
+  border-radius: 5px;
+}
+
+.navLinks {
+  font-family: sans-serif;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.navLinks:hover {
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 5px 0;
+}
 
 
-  .is-hidden {
-    display: none;
-  }
+.is-hidden {
+  display: none;
+}
 
 .banner {
-    display: block;
+  display: block;
 }
+
 .alert-box {
     color:#555;
     border-radius:10px;
@@ -117,17 +137,20 @@
 }
 
 .error {
-    background-color:#ffecec;
-    border:1px solid #f5aca6;
+  background-color: #ffecec;
+  border: 1px solid #f5aca6;
 }
+
 .success {
-    background-color:#e9ffd9;
-    border:1px solid #a6ca8a;
+  background-color: #e9ffd9;
+  border: 1px solid #a6ca8a;
 }
+
 .warning {
-    background-color:#fff8c4;
-    border:1px solid #f2c779;
+  background-color: #fff8c4;
+  border: 1px solid #f2c779;
 }
+
 .notice {
     background-color:#e3f7fc;
     border:1px solid #8ed9f6;

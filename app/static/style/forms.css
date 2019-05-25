@@ -1,128 +1,137 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  
-  h1,
-  .login,
-  .account,
-  .contact{
-    width:80%;
-    margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+h1,
+.login,
+.account,
+.contact {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.8fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  margin-top: 30px;
+}
+
+@media (min-width: 550px) {
+  .container {
+    grid-template-columns: repeat(2, minmax(150px, 30%));
+    width: 50%;
+    margin-top: 30px;
   }
 
-  .form {
+  h1,
+  .login {
+    grid-column-end: span 2;
+    width: auto;
+  }
+
+  .login>div {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.8fr;
-    justify-items: center;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
   }
- 
-    @media (min-width: 700px) {
-      .container {
-        grid-template-columns: repeat(2, minmax(150px, 30%));
-        width: 50%;
-        margin-top: 30px;
-      }
-      h1,
-      .login {
-        grid-column-end: span 2;
-        width: auto;
-      }
-      .login > div {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        align-items: center;
-      }
-      .login > div.actions {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-      .account {
-        border: 1px dotted rgb(191, 216, 227);
-        padding: 0 10px 0 0;
-        align-self: center;
-        justify-self: center;
-        width: auto;
-      }
-      .contact {
-        padding: 0 0 0 10px;
-        width: auto;
-      }
-      input[type="submit"] {
-        grid-column: 2;
-      }
-      .actions a {
-        justify-self: end;
-      }
-    }
-  
-  .container h1 {
-    background-color: rgba(191, 216, 227, 0.8);
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    padding: 10px;
-    font-size: 24px;
-    line-height: 1.4;
-    text-align: center;
-  }
-  
-  .login, .textarea {
-    background-color: rgba(191, 216, 227, .4);
-    border: 1px solid rgba(191, 216, 227, .8);
-    border-radius: 5px;
-    padding: 20px;
-    /* padding: 10px; */
-    /* margin-bottom: 10px; */
+
+  .login>div.actions {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .add-poll input[type="button"],
-  #options-_-date,
-  input[type="time"] {
-    grid-column: 1;
-    margin: 5px;
+  .account {
+    border: 1px dotted rgb(191, 216, 227);
+    padding: 0 10px 0 0;
+    align-self: center;
+    justify-self: center;
+    width: auto;
   }
 
-  .remove-time {
-    margin: 10px;
-    width: 60%;
+  .contact {
+    padding: 0 0 0 10px;
+    width: auto;
   }
-  .textarea {
-    margin-top: 30px;
-      width: fixed;
-  }
-  
-  .account  {
-    background-color: rgba(191, 216, 227, .4);
-    border: 1px solid rgba(191, 216, 227, .8);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  .login > div {
-    padding: 5px 0;
-  }
-  
-  input[type="submit"],
-  #submit {
-    border-radius: 5px;
-    border: none;
-    color: white;
-    padding: 10px 18px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    background-color: rgb(54, 134, 169);
-    font-size: 100%;
-  }
-  
 
-  input[type="text"],
-  input[type="password"] {
-    border: 1px solid rgba(191, 216, 227, .8);
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 110%;
-    width: 100%;
+  input[type="submit"] {
+    grid-column: 2;
   }
-  
+
+  .actions a {
+    justify-self: end;
+  }
+}
+
+.container h1 {
+  background-color: rgba(191, 216, 227, 0.8);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  padding: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.login,
+.textarea {
+  background-color: rgba(191, 216, 227, .4);
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  padding: 20px;
+  /* padding: 10px; */
+  /* margin-bottom: 10px; */
+}
+
+.add-poll input[type="button"],
+#options-_-date,
+input[type="time"] {
+  grid-column: 1;
+  margin: 5px;
+}
+
+.remove-time {
+  margin: 10px;
+  width: 60%;
+}
+
+.textarea {
+  margin-top: 30px;
+  width: fixed;
+}
+
+.account {
+  background-color: rgba(191, 216, 227, .4);
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.login>div {
+  padding: 5px 0;
+}
+
+input[type="submit"],
+#submit {
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  color: #fff;
+  background-color: rgb(54, 134, 169);
+  font-size: 200%;
+}
+
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid rgba(191, 216, 227, .8);
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 110%;
+  width: 100%;
+}
