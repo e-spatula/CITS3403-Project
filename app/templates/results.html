@@ -1,38 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-    <script src = "{{url_for('static', filename = 'scripts/bar.js')}}"></script>
+    <script src="{{url_for('static', filename = 'scripts/bar.js')}}"></script>
     <script>
-        let poll_id = {{ poll.id }};
+        let poll_id = {
+            {
+                poll.id
+            }
+        };
     </script>
     <style>
         .poll {
             grid-template-columns: 0.5fr;
             justify-content: center;
         }
-    
     </style>
     <div class="form">
-    <div class="container">
-    <div class="login">
-    <h1> See how {{ poll.title }} is going </h1>
-    <br>
-    <h2> Poll author: {{ poll.author.username }}</h2>
-    <h2>About poll:</h2>
-    <p> {{ poll.description }}</p>
-    <h2>Expires {{ moment(poll.expiry_date).fromNow() }} </h2>
-    </div>
-    <div class = "polls">
-        <div class = "poll">
-            <div class="graph">
-                
-            </div>   
+        <div class="container">
+            <div class="login">
+                <h1> See how {{ poll.title }} is going </h1>
+                <br>
+                <h2> Poll author: {{ poll.author.username }}</h2>
+                <h2>About poll:</h2>
+                <p> {{ poll.description }}</p>
+                <h2>Expires {{ moment(poll.expiry_date).fromNow() }} </h2>
+            </div>
+            <div class="polls">
+                <div class="poll">
+                    <div class="graph">
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="login">
+                <h1>Results: </h1>
+
+            </div>
         </div>
     </div>
-    
-    <div id = "results" class = "login">
-        <h1>Results: </h1>
-
-    </div>
-</div>
-</div>
 {% endblock %}

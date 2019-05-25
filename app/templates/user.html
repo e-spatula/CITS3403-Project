@@ -1,57 +1,57 @@
 {% extends "base.html" %}
 {% block content %}
     <script>
-        let userID = {{user.id}};
+        let userID = {{ user.id }};
     </script>
     <style>
         .form {
             justify-items: left;
             margin-left: 20px;
         }
-        .login > img {
+
+        .login>img {
             border-radius: 5px;
             margin: 5px;
         }
-    
     </style>
     <script src="{{url_for('static', filename = 'scripts/user.js')}}"></script>
     <div class="form">
-    <div class="container">
-    <br>
-    <div class="login">
-    <h1>User ~ {{ user.username }}</h1>
-    <img src = "{{user.avatar(128)}}" style = "width:128px; height:128px;" alt = "user avatar" />
-    <p>Admin: {{user.get_admin()}}</p>
-    {% if user.description %}
-        <p> {{ user.description }} </p>
-    {% endif %}
-    {% if user.last_seen %}
-        <p> Last seen: {{ moment(user.last_seen).format("LLL") }}</p>
-    {% endif %}
-    {% if user.id == current_user.id or current_user.get_admin() %}
-        <a href = "{{url_for('delete_user', id = user.id) }}">Delete user</a>
-    {% endif %}
-</div>
-<div class="account">
-        {% if user == current_user %}
-            <a href = "{{ url_for('upload') }}">Change profile picture</a>
+        <div class="container">
             <br>
-            <a href = "{{ url_for('edit_profile') }}">Edit personal description</a>
-            {%  if not current_user.get_admin() %}
+            <div class="login">
+                <h1>User ~ {{ user.username }}</h1>
+                <img src="{{user.avatar(128)}}" style="width:128px; height:128px;" alt="user avatar" />
+                <p>Admin: {{user.get_admin()}}</p>
+                {% if user.description %}
+                <p> {{ user.description }} </p>
+                {% endif %}
+                {% if user.last_seen %}
+                <p> Last seen: {{ moment(user.last_seen).format("LLL") }}</p>
+                {% endif %}
+                {% if user.id == current_user.id or current_user.get_admin() %}
+                <a href="{{url_for('delete_user', id = user.id) }}">Delete user</a>
+                {% endif %}
+            </div>
+            <div class="account">
+                {% if user == current_user %}
+                <a href="{{ url_for('upload') }}">Change profile picture</a>
                 <br>
-                <a href = "{{url_for('admin')}}">Get admin privileges</a>
-            {% endif %}
-        {% endif %}
+                <a href="{{ url_for('edit_profile') }}">Edit personal description</a>
+                {%  if not current_user.get_admin() %}
+                <br>
+                <a href="{{url_for('admin')}}">Get admin privileges</a>
+                {% endif %}
+                {% endif %}
+            </div>
         </div>
-</div>
-</div>
-    <p>This user has voted in: <span id = "vote-counter"></span> polls</p>
+    </div>
+    <p>This user has voted in: <span id="vote-counter"></span> polls</p>
     <hr>
-    <div class = "container">
-            <div class = "grid-row">
-    {% for poll in user.polls %}   
+    <div class="container">
+        <div class="grid-row">
+            {% for poll in user.polls %}
             {% include "_poll.html"  %}
-    {% endfor %}
-        </div> 
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

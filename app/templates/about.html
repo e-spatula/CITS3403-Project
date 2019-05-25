@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename = 'style/about.css')}}">
-    <div id ="about">
-        <h1>About us</h1>
-        <div id = "text">
-            <p>We are two Computer Science students at the University of Western Australia and this is our assignment for CITS3403
-                Agile Responsive Web Development.
-            </p>
-            <p>Our names are Eddie and David and this application was built using Flask, HTML, CSS, Javascript and a good amount of suffering. The idea of 
-                this app was to allow people and organisations to more easily organise events.
-            </p>
-            <p>We hope you get some value out of this app.</p>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'style/about.css')}}">
+<div id="about">
+    <h1>About us</h1>
+    <div id="text">
+        <p>We are two Computer Science students at the University of Western Australia and this is our assignment for
+            CITS3403
+            Agile Responsive Web Development.
+        </p>
+        <p>Our names are Eddie and David and this application was built using Flask, HTML, CSS, Javascript and a good
+            amount of suffering. The idea of
+            this app was to allow people and organisations to more easily organise events.
+        </p>
+        <p>We hope you get some value out of this app.</p>
     </div>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3384.3587368370504!2d115.81642206516196!3d-31.978289331220502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32a4ee6e7380e9%3A0xf04f0b618f28290!2sThe+University+of+Western+Australia!5e0!3m2!1sen!2sau!4v1558683504458!5m2!1sen!2sau" width="600"
-     height="450" frameborder="0" 
-     style="border:0" 
-     allowfullscreen></iframe>
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3384.3587368370504!2d115.81642206516196!3d-31.978289331220502!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32a4ee6e7380e9%3A0xf04f0b618f28290!2sThe+University+of+Western+Australia!5e0!3m2!1sen!2sau!4v1558683504458!5m2!1sen!2sau"
+        width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
     <br>
     <br>
-     <a href = "{{url_for('index')}}" id = "get-started"> Get started </a>
-    </div>
-
+    <a href="{{url_for('index')}}" id="get-started"> Get started </a>
+</div>
 {% endblock %}
