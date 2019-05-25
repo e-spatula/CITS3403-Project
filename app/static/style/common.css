@@ -171,10 +171,11 @@ p {
 
  #references {
    margin: 10px;
+   margin: 0 auto;
+   width: 75%;
  }
  .list {
    line-height: 1.5;
-   text-align: justify;
    letter-spacing: 0px;
    text-align: center;
    margin: 10px;
@@ -190,5 +191,6 @@ p {
 .list img {
   width: 100px;
   height: 100px;
+  margin: 5px;
 }
 
