@@ -41,7 +41,9 @@ def index():
 
 """
 Route for the login page, redirects users that are already signed in. 
-
+If the form validates the user is inserted into the database and any image they upload is
+also saved in the USER_UPLOADS directory. If there are validation errors the form is 
+returned with the appropriate error message.
 """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -64,12 +66,16 @@ def login():
         return(redirect(next_page))
     return(render_template('login.html', title='Sign In', form=form))
 
-
+"""
+Logs users out.
+"""
 @app.route("/logout")
 def logout():
     logout_user()
     return(redirect(url_for("index", title = "Home")))
+"""
 
+"""
 @app.route("/admin", methods = ["POST", "GET"])
 @login_required 
 def admin():
