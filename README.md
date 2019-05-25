@@ -1,6 +1,6 @@
 # Project Title
 
-One Paragraph of project description goes here
+This is a project submission for Agile Web development at the University of 
 
 ## Getting Started
 
