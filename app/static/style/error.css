@@ -15,7 +15,7 @@ form.page-error li img {
     border-radius: 5px;
 }
 
-ul,
+#error-form ul,
 .button-link {
     background: var(--borderBox);
     box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);

@@ -24,6 +24,7 @@ def before_request():
 @app.route("/index")
 def index():
     polls = Poll.query.order_by(Poll.expiry_date.desc())
+    polls = list(polls)
     return(render_template("index.html", title = "Home", polls = polls))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -51,13 +52,13 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return(redirect(url_for("index")))
+    return(redirect(url_for("index", title = "Home")))
 
 @app.route("/admin", methods = ["POST", "GET"])
 @login_required 
 def admin():
     if(current_user.get_admin()):
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
     form = AdminForm()
     if(form.validate_on_submit()):
         admin_pin = ADMIN_PIN
@@ -72,7 +73,7 @@ def admin():
 @app.route("/register", methods = ["POST", "GET"])
 def register():
     if(current_user.is_authenticated):
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
     form = RegistrationForm()
     if(form.validate_on_submit()):
         user = User(username = form.username.data, email = form.email.data)
@@ -80,7 +81,7 @@ def register():
         if(form.display_picture.data):
             if(not file_uploader(form.username.data, form.display_picture.data, USER_UPLOAD_FOLDER)):
                 db.session.rollback()
-                return(redirect(url_for("register")))
+                return(redirect(url_for("register", title = "Sign Up")))
         db.session.add(user)
         db.session.commit()
         send_confirmation_email(user)
@@ -90,7 +91,7 @@ def register():
         else:
             next_page = "login"
         return(redirect(url_for(next_page)))
-    return(render_template("register.html", title = "Register", form = form))
+    return(render_template("register.html", title = "Sign Up", form = form))
 
 @app.route('/upload', methods = ["GET", "POST"])
 @login_required
@@ -98,7 +99,7 @@ def upload():
     form = UploadForm()
     if(request.method == "POST"):
         if(file_uploader(current_user.id, form.display_picture.data, USER_UPLOAD_FOLDER)):
-            return(redirect(url_for("index")))
+            return(redirect(url_for("index", title = "Home")))
     return (render_template("upload.html", title = "Upload", form = form))
 
 def allowed_file(file):
@@ -154,9 +155,9 @@ def delete_user(id):
         username = user.username
         user.delete()
         flash("User " + username + " is gone forever!", category = "info")
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
     else:
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -204,7 +205,7 @@ def poll(id):
         voted_options = form.get_responses()
         if(not can_vote(current_user, poll)):
             flash("You have already voted you sneaky devil", category = "error")
-            return(render_template("poll-page.html", poll = poll, form = form))
+            return(render_template("poll-page.html", poll = poll, form = form, title = poll.title))
         if(valid_vote(voted_options, option_limit)):
             print(voted_options)
 
@@ -215,7 +216,7 @@ def poll(id):
             db.session.commit()
             flash("Vote counted!", category = "info")
             return(redirect(url_for("results", id = poll.id)))
-    return(render_template("poll-page.html", poll = poll, form = form))
+    return(render_template("poll-page.html", poll = poll, form = form, title = poll.title))
 
 def can_vote(user, poll):
     responses = poll.poll_votes
@@ -262,6 +263,7 @@ def create_poll():
         poll = Poll(title = title, description = description, expiry_date = expiry_date, option_limit = int(options_limit), user_id = current_user.id)
         db.session.add(poll)
         db.session.commit()
+        poll.check_display_picture()
         for i in range(len(options)):
             resp = Responses(value = options[i], poll_id = poll.id) 
             db.session.add(resp)
@@ -277,7 +279,7 @@ def poll_upload(id):
     if(request.method == "POST"):
         if(file_uploader(id, form.display_picture.data, POLL_UPLOAD_FOLDER)):
             return(redirect(url_for("poll", id = id)))
-    return(render_template("upload.html", id = id, form = form))
+    return(render_template("upload.html", id = id, form = form, title = "Upload"))
 
 @app.route("/poll/delete/<id>", methods = ["GET", "POST"])
 @login_required
@@ -287,13 +289,13 @@ def delete_poll(id):
     poll = Poll.query.filter_by(id = id).first()
     if(not poll):
         flash("Poll to delete not found")
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
     poll_owner = int(poll.user_id)
 
     if(admin or user_id == poll_owner):
         poll.delete()
         flash("Poll deleted forever", category = "info")
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
 
 @app.route("/api/poll/<poll_id>", methods = ["GET"])
 def get_poll(poll_id):
@@ -363,7 +365,7 @@ def reset_password_request():
         if(user):
             send_password_reset_email(user)
         flash("Password reset link sent", category = "info")
-        return(redirect(url_for("login")))
+        return(redirect(url_for("login", title = "Sign In")))
     return(render_template("reset_password_request.html", form = form, title = "Reset Password"))
 
 
@@ -374,7 +376,7 @@ def reset_password(token):
     
     user = User.verify_reset_token(token)
     if(not user):
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
 
     form = ResetPasswordForm()  
     if(form.validate_on_submit()):
@@ -382,33 +384,38 @@ def reset_password(token):
         user.set_password(form.password.data)
         db.session.commit()
         flash("Password reset!", category = "success")
-        return(redirect(url_for("login")))
-    return(render_template("reset_password.html", form = form))
+        return(redirect(url_for("login", title = "Sign In")))
+    return(render_template("reset_password.html", form = form, title = "Reset Password"))
 
 
 @app.route("/confirm_email/<token>", methods = ["GET", "POST"])
 def confirm_email(token):
 
     if(current_user.is_authenticated):
-        return(redirect(url_for("index")))
+        return(redirect(url_for("index", title = "Home")))
     
     user = User.verify_confirmation_token(token)
     if(not user):
-        return(redirect(url_for("register")))
+        return(redirect(url_for("register", title = "Sign Ups")))
 
     user.confirm()
     flash("Email confirmed!", category = "success")
-    return(redirect(url_for("login")))
+    return(redirect(url_for("login", title = "Sign In")))
 
 
 @app.route("/poll/results/<id>")
 @login_required
 def results(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
-    return(render_template("results.html", poll = poll))
+    return(render_template("results.html", poll = poll, title = "Results"))
 
 
 @app.route("/about")
 def about():
     
     return(render_template("about.html", title = "About"))
+
+
+@app.route("/references")
+def references():
+    return(render_template("references.html", title = "References"))

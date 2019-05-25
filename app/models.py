@@ -126,6 +126,13 @@ class Poll(db.Model):
         db.session.commit()
 
 
+    def check_display_picture(self):
+        for file in os.listdir(POLL_UPLOAD_FOLDER):
+            file_id = file.split(".")[0] 
+            if(file_id == str(self.id)):
+                path = POLL_UPLOAD_FOLDER + file
+                os.remove(path)
+
     def get_display_picture(self):
         for file in os.listdir(POLL_UPLOAD_FOLDER):
             file_id = file.split(".")[0] 
