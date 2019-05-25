@@ -74,7 +74,10 @@ def logout():
     logout_user()
     return(redirect(url_for("index", title = "Home")))
 """
-
+Form for requesting admin privileges.
+If the current user is an admin it redirects them to the home page. Otherwise renders
+the admin form. If the form validates correctly the pin is checked against the pin
+from the config file and the user is  set as an admin. Otherwise errors are shown.
 """
 @app.route("/admin", methods = ["POST", "GET"])
 @login_required 
@@ -83,12 +86,11 @@ def admin():
         return(redirect(url_for("index", title = "Home")))
     form = AdminForm()
     if(form.validate_on_submit()):
-        admin_pin = ADMIN_PIN
-        if(admin_pin == form.pin.data):
+        if(ADMIN_PIN == form.pin.data):
             current_user.set_admin(True)
             flash("Congratulations you are now an admin", "success")
             return(redirect(url_for("index")))
-        form.pin.errors.append("Admin pin incorrect")
+        flash("PIN incorrect", "errors")
     return(render_template("admin.html", form = form, title = "Admin"))
     
 

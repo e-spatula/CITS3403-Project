@@ -42,7 +42,7 @@ class UploadForm(FlaskForm):
     submit = SubmitField("Upload")
     
 class AdminForm(FlaskForm):
-    username = StringField("Username:", validators = [DataRequired()])
+    
     pin = PasswordField("PIN:", validators = [DataRequired()])
     submit = SubmitField("Submit")
 
