@@ -20,7 +20,6 @@ class RegistrationForm(FlaskForm):
     password2 = PasswordField(
         "Repeat Password", validators = [DataRequired(), EqualTo("password", message = "Passwords must match")]
     )
-    admin = BooleanField("I have an admin pin")
 
     display_picture = FileField("Upload a display picture...or don't I'm not a cop")
 

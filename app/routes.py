@@ -11,22 +11,38 @@ import os
 from app.email import send_password_reset_email, send_confirmation_email
 
 
+"""
+Custom context processor that makes the allowed file extensions available to Jinja 
+and more importantly Javascript
+"""
 @app.context_processor
 def get_allowed_files():
     return(dict(allowed_files = ALLOWED_FILES))
+
+"""
+Updates a user's last seen time everytime they submit a request
+"""
 @app.before_request
 def before_request():
     if(current_user.is_authenticated):
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+"""
+Route for the index page, queries the backend for the polls and orders them 
+by creation date.  
+"""
 @app.route("/")
 @app.route("/index")
 def index():
-    polls = Poll.query.order_by(Poll.expiry_date.desc())
+    polls = Poll.query.order_by(Poll.create_date.desc())
     polls = list(polls)
     return(render_template("index.html", title = "Home", polls = polls))
 
+"""
+Route for the login page, redirects users that are already signed in. 
+
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if (current_user.is_authenticated):
@@ -67,7 +83,7 @@ def admin():
             flash("Congratulations you are now an admin", "success")
             return(redirect(url_for("index")))
         form.pin.errors.append("Admin pin incorrect")
-    return(render_template("admin.html", form = form))
+    return(render_template("admin.html", form = form, title = "Admin"))
     
 
 @app.route("/register", methods = ["POST", "GET"])
@@ -86,11 +102,6 @@ def register():
         db.session.commit()
         send_confirmation_email(user)
         flash("Congratulations you have now joined, please check your email for an email confirmation link", category = "info")
-        if(form.admin.data):
-            next_page = "admin"
-        else:
-            next_page = "login"
-        return(redirect(url_for(next_page)))
     return(render_template("register.html", title = "Sign Up", form = form))
 
 @app.route('/upload', methods = ["GET", "POST"])
@@ -140,7 +151,7 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     polls = Poll.query.filter_by(user_id = user.id)
     
-    return render_template('user.html', user=user, polls = polls)
+    return render_template('user.html', user=user, polls = polls, title = username)
 
 @app.route("/user/delete/<id>")
 @login_required
@@ -207,7 +218,6 @@ def poll(id):
             flash("You have already voted you sneaky devil", category = "error")
             return(render_template("poll-page.html", poll = poll, form = form, title = poll.title))
         if(valid_vote(voted_options, option_limit)):
-            print(voted_options)
 
             for key in voted_options.keys():
                 if(voted_options[key]):
@@ -396,7 +406,7 @@ def confirm_email(token):
     
     user = User.verify_confirmation_token(token)
     if(not user):
-        return(redirect(url_for("register", title = "Sign Ups")))
+        return(redirect(url_for("register", title = "Sign Up")))
 
     user.confirm()
     flash("Email confirmed!", category = "success")
@@ -412,7 +422,6 @@ def results(id):
 
 @app.route("/about")
 def about():
-    
     return(render_template("about.html", title = "About"))
 
 
