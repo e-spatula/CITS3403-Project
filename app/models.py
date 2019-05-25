@@ -27,7 +27,9 @@ class User(UserMixin, db.Model):
     votes = db.relationship("Votes", backref = "voter", lazy = "dynamic", cascade = "all,delete")
 
 
-
+    """
+    Simple function for returning whether a user has voted in a given poll
+    """
     def has_voted(self, poll_id):
         poll = Poll.query.filter_by(id = id).first_or_404()
 
@@ -36,16 +38,24 @@ class User(UserMixin, db.Model):
             if(response.user_id == self.id):
                 return(True)
         return(False)
-        
+    """
+    Function to change a user's email confirmation status to true when their email is confirmed.
+    """
     def confirm(self):
         self.confirmed = True
         db.session.commit()
     
+    """ 
+    Function for generating a JWT email confirmation token
+    """
     def generate_confirmation_token(self, expires_in = 600):
         return(jwt.encode(
             {"confirmation_token" : self.id, "exp": time() + expires_in},
             app.config["SECRET_KEY"], algorithm = "HS256").decode("utf-8"))
 
+    """
+    Function for confirming JWT email confirmation token.
+    """
     @staticmethod
     def verify_confirmation_token(token):
         try:
@@ -55,12 +65,16 @@ class User(UserMixin, db.Model):
             return
         return(User.query.get(id))
         
-    
+    """
+    Function for generating JWT token for password resets.
+    """
     def get_reset_password_token(self, expires_in = 600):
         return(jwt.encode(
             {"reset_password": self.id, "exp" : time() + expires_in},
             app.config["SECRET_KEY"], algorithm = "HS256").decode("utf-8"))
-
+    """
+    Function for verifying JWT password reset token.
+    """
     @staticmethod
     def verify_reset_token(token):
         try:
@@ -70,7 +84,9 @@ class User(UserMixin, db.Model):
             return
     
         return(User.query.get(id))
-
+    """
+    Function for deleting the user and any stored profile pictures they may have.
+    """
     def delete(self):
         for file in os.listdir(USER_UPLOAD_FOLDER):
             file_id = file.split(".")[0] 

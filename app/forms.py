@@ -57,7 +57,14 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
+"""
+Function for dynamically creating the vote form. Creates a form and defers its construction until after the 
+code below it has executed. The options for the poll are passed as a dictionary from the database
+with the key being the response ID and the value being the value of the response.
 
+The responses are taken from the from by getting the forms data and deleting the values for submit button
+and CSRF token.
+"""
 def generate_poll_form(options, **kwargs):
     class PollForm(FlaskForm): 
         pass
