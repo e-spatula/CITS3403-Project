@@ -1,10 +1,15 @@
+
+/* setting grid area for poll container */
 .polls {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   grid-auto-rows: minmax(200px, 1fr);
   grid-gap: 20px;
 }
-
+/* 
+ * setting individual poll collums and basic styling
+ * 300px for image and whatever remaining space for text
+*/
 .poll {
   background: var(--borderBox);
   padding: 20px;
@@ -18,6 +23,8 @@
   border-radius: 3px;
   margin: 10px;
 }
+
+/* internal poll styling */
 
 .poll__image {
   width: 100%;
@@ -42,6 +49,8 @@
   color: white;
 }
 
+/* graph styling */
+
 .graph {
   display: grid;
   grid: repeat(10, auto) max-content / max-content repeat(1, auto);
@@ -58,6 +67,8 @@
   height: 100%;
   box-shadow: 0 0 3px lightgrey;
 }
+
+/* separating the collums generically */
 .graphBar:nth-of-type(1) {
   grid-column: 2;
 }
@@ -73,6 +84,8 @@
 .graphBar:nth-of-type(5) {
   grid-column: 6;
 }
+
+/* setting height of the graph */
 .h0 {
   --h: 5%;
 }
