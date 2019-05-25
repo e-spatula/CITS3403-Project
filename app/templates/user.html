@@ -27,6 +27,7 @@
                 {% endif %}
                 {% if user.last_seen %}
                 <p> Last seen: {{ moment(user.last_seen).format("LLL") }}</p>
+                <p>{{ user.username }} has voted in: <span id="vote-counter"></span> polls</p>
                 {% endif %}
                 {% if user.id == current_user.id or current_user.get_admin() %}
                 <a href="{{url_for('delete_user', id = user.id) }}">Delete user</a>
@@ -45,9 +46,9 @@
             </div>
         </div>
     </div>
-    <p>This user has voted in: <span id="vote-counter"></span> polls</p>
     <hr>
     <div class="container">
+        <h2>{{user.username}}'s Polls</h2>
         <div class="grid-row">
             {% for poll in user.polls %}
             {% include "_poll.html"  %}
