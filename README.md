@@ -1,6 +1,10 @@
 # Project Title
 
-This is a project submission for Agile Web development at the University of 
+This is a project submission for Agile Web development at the University of Western Australia by David Adams and Eddie Atkinson.
+
+The idea of this app was to allow people and organisations to more easily organise events by voting on times and dates to possibly run events.
+Users will be able to create Polls and vote on them as well as view results of various polls.
+
 
 ## Getting Started
 

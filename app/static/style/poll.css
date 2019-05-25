@@ -14,7 +14,7 @@
   background: var(--borderBox);
   padding: 20px;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 0.5fr;
   grid-gap: 10px;
   align-items: center;
   color:var(--black);
@@ -28,25 +28,28 @@
 
 .poll__image {
   width: 100%;
+  border-radius: 5px;
 }
 
 .poll__details {
+  grid-column: 2;
   justify-self: center;
   text-align: center;
   font-size: 20px;
 }
 
 .poll__vote {
-  background: none;
-  text-decoration: none;
-  color: var(--black);
-  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(191, 216, 227, .8);
   border-radius: 5px;
-  padding: 5px;
+  color: #fff;
+  background-color: rgb(54, 134, 169);
+  font-size: 200%;
+
 }
 
 .poll__vote:hover {
-  color: white;
+  background-color: #fff;
+  color: rgb(54, 134, 169);
 }
 
 /* graph styling */
@@ -91,7 +94,7 @@
 }
 
 .h05 {
-  --h: = 5%;
+  --h: 5%;
 }
 
 .h10 {
