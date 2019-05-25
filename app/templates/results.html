@@ -2,11 +2,7 @@
 {% block content %}
     <script src="{{url_for('static', filename = 'scripts/bar.js')}}"></script>
     <script>
-        let poll_id = {
-            {
-                poll.id
-            }
-        };
+        let poll_id = {{ poll.id }};
     </script>
     <style>
         .poll {
