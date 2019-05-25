@@ -12,7 +12,7 @@
   grid-template-columns: 300px 1fr;
   grid-gap: 10px;
   align-items: center;
-  color: black;
+  color:var(--black);
   font-weight: 100;
   border: 1px solid rgba(0, 0, 0, 0.03);
   border-radius: 3px;
@@ -32,7 +32,7 @@
 .poll__vote {
   background: none;
   text-decoration: none;
-  color: black;
+  color: var(--black);
   background: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   padding: 5px;
