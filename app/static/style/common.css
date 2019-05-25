@@ -97,6 +97,9 @@
   }
 
 
+  .is-hidden {
+    display: none;
+  }
 
 .banner {
     display: block;

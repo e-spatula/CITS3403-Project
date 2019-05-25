@@ -111,6 +111,8 @@ def previous_file_checker(id, folder):
             return(folder + file)
 
 def file_uploader(id, file, folder):
+    id = str(id)
+
     if(not file.filename):
         flash("No file uploaded!", category = "error")
         return(False)
@@ -212,7 +214,7 @@ def poll(id):
                     db.session.add(vote)
             db.session.commit()
             flash("Vote counted!", category = "info")
-            return(redirect(url_for("results")))
+            return(redirect(url_for("results", id = poll.id)))
     return(render_template("poll-page.html", poll = poll, form = form))
 
 def can_vote(user, poll):
