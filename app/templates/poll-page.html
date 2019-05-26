@@ -17,7 +17,7 @@
            {% endif %}
            <div class="login">
                <h1>{{poll.title}}</h1>
-               <img src="{{ poll.get_display_picture() }}">
+               <img src="{{ poll.get_display_picture() }}" alt = "poll's display picture ">
                {% if poll.description %}
                <p>{{poll.description}}</p>
                {% endif %}
@@ -32,7 +32,7 @@
                <a href="{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
                {% endif %}
                {% endif %}
-               <form action="" method="POST">
+               <form action="" method="post">
                    {{ form.hidden_tag() }}
                    <div id="options">
                        {%  for field in form %}
@@ -49,8 +49,8 @@
                    {% if current_user.is_authenticated and not poll.has_expired() %}
                    {{form.submit}}
                    {% endif %}
-           </div>
-           </form>
+                </form>
        </div>
+    </div>
    </div>
 {% endblock %}  

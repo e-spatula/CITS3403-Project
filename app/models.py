@@ -32,6 +32,7 @@ class User(UserMixin, db.Model):
     """
     def has_voted(self, poll_id):
         poll = Poll.query.filter_by(id = id).first()
+        
         if(not poll):
             return(False)
         responses = poll.poll_votes

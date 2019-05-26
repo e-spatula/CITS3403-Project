@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 
 <head>
     <title>{{ title }} </title>
@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{url_for('static', filename = 'scripts/error-text.js')}}"></script>
     <script src="{{url_for('static', filename = 'scripts/validate.js')}}"></script>
+    <script src="{{url_for('static', filename = 'scripts/user.js')}}"></script>
     <script>
         let url = window.location.origin;
         let allowed_files = {{ allowed_files | tojson }};

@@ -4,7 +4,7 @@ from app.models import User, Poll, Votes, Responses
 from sqlalchemy import MetaData
 from datetime import datetime, timedelta
 
-class RelationshipsTestCase(unittest.TestCase):
+class UserTestCase(unittest.TestCase):
 
     def setUp(self):
         basedir = os.path.abspath(os.path.dirname(__file__))
@@ -52,8 +52,27 @@ class RelationshipsTestCase(unittest.TestCase):
         self.assertEqual(poll.poll_votes[0].user_id, 1)
         self.assertEqual(poll.poll_options[0].poll_id, 1)
 
+    def test_confirmation_tokens(self):
+        user = User.query.get(1)
+        token = user.generate_confirmation_token()
+        self.assertEqual(user.verify_confirmation_token(token), user)
 
+    def test_reset_token(self):
+        user = User.query.get(1)
+        token = user.get_reset_password_token()
+        self.assertEqual(user.verify_reset_token(token), user)
+
+    def test_delete(self):
+        user = User.query.get(2)
+        user.delete()
+        self.assertEquals(User.query.get(2), None)
+        s2 = User(username = "Dave", email = "Dave@gmail.com")
+        s2.set_password("World")
+        db.session.add(s2)
+        db.session.commit()
     
+    def test_password(self):
+        user = User.query.get()    
 if __name__ == "main":
     unittest.main()
 
