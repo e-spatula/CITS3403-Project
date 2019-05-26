@@ -15,6 +15,10 @@ These instructions will get you a copy of the project up and running on your loc
 This application uses a simple first past the post voting system. Only logged in users can vote and users can only vote once.
 The poll creator has the option to limit the number of options individual users can vote for. 
 
+
+### of note
+This web app is completely custom styled using CSS grid and all pages should be fully responsive. This includes the custom made graph rendering classes. 
+
 ### Prerequisites
 
 A minimum of python 3.7 is required to run this project
@@ -35,20 +39,13 @@ on windows go to the python website and download the installer
 
 ### Installing
 
-To set up the virtual environment open the root directory of the project in a terminal and type. It is recommended that this application is run on a linux or mac system. 
+To set up the virtual environment open the root directory of the project in a terminal and type. It is recommended that this application is run on a linux or mac system as pip on windows does not correctly manage packages
 
 On mac and Linux:
 ```
 $ python3 -m venv flask
 $ source flask/bin/activate
 $ pip install -r requirements_unix.txt
-```
-
-On windows:
-```
-$ python -m venv flask
-$ source flask/scripts/activate
-$ pip install -r requirements_windows.txt
 ```
 
 ## Running the tests
@@ -63,10 +60,7 @@ To run the automated tests.
 **Ensure that the virtual environment is not active when you run the automated tests, it will give you an error.**
 
 
-
 ## Deployment
-
-
 
 To run this server locally assuming correct installation set the environment variables by opening a terminal at the root directory of the project and entering:
 
@@ -80,7 +74,6 @@ If you are not the marker you will need to provide the following environment var
 ```
 $ export MAIL_PASSWORD = <our-mail-server-password>
 $ export ADMIN_PIN = <whatever-admin-pin-you-want-to-set>
-
 ```
 Then enter:
 ```
