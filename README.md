@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Social Choice Mechanism
 This application uses a simple first past the post voting system. Only logged in users can vote and users can only vote once.
-The poll creator has the option to limit the number of options individual users can vote for.
+The poll creator has the option to limit the number of options individual users can vote for. 
 
 ### Prerequisites
 
@@ -54,7 +54,13 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Open the root directory for the project in a terminal window and enter the command:
+
+```
+python -m unittest discover -s tests
+```
+To run the automated tests.
+
 
 ### Break down into end to end tests
 
@@ -67,11 +73,27 @@ Give an example
 
 ## Deployment
 
-To run this server locally assuming correct installation:
 
+
+To run this server locally assuming correct installation set the environment variables by opening a terminal at the root directory of the project and entering:
+
+```
+$ export FLASK_APP=polly.py
+```
+**If you are the marker for this assignment we will have submitted a .env file with the submission for this assignment, please place that in the root directory of the project.**
+
+If you are not the marker you will need to provide the following environment variables:
+
+```
+$ export MAIL_PASSWORD = <our-mail-server-password>
+$ export ADMIN_PIN = <whatever-admin-pin-you-want-to-set>
+
+```
+Then enter:
 ```
 $ flask run
 ```
+
 
 ## Dependencies
 
