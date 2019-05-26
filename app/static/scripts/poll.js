@@ -7,3 +7,4 @@ $(document).ready(function(){
         this.textContent = moment(this.textContent).format("dddd, MMMM Do YYYY, h:mm:ss a");
     });
 });
+
