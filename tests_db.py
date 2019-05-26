@@ -65,7 +65,7 @@ class UserTestCase(unittest.TestCase):
     def test_delete(self):
         user = User.query.get(2)
         user.delete()
-        self.assertEquals(User.query.get(2), None)
+        self.assertEqual(User.query.get(2), None)
         s2 = User(username = "Dave", email = "Dave@gmail.com")
         s2.set_password("World")
         db.session.add(s2)
