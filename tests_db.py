@@ -71,9 +71,5 @@ class UserTestCase(unittest.TestCase):
         db.session.add(s2)
         db.session.commit()
     
-    def test_password(self):
-        user = User.query.get()    
 if __name__ == "main":
     unittest.main()
-
-
