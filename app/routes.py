@@ -77,7 +77,7 @@ def logout():
 Form for requesting admin privileges.
 If the current user is an admin it redirects them to the home page. Otherwise renders
 the admin form. If the form validates correctly the pin is checked against the pin
-from the config file and the user is  set as an admin. Otherwise errors are shown.
+from the config file and the user is  set as an admin. Otherwise errors are shown on the form.
 """
 @app.route("/admin", methods = ["POST", "GET"])
 @login_required 
@@ -94,6 +94,13 @@ def admin():
     return(render_template("admin.html", form = form, title = "Admin"))
     
 
+"""
+Route for registering users. If the user is currently signed in they are redirected to
+the home page. Otherwise a registration form is generated and when validated is used to
+build a new user. If they entered a profile picture it is added to the USER_UPLOAD_FOLDER using
+their username as its filename. A confirmation email is then sent to the address the user signed 
+up with. 
+"""
 @app.route("/register", methods = ["POST", "GET"])
 def register():
     if(current_user.is_authenticated):
@@ -112,6 +119,14 @@ def register():
         flash("Congratulations you have now joined, please check your email for an email confirmation link", category = "info")
     return(render_template("register.html", title = "Sign Up", form = form))
 
+"""
+Route for uploading images for polls or users. Requires a user to 
+be logged in and generates an upload form. If a user has provided a valid
+file to be uploaded a call to file_uploader is made. If file_uploader returns
+True the user is redirected to the home page, elsewise the form is returned to 
+them with errors.
+
+"""
 @app.route('/upload', methods = ["GET", "POST"])
 @login_required
 def upload():
@@ -121,15 +136,29 @@ def upload():
             return(redirect(url_for("index", title = "Home")))
     return (render_template("upload.html", title = "Upload", form = form))
 
+"""
+Function that checks whether a given file is of an accepted type. 
+"""
 def allowed_file(file):
     return(file.filename.split(".")[1].lower() in ALLOWED_FILES)
 
+"""
+Function for checking whether a user/poll has a previous picture uploaded 
+and if so returns the file path to the file.
+"""
 def previous_file_checker(id, folder):
     for file in os.listdir(folder):
         file_id = file.split(".")[0] 
         if(file_id == id):
             return(folder + file)
 
+"""
+Function for uploading files. Checks if a file has been uploaded and
+if an uploaded file has a supported file type. If a file has been uploaded
+It then checks whether a user/poll has a previous file uploaded. Finally
+the file name is created using secure_filename() with the user/polls identifier, 
+the previous file is deleted and the new file is placed in the appropriate folder. 
+"""
 def file_uploader(id, file, folder):
     id = str(id)
 
@@ -152,7 +181,11 @@ def file_uploader(id, file, folder):
         return(True)
 
 
-
+"""
+Route for viewing a user's profile page. Queries the DB for 
+a user's details and any of the polls they've created and serves them
+to the jinja template.
+"""
 @app.route('/user/<username>')
 @login_required
 def user(username):
@@ -161,6 +194,12 @@ def user(username):
     
     return render_template('user.html', user=user, polls = polls, title = username)
 
+
+"""
+Function for deleting a user. Checks whether the current user is an admin or is
+the user who is being deleted. If either of those conditions are satisfied a call
+to user.delete() is made on the user and the user is redirected to the home page. 
+"""
 @app.route("/user/delete/<id>")
 @login_required
 def delete_user(id):
@@ -178,6 +217,12 @@ def delete_user(id):
     else:
         return(redirect(url_for("index", title = "Home")))
 
+"""
+Route for editing a user's description. Generates the profile editing form.
+If it validates correctly a user's description is updated. Elsewise the 
+form is returned with the description field pre-populated with the user's current
+description if anything.
+"""
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -186,12 +231,19 @@ def edit_profile():
         current_user.description = form.description.data
         db.session.commit()
         flash('Your changes have been saved.', category = "info")
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('edit_profile', title = "Edit Profile"))
     elif(request.method == 'GET'):
         form.description.data = current_user.description
     return( render_template('edit_profile.html', title='Edit Profile', form=form))
 
 
+"""
+Function for checking whether a vote is valid. Firstly checks 
+whether any votes have been submitted and then checks if there is 
+no limit on the number of votes that can be submitted (vote_limit == -1) 
+or if the user has violated the vote_limit specified during the polls creation.
+
+"""
 def valid_vote(options, vote_limit):
     checked_options = 0
     for option in options.keys():
@@ -208,7 +260,16 @@ def valid_vote(options, vote_limit):
     else:
         return(True)
 
-
+"""
+Route for viewing a poll. Fetches the poll by the id specified
+in the URL or throws a 404. Fetches the voting options for the
+poll from the poll object query, and uses a for loop to construct
+a dictionary containing the response id as a key and its value as
+the item. This is then passed to the generate_poll_form function that
+dynamically builds the PollForm object that is returned using 
+the options_list dictionary. If the form validates a check is made
+to see if the user has already voted, otherwise the vote is recorded.
+"""
 @app.route("/poll/<id>", methods = ["GET", "POST"])
 def poll(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
@@ -236,6 +297,11 @@ def poll(id):
             return(redirect(url_for("results", id = poll.id)))
     return(render_template("poll-page.html", poll = poll, form = form, title = poll.title))
 
+"""
+Function that checks whether a user has already voted in a poll by 
+querying the poll and checking if the user's id is in the poll_votes
+view.
+"""
 def can_vote(user, poll):
     responses = poll.poll_votes
     for response in responses:
@@ -243,7 +309,14 @@ def can_vote(user, poll):
             return(False)
     return(True)
 
+"""
+Route for creating a poll. If a GET request is sent 
+the template for the poll creation form is returned. 
 
+Elsewise the route checks for JSON data sent from a Javascript fetch request. If there
+is no data or one of the fields an exception is thrown and caught and an error is returned to 
+the frontend. Validates all the fields and constructs the appropriate poll and response objects.
+"""
 @app.route("/poll/create", methods = ["GET", "POST"])
 @login_required
 def create_poll():
@@ -273,7 +346,10 @@ def create_poll():
         for i in range(len(options)):
             if(not options[i]):
                 del options[i]
-            options[i] = datetime.fromtimestamp(options[i] / 1000.0)
+            try:
+                options[i] = datetime.fromtimestamp(options[i] / 1000.0)
+            except TypeError as e:
+                return(jsonify({"url" : False}), 400)
         if(not title):
             return(jsonify({"url" : False}), 400)
         if(not options):
@@ -289,7 +365,11 @@ def create_poll():
         response_dict = {"url": poll.id}
     return(jsonify(response_dict))
 
-
+"""
+Route for uploading a poll image. Generates an upload form
+which if validated uploads the poll image to the appropriate folder with the
+poll's id as its filename
+"""
 @app.route("/poll/upload/<id>", methods = ["GET", "POST"])
 @login_required
 def poll_upload(id):
@@ -299,6 +379,12 @@ def poll_upload(id):
             return(redirect(url_for("poll", id = id)))
     return(render_template("upload.html", id = id, form = form, title = "Upload"))
 
+
+"""
+Route for deleting a poll. Checks whether the person deleting a poll
+is an admin or the poll owner. If either of these conditions is satisfied
+the poll.delete() method is called and the user is redirected. 
+"""
 @app.route("/poll/delete/<id>", methods = ["GET", "POST"])
 @login_required
 def delete_poll(id):
@@ -315,6 +401,12 @@ def delete_poll(id):
         flash("Poll deleted forever", category = "info")
         return(redirect(url_for("index", title = "Home")))
 
+"""
+API route for returning information about a poll. 
+Returns a JSON string containing the options and the number
+of times they've been voted for, the poll id and the number of options 
+there are to vote on.
+"""
 @app.route("/api/poll/<poll_id>", methods = ["GET"])
 def get_poll(poll_id):
     response = {}
@@ -335,7 +427,12 @@ def get_poll(poll_id):
     response["votes_count"] = votes_count
     response["options_count"] = options_count
     return(jsonify(response))
-
+"""
+API route for requesting basic information about a user. 
+Returns a JSON string containing a user's username, administrator status,
+the last time they were seen, the number of polls they've voted in and 
+which polls they've voted in.
+"""
 @app.route("/api/user/<id>")
 def get_user(id):
     response = {}
@@ -358,6 +455,11 @@ def get_user(id):
     response["polls_voted"] = list(unique_votes)
     return(jsonify(response))
 
+
+"""
+API route for checking whether a username is already taken or not. 
+Used in Javascript fetch requests for client-side form validation .
+"""
 @app.route("/api/<username>")
 def check_username(username):
     username = User.query.filter_by(username = username)
@@ -372,7 +474,17 @@ def check_username(username):
 
     return(jsonify(response))
 
+"""
+Route for requesting a password reset token. 
+Redirects currently signed in users to the home page.
 
+Otherwise checks if the supplied email address is valid and sends 
+a reset link to the email if it is. 
+
+Regardless of whether the email is valid the user is redirected to the
+login page to protect against phishing attacks.
+
+"""
 @app.route("/reset_password_request", methods = ["GET", "POST"])
 def reset_password_request():
     if(current_user.is_authenticated):
@@ -386,7 +498,17 @@ def reset_password_request():
         return(redirect(url_for("login", title = "Sign In")))
     return(render_template("reset_password_request.html", form = form, title = "Reset Password"))
 
+"""
+Route for resetting a user's password after they've received a reset link
 
+Redirects signed in users to the home page.
+
+Otherwise verifies the reset token, if it is invalid the user
+is redirected to the home page.
+
+If the token is valid a reset password form is generated, validated
+and the user's password is changed. 
+"""
 @app.route("/reset_password/<token>", methods = ["GET", "POST"])
 def reset_password(token):
     if(current_user.is_authenticated):
@@ -406,6 +528,13 @@ def reset_password(token):
     return(render_template("reset_password.html", form = form, title = "Reset Password"))
 
 
+"""
+Route for confirming a user's email address from a confirmation link.
+
+Redirects signed in users and users with invalid tokens to the home page.
+
+Otherwise confirms the user.
+"""
 @app.route("/confirm_email/<token>", methods = ["GET", "POST"])
 def confirm_email(token):
 
@@ -420,19 +549,25 @@ def confirm_email(token):
     flash("Email confirmed!", category = "success")
     return(redirect(url_for("login", title = "Sign In")))
 
-
+"""
+Route for viewing the results of a poll, requires the user to be signed in.
+"""
 @app.route("/poll/results/<id>")
 @login_required
 def results(id):
     poll = Poll.query.filter_by(id = id).first_or_404()
     return(render_template("results.html", poll = poll, title = "Results"))
 
-
+"""
+Route for the about page.
+"""
 @app.route("/about")
 def about():
     return(render_template("about.html", title = "About"))
 
-
+"""
+Route for the references page.
+"""
 @app.route("/references")
 def references():
     return(render_template("references.html", title = "References"))
