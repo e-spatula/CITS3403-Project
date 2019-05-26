@@ -112,9 +112,9 @@ $ flask run
 * Flask-WhooshAlchemy==0.56
 * Flask-WTF==0.14.2
 * flipflop==1.0
-* futures==3.2.0
+* futures==3.1.1
 * guess-language==0.2
-* gyp==0.1
+* html-testRunner==1.2
 * idna==2.8
 * infinity==1.4
 * intervals==0.8.1
@@ -132,7 +132,7 @@ $ flask run
 * numpy==1.16.2
 * pbr==5.1.3
 * pycrypto==2.6.1
-* pygobject==3.26.1
+* pygobject==3.32.1
 * PyJWT==1.7.1
 * pylint==1.8.3
 * python-dateutil==2.8.0
