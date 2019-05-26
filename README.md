@@ -36,9 +36,12 @@ on windows go to the python website and download the installer
 ### Installing
 
 To set up the virtual environment open the root directory of the project in a terminal and type: 
+```
+$ python3 -m venv flask
+$ source flask/bin/activate
+$ pip install -r requirements.txt
+```
 
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
@@ -49,14 +52,6 @@ python -m unittest discover -s tests
 ```
 To run the automated tests.
 
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 
 ## Deployment
