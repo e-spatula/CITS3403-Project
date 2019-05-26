@@ -85,11 +85,13 @@ $ flask run
 There are some dummy accounts available for use with the following credentials:
 
 Username: Eddie
+
 Password: eddie
 
 This user has admin privileges
 
 Username: NewUser
+
 Password: newuser
 
 This user does not have admin privileges
