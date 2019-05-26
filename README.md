@@ -35,13 +35,21 @@ on windows go to the python website and download the installer
 
 ### Installing
 
-To set up the virtual environment open the root directory of the project in a terminal and type: 
+To set up the virtual environment open the root directory of the project in a terminal and type. It is recommended that this application is run on a linux or mac system. 
+
+On mac and Linux:
 ```
 $ python3 -m venv flask
 $ source flask/bin/activate
-$ pip install -r requirements.txt
+$ pip install -r requirements_unix.txt
 ```
 
+On windows:
+```
+$ python -m venv flask
+$ source flask/scripts/activate
+$ pip install -r requirements_windows.txt
+```
 
 ## Running the tests
 
