@@ -48,9 +48,11 @@ $ pip install -r requirements.txt
 Open the root directory for the project in a terminal window and enter the command:
 
 ```
-python -m unittest discover -s tests
+python -m unittest discover
 ```
 To run the automated tests.
+
+**Ensure that the virtual environment is not active when you run the automated tests, it will give you an error.
 
 
 
