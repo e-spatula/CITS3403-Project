@@ -13,7 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Social Choice Mechanism
 This application uses a simple first past the post voting system. Only logged in users can vote and users can only vote once.
-The poll creator has the option to limit the number of options individual users can vote for. 
+The poll creator has the option to limit the number of options individual users can vote for.
 
 ### Prerequisites
 
