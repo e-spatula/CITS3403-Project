@@ -1,6 +1,10 @@
-# Project Title
+# Polly
 
-One Paragraph of project description goes here
+This is a project submission for Agile Web development at the University of Western Australia by David Adams and Eddie Atkinson.
+
+The idea of this app was to allow people and organisations to more easily organise events by voting on times and dates to possibly run events.
+Users will be able to create Polls and vote on them as well as view results of various polls.
+
 
 ## Getting Started
 
@@ -8,27 +12,38 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+A minimum of python 3.7 is required to run this project
+
+on linux:
 
 ```
-Give examples
+$ sudo apt-get install python3.6
 ```
+
+on mac:
+
+```
+$ brew install python3
+```
+
+on windows go to the python website and download the installer
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+To set up the virtual environment simply change the terminal source
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+navigate to flask bin
 
 ```
-until finished
+$ cd CITS3403-Project/flask/bin
 ```
+
+Set the source
+
+```
+$ source activate
+```
+
 
 End with an example of getting some data out of the system or using it for a little demo
 
@@ -44,44 +59,30 @@ Explain what these tests test and why
 Give an example
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To run this server locally assuming correct installation:
+
+```
+$ flask run
+```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [flask](http://flask.pocoo.org/) - The web framework used
+* [python](https://www.python.org/) - Dependency and Package Management
+* [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout) - Front end styling
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+* **Eddie Atkinson**
+* **David Adams**
+ 
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Css tricks for never failing to find something that worked
+* Eddie for putting up with David
+* Coders for Causes for letting us take over the club room for hours on end

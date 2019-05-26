@@ -1,12 +1,12 @@
 <div class="poll">
     <img class="poll__image" src="{{ poll.get_display_picture() }}" alt="poll display picture">
-    <div class="poll__details">
-        <h2 class="poll__title">{{poll.title}}</h2>
+    <div class="poll__details login">
+        <h1>{{poll.title}}</h1>
         <p>Poll author: {{ poll.author.username }}</p>
         <p>Created {{ moment(poll.create_date).fromNow() }}</p>
         {% if poll.description %}
             <p class="poll__desc">{{ poll.description }}</p>
         {% endif %}
-        <a href="{{url_for('poll', id = poll.id)}}" class="poll__vote">Vote</a>
+        <a href="{{url_for('poll', id = poll.id)}}" class="poll__vote capitalised">Vote</a>
     </div>
 </div>

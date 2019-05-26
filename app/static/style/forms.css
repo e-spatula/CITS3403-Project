@@ -71,8 +71,7 @@ h1,
 /* generic box styling for elemetns */
 .container h1 {
   background-color: rgba(191, 216, 227, 0.8);
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
   padding: 10px;
   line-height: 1.4;
   text-align: center;
@@ -124,6 +123,11 @@ input[type="submit"],
   font-size: 200%;
 }
 
+input[type="submit"]:hover,
+#submit:hover {
+  background-color: #fff;
+  color: rgb(54, 134, 169);
+}
 
 input[type="text"],
 input[type="password"] {

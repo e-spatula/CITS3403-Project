@@ -199,7 +199,7 @@ function formProcessor() {
 $(document).ready(function() {
     $(".add-date").click(addDate)
     $(".remove-date").click(removeDate);
-    $(".add-time").click(addTime);
-    $(".remove-time").click(removeTime);
+    $(document).on("click", ".add-time", addTime);
+    $(document).on("click", ".remove-time", removeTime);
     $("#submit").click(formProcessor);
 });
