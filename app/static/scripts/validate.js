@@ -1,3 +1,12 @@
+/*
+Validation for new usernames. 
+
+Checks if the username field is blank.
+
+
+Makes a fetch request to the API to check if a username is already in 
+use and displays an error message if it is. 
+*/
 function validateNewUsername(username) {
 
     if(username.length == 0) {
@@ -14,7 +23,15 @@ function validateNewUsername(username) {
         });
     }
 }
+/*
+Validation for existing usernames.
 
+Checks if the username field is blank.
+
+Makes a fetch request to the API to check if a username
+exists, if not an error is displayed.
+
+*/
 function validateUsername(username) {
     if(username.length == 0) {
         displayText("Username is blank", "error");
@@ -30,6 +47,14 @@ function validateUsername(username) {
         });
     }
 }
+/*
+Validates email addresses.
+
+Checks if an email isn't blank.
+
+Uses a simple regex query to check if the supplied address follows 
+the basic format of an email address. e.g. myString@string.com
+*/
 function validateEmail(email) {
     if(email.length === 0) {
         displayText("Email can't be blank", "error");
@@ -42,6 +67,11 @@ function validateEmail(email) {
     }
 }
 
+/*
+Validates image uploads.
+
+Checks if the extension of a file is supported.
+*/
 function validateImage(image) {
     let extension = image.split(".").pop();
         if(!allowed_files.includes(extension)) {
@@ -60,6 +90,12 @@ function isValidEmail(email) {
     return(re.test(String(email).toLowerCase()));
 }
 
+/*
+Validates admin pins.
+
+Checks if the field isn't empty.
+
+*/
 function validatePin(pin) {
     if(pin.length === 0) {
         displayText("PIN is empty", "error");

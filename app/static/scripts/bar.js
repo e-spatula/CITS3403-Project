@@ -1,11 +1,14 @@
 $(document).ready(function() {
     
+    /* Fetch results from API */
     fetch(url + "/api/poll/" + String(poll_id)).then(function(response) {
         return(response.json());
     }).then(function(json) {
         let count = json["votes_count"];
         let options = json["options"];
         let days = {};
+
+        /* Decompose options into days for graphing */
         Object.keys(options).forEach(function(day) {
             formattedDay = moment(day).format("MMM Do YYYY");
             if(formattedDay in Object.keys(days)) {
@@ -14,7 +17,7 @@ $(document).ready(function() {
                 days[formattedDay] = parseInt(options[day]);  
             }
         });
-
+        /* Append the bar label classes */
         $(".graph").append("<span class='graphRowLabel'>100</span>");
         $(".graph").append("<span class='graphRowLabel'>90</span>");
         $(".graph").append("<span class='graphRowLabel'>80</span>");
@@ -26,7 +29,12 @@ $(document).ready(function() {
         $(".graph").append("<span class='graphRowLabel'>20</span>");
         $(".graph").append("<span class='graphRowLabel'>10</span>");
     
+        /* 
+        
+        For each day find it's percentage of total votes rounded to the nearest mutiple of 5.
+        Append a div with the adjustedCount as its class to the graph class.
 
+        */
         Object.keys(days).forEach(function(day) {
             let adjustedCount = (days[day] / count);
             adjustedCount = adjustedCount * 100;
@@ -39,9 +47,14 @@ $(document).ready(function() {
             document.getElementsByClassName("graph")[0].appendChild(barDiv);
         });
 
+        /* 
+        Append the X Y labels to the graph
+        */
         $(".graph").append("<span><sup>Y </sup>&frasl;<sub> X</sub></span>");
 
-
+        /* 
+        Add the labels to the bars on the graph
+        */
         Object.keys(days).forEach(function(day) {
             let adjustedCount = (days[day] / count);
             adjustedCount = adjustedCount * 100;
@@ -53,6 +66,9 @@ $(document).ready(function() {
 
             document.getElementsByClassName("graph")[0].appendChild(labelSpan);
         });
+        /*
+        Append the counts for each option into result div and apply a cool count up animation.
+        */
         Object.keys(options).forEach(function(option, i) {
             let result = document.createElement("h2");
             
@@ -71,7 +87,10 @@ $(document).ready(function() {
     });
 });
 
-
+/*
+Simple animation that counts up to a given number, with the number changing in 100ms
+increments.
+*/
 function voteCounter(votes, id) {
     let current = -1;
     let timer = setInterval(function() {
@@ -82,3 +101,4 @@ function voteCounter(votes, id) {
         }
     }, 100);
 }
+

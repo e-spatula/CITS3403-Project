@@ -1,3 +1,11 @@
+/*
+Function for adding a date.
+
+Clones a hidden template at the bottom of the page and appends it to the subform container. 
+Checks to see if more than 5 dates have been adeed and maintains consistent indices for the dates.
+
+
+*/
 function addDate() {
     let $templateForm = $("#options-_");
     if(!$templateForm) {
@@ -29,34 +37,28 @@ function addDate() {
     $newForm.removeClass("is-hidden");
 }
 
+/*
+Removes a date.
+
+Selects the last instance of the subform class and removes it. 
+*/
 function removeDate() {
     let $removedForm = $(".subform").last();
     let removedIndex = parseInt($removedForm.attr("data-index"));
 
     $removedForm.remove();
-    adjustDateIndices(removedIndex);
 }
 
-function adjustDateIndices(removedIndex) {
-    let $forms = $(".subform");
 
-    $forms.each((function(i) {
-        let $form = $(this);
-        let index = parseInt($form.data("index"))
-        let newIndex = index - 1;
-        if(index < removedIndex) {
-            return true;
-        }
-        $form.attr("id", $form.attr("id").replace(index, newIndex));
-        $form.data("index", newIndex);
-        $form.find("input").each(function(j){
-            let $item = $(this);
-            $item.attr("id", $item.attr("id").replace(index, newIndex));
-            $item.attr("name", $item.attr("name").replace(index, newIndex))
-        });
-    }));
-} 
+/*
+Adds a time to date.
 
+Clones the previous sibling of its parent element to add a time element. 
+If there is no previous sibling a new time element is constructed.
+
+Checks if more than 5 times have been added to a date and displays an error message
+if the user attempts to add more than 5 times to the same date.
+*/
 function addTime() {
     let $currentForm = $(this).parent();
     let parentID = $currentForm.attr("data-index");
@@ -82,6 +84,11 @@ function addTime() {
     
 }
 
+/*
+Removes a time
+
+Finds the last child of the parent that is a time input and removes it.
+*/
 function removeTime() {
     let $parent = $(this).parent();
     let $removedOption = $parent.find("input[type=time]").last();
@@ -89,8 +96,23 @@ function removeTime() {
     $removedOption.remove();
 
 }
+/*
+Validates the form, packages it up into JSON and posts it to the backend.
+
+Checks if the form doesn't have a title or if the description is more than 240 characters.
+
+Checks if the expiry date is not set or is set in the past.
+
+Checks that all the dates and times submitted are valid.
+
+Breaks down the dates and times into their individual components and reconstructs them
+as datetime stamps for passing to the backend. 
+
+Checks if at least one option has been created. 
+
+
+*/
 function formProcessor() {
-    $("#errors").empty();
     contents = {};
     let title = $("#title").val();
     if(!title) {
@@ -196,6 +218,9 @@ function formProcessor() {
 
 }
 
+/*
+Adds all the necessary event listeners 
+*/
 $(document).ready(function() {
     $(".add-date").click(addDate)
     $(".remove-date").click(removeDate);
