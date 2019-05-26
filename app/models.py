@@ -31,8 +31,9 @@ class User(UserMixin, db.Model):
     Simple function for returning whether a user has voted in a given poll
     """
     def has_voted(self, poll_id):
-        poll = Poll.query.filter_by(id = id).first_or_404()
-
+        poll = Poll.query.filter_by(id = id).first()
+        if(not poll):
+            return(False)
         responses = poll.poll_votes
         for response in responses:
             if(response.user_id == self.id):
