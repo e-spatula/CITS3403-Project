@@ -35,19 +35,7 @@ on windows go to the python website and download the installer
 
 ### Installing
 
-To set up the virtual environment simply change the terminal source
-
-navigate to flask bin
-
-```
-$ cd CITS3403-Project/flask/bin
-```
-
-Set the source
-
-```
-$ source activate
-```
+To set up the virtual environment open the root directory of the project in a terminal and type: 
 
 
 End with an example of getting some data out of the system or using it for a little demo
