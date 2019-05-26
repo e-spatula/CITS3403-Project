@@ -52,6 +52,19 @@
   color: rgb(54, 134, 169);
 }
 
+/* for very small screens poll image is not displayed */
+@media screen and (max-width: 550px) {
+  .poll__image {
+    display: none;
+  }
+  .poll {
+    grid-template-columns: 0.5fr;
+  }
+  #title {
+    font-size: 25px;
+  }
+}
+
 /* graph styling */
 
 .graph {

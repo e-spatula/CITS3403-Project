@@ -67,6 +67,8 @@ nav div {
    nav .login {
     padding: 10px;
   }
+
+  
 }
 /* specifying position of nav elemetns */
 .login {
@@ -91,6 +93,10 @@ a {
   font-size: 1.2em; 
   text-decoration: none;
   color: var(--black);
+}
+
+a {
+  color: #8C7284;
 }
 
 .capitalised {
@@ -161,7 +167,7 @@ h2 {
 
 p { 
   color: #111;  
-  font-size: 14px; 
+  font-size: 16px; 
   line-height: 24px; 
   margin: 0 0 24px; 
   text-align: justify; 
@@ -169,12 +175,8 @@ p {
  }
 
  footer {
-   position: absolute;
-   bottom: 0;
-   width: 100%;
-   height: 60px;
    margin: 10px;
- }
+ } 
 
 /* reference page styling */
  #references {

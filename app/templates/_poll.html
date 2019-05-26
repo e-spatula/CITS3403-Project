@@ -2,7 +2,7 @@
     <img class="poll__image" src="{{ poll.get_display_picture() }}" alt="poll display picture">
     <div class="poll__details login">
         {% set author = poll.author.username %}
-        <h1>{{poll.title}}</h1>
+        <h1 id="title">{{poll.title}}</h1>
         <p>Poll author: <a href = "{{url_for('user', username = author)}}">{{ poll.author.username }}</a></p>
         <p>Created {{ moment(poll.create_date).fromNow() }}</p>
         {% if poll.description %}

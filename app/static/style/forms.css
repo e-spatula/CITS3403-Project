@@ -85,6 +85,11 @@ h1,
   padding: 20px;
 }
 
+.smaller-textarea {
+  display: none;
+}
+
+
 .add-poll input[type="button"],
 #options-_-date,
 input[type="time"] {
@@ -99,6 +104,7 @@ input[type="time"] {
 
 .textarea {
   margin-top: 30px;
+  margin-bottom: 30px;
   width: fixed;
 }
 
