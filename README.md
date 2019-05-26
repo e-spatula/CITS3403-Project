@@ -52,7 +52,7 @@ python -m unittest discover
 ```
 To run the automated tests.
 
-**Ensure that the virtual environment is not active when you run the automated tests, it will give you an error.
+**Ensure that the virtual environment is not active when you run the automated tests, it will give you an error.**
 
 
 
