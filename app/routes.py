@@ -133,7 +133,7 @@ them with errors.
 def upload():
     form = UploadForm()
     if(request.method == "POST"):
-        if(file_uploader(current_user.id, form.display_picture.data, USER_UPLOAD_FOLDER)):
+        if(file_uploader(current_user.username, form.display_picture.data, USER_UPLOAD_FOLDER)):
             return(redirect(url_for("index", title = "Home")))
     return (render_template("upload.html", title = "Upload", form = form))
 
