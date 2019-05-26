@@ -32,7 +32,7 @@
                <a href="{{ url_for('poll_upload', id = poll.id) }}">Upload poll picture</a>
                {% endif %}
                {% endif %}
-               <form action="" method="post">
+               <form  method="post">
                    {{ form.hidden_tag() }}
                    <div id="options">
                        {%  for field in form %}
