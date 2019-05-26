@@ -1,0 +1,27 @@
+#about {
+    margin: 15px;
+    text-align: center;
+}
+
+#text {
+    width: 400px;
+    margin: 0 auto;
+}
+ 
+#get-started {
+    background-color: #4CAF50; /* Green */
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+@media (max-width: 650px) {
+    iframe {
+        display: none;
+    }
+}

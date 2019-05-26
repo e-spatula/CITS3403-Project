@@ -19,7 +19,7 @@ dirname = os.path.dirname(os.path.abspath(__file__))
 USER_UPLOAD_FOLDER = dirname + "/static/user-images/"
 POLL_UPLOAD_FOLDER = dirname + "/static/poll-images/"
 ALLOWED_FILES = ["png", "jpeg", "jpg"]
-ADMIN_PIN = "0000"
+ADMIN_PIN = os.getenv("ADMIN_PIN")
 
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config ["MAIL_SERVER"] = "smtp.googlemail.com"

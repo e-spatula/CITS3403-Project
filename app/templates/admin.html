@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-    <script src = "{{url_for('static', filename = 'scripts/admin.js')}}"></script>
-    <h1> Get admin privileges </h1>
-    <form action = "", method = "post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>{{ form.username.label }}</p>
-        <p>{{form.username(size  = 32)}}</p>
-        {% for error in form.username.errors %}
-            <br>
-            <span class = "alert-box error">{{error}}</span>
-            <br>
-        {% endfor %}
-        <p>{{ form.pin.label }}</p>
-        <p>{{ form.pin(size = 4)}}</p>
-        {% for error in form.pin.errors %}
-            <span class = "alert-box error">{{error}}</span>
-            <br>
-        {% endfor %}
-        <br>
-        {{ form.submit() }}
-    </form>
+    <script src="{{url_for('static', filename = 'scripts/admin.js')}}"></script>
+    <div class="form">
+        <div class="container">
+            <h1> Get admin privileges </h1>
+            <form   method="post" novalidate>
+                <div class="login">
+                    {{ form.hidden_tag() }}
+                    <p>{{ form.pin.label }}</p>
+                    <p>{{ form.pin(size = 4)}}</p>
+                    {% for error in form.pin.errors %}
+                    <span class="alert-box error">{{error}}</span>
+                    <br>
+                    {% endfor %}
+                    <br>
+                    <div class="actions">
+                        {{ form.submit() }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 {%  endblock %}

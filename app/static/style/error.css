@@ -10,8 +10,24 @@ form.page-error li {
 form.page-error li img {
     width: 400px;
     height: 400px;
-    margin: 0 50px 50px 10px;
+    margin: 0 50px 30px 0px;
+    border: 1px solid 008CBA;
+    border-radius: 5px;
 }
+
+#error-form ul,
+.button-link {
+    background: var(--borderBox);
+    box-shadow: 0 0 5px rgba(0 , 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+
+#error-form h3 {
+    color: #D39B9B;
+    font-size: 50px;
+}
+
 
 .button-link {
     background-color: #008CBA;

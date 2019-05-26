@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    /*
+    Validates password.
+
+    Checks if the password is blank, and if there is data in the second password field 
+    checks whether the data matches the current field.
+    */
     $("#password").blur(function() {
         let $password2 = $("#password2").val();
 
@@ -11,6 +17,13 @@ $(document).ready(function() {
             clearText();
         }
     });
+
+    /*
+    Validates confirm password.
+
+    Checks if the confirm password is blank, and if there is data in the first password field 
+    checks whether the data matches the current field.
+    */
 
     $("#password2").blur(function() {
         let $password = $("#password").val();

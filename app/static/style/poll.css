@@ -1,0 +1,220 @@
+
+/* setting grid area for poll container */
+.polls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-auto-rows: minmax(200px, 1fr);
+  grid-gap: 20px;
+}
+/* 
+ * setting individual poll collums and basic styling
+ * 300px for image and whatever remaining space for text
+*/
+.poll {
+  background: var(--borderBox);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 300px 0.5fr;
+  grid-gap: 10px;
+  align-items: center;
+  color:var(--black);
+  font-weight: 100;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 3px;
+  margin: 10px;
+}
+
+/* internal poll styling */
+
+.poll__image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.poll__details {
+  grid-column: 2;
+  justify-self: center;
+  text-align: center;
+  font-size: 18px;
+}
+
+.poll__vote {
+  border: 1px solid rgba(191, 216, 227, .8);
+  border-radius: 5px;
+  color: #fff;
+  background-color: rgb(54, 134, 169);
+  font-size: 200%;
+  font-family: sans-serif;
+}
+
+.poll__vote:hover {
+  background-color: #fff;
+  color: rgb(54, 134, 169);
+}
+
+/* for very small screens poll image is not displayed */
+@media screen and (max-width: 550px) {
+  .poll__image {
+    display: none;
+  }
+  .poll {
+    grid-template-columns: 0.5fr;
+  }
+  #title {
+    font-size: 25px;
+  }
+}
+
+/* graph styling */
+
+.graph {
+  display: grid;
+  grid: repeat(10, auto) max-content / max-content repeat(1, auto);
+  height: 100%;
+}
+/* graph bars */
+.graphBar {
+  grid-row: 1 / -2;
+  border-radius: 0 0 50% 50% / 0 0 10px 10px;
+  background: palegoldenrod
+      linear-gradient(to top, gold var(--h), transparent var(--h));
+  justify-self: center;
+  width: 45px;
+  height: 100%;
+  box-shadow: 0 0 3px lightgrey;
+}
+
+/* separating the collums generically */
+.graphBar:nth-of-type(1) {
+  grid-column: 2;
+}
+.graphBar:nth-of-type(2) {
+  grid-column: 3;
+}
+.graphBar:nth-of-type(3) {
+  grid-column: 4;
+}
+.graphBar:nth-of-type(4) {
+  grid-column: 5;
+}
+.graphBar:nth-of-type(5) {
+  grid-column: 6;
+}
+
+/* setting height of the graph */
+.h0 {
+  --h: 5%;
+}
+
+.h05 {
+  --h: 5%;
+}
+
+.h10 {
+  --h: 10%;
+}
+
+.h15 {
+  --h: 15%;
+}
+
+.h20 {
+  --h: 20%;
+}
+
+.h25 {
+  --h: 25%;
+}
+
+.h30 {
+  --h: 30%;
+}
+
+.h35 {
+  --h: 35%;
+}
+
+.h40 {
+  --h: 40%;
+}
+
+.h45 {
+  --h: 45%;
+}
+
+.h50 {
+  --h: 50%;
+}
+
+.h55 {
+  --h: 55%;
+}
+
+.h60 {
+  --h: 60%;
+}
+
+.h65 {
+  --h: 65%;
+}
+
+.h70 {
+  --h: 75%;
+}
+
+.h75 {
+  --h: 75%;
+}
+
+.h80 {
+  --h: 80%;
+}
+
+.h85 {
+  --h: 85%;
+}
+
+.h90 {
+  --h: 90%;
+}
+
+.h95 {
+  --h: 95%;
+}
+
+.h100 {
+  --h: 100%;
+}
+/* graph bar edges */
+.graphBar::before,
+.graphBar::after {
+  display: block;
+  content: "";
+  height: 20px;
+  border-radius: 50% / 10px;
+}
+.graphBar::before {
+  margin-top: -10px;
+  background-color: darkkhaki;
+}
+.graphBar::after {
+  background-color: darkgoldenrod;
+  position: relative;
+  top: calc(100% - var(--h) - 20px);
+}
+/* graph  labels */
+.graphRowLabel {
+  margin-top: -0.5em;
+}
+.graphColumnLabel {
+  justify-self: center;
+  margin-top: 6px;
+  text-shadow: 0 0 2px palegoldenrod;
+  font-size: 14pt;
+}
+
+#results {
+  padding: 15px;
+  line-height: 2;
+}
+
